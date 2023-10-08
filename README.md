@@ -20,7 +20,7 @@ FoodLink is a food redistribution service designed to minimize food waste and ad
 
 ## Technologies
 
-- Node.js 16.x
+- Node.js 20.x
 - TypeScript
 - MongoDB
 - Docker & Docker Compose
@@ -33,7 +33,7 @@ FoodLink is a food redistribution service designed to minimize food waste and ad
 
 ### Prerequisites
 
-- Make sure you have Node.js (v16.x) installed. If not, download and install it from [nodejs.org](https://nodejs.org/).
+- Make sure you have Node.js (v20.x) installed. If not, download and install it from [nodejs.org](https://nodejs.org/).
 - Make sure you have Docker installed. If not, download and install it from [Docker's website](https://www.docker.com/products/docker-desktop).
 - If using VS Code Dev Containers, ensure you have Visual Studio Code and the Remote - Containers extension installed.
 
