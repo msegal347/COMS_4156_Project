@@ -1,29 +1,16 @@
 {
-    "name": "FoodLink Development Environment",
+    "name": "FoodLink Development Container",
     "dockerComposeFile": "../docker-compose.yml",
     "service": "api",
-    "runServices": ["api", "mongo"],
-    "forwardPorts": [3000, 27017],
+    "workspaceFolder": "/workspace",
     "customizations": {
         "vscode": {
             "settings": {
-                "terminal.integrated.shell.linux": "/bin/bash",
-                "typescript.tsdk": "node_modules/typescript/lib",
-                "eslint.enable": true,
-                "prettier.enable": true
+                "terminal.integrated.shell.linux": "/bin/bash"
             },
-            "extensions": [
-                "dbaeumer.vscode-eslint",
-                "esbenp.prettier-vscode",
-                "ms-azuretools.vscode-docker",
-                "redhat.vscode-yaml",
-                "ms-kubernetes-tools.vscode-kubernetes-tools",
-                "hashicorp.terraform",
-                "ms-vscode.vscode-typescript-tslint-plugin",
-                "orta.vscode-jest"
-            ]
+            "extensions": ["dbaeumer.vscode-eslint", "esbenp.prettier-vscode"]
         }
     },
-    "postCreateCommand": "npm install",
-    "remoteUser": "vscode"
+    "forwardPorts": [3000, 27017],
+    "postCreateCommand": "npm install"
 }

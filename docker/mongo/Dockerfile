@@ -1,11 +1,11 @@
-# Use a specific version of the official MongoDB image
-FROM mongo:6.1.0
+# Use the official MongoDB image
+FROM mongo:latest
 
 # Copy the MongoDB initialization script
-COPY mongo-init.js /docker-entrypoint-initdb.d/
+COPY mongo-init/mongo-init.js /docker-entrypoint-initdb.d/
 
-# Expose the MongoDB port
+# Expose MongoDB port
 EXPOSE 27017
 
-# Start the MongoDB server
+# Start MongoDB
 CMD ["mongod"]

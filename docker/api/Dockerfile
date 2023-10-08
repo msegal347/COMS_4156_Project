@@ -1,33 +1,33 @@
-# Use an official Node runtime as a parent image
-FROM node:20.8 AS build-stage
+# Use Node.js 16 LTS as a parent image
+FROM node:16 AS development-stage
 
 # Set the working directory in the container
-WORKDIR /app
+WORKDIR /workspace
+
+# Create a user named vscode
+RUN useradd -ms /bin/bash vscode
+
+# Change the ownership of /workspace
+RUN chown -R vscode:vscode /workspace
+
+# Switch to vscode user
+USER vscode
 
 # Copy package.json and package-lock.json for installing node modules
-COPY package.json package-lock.json ./
+# The copy operation will be done as vscode user, so there should be no permission issues.
+COPY --chown=vscode:vscode package.json package-lock.json ./
 
 # Install npm packages
 RUN npm install
 
 # Copy local code to the container
-COPY . .
+COPY --chown=vscode:vscode . .
 
-# Build the project
+# The build operation is optional in development and can be run manually if needed.
 RUN npm run build
-
-# Start a new, smaller image to reduce size
-FROM node:20.8 AS production-stage
-
-# Set the working directory
-WORKDIR /app
-
-# Copy only the compiled output and node modules from the build stage
-COPY --from=build-stage /app/dist /app/dist
-COPY --from=build-stage /app/node_modules /app/node_modules
 
 # Expose API port
 EXPOSE 3000
 
-# Start your Node.js app
-CMD ["npm", "start"]
+# Set up the command to run your app using nodemon for development
+CMD ["npm", "run", "dev"]
