@@ -1,5 +1,5 @@
 module.exports = {
-    roots: ['COMS_4156_Project/src'],
+    roots: ['src'],
   
     transform: {
       '^.+\\.tsx?$': 'ts-jest',
