@@ -1,0 +1,61 @@
+name: CI/CD Pipeline for FoodLink API
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  codeql-analysis:
+    name: "CodeQL"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v1
+        with:
+          languages: "javascript"
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v1
+
+  build-and-test:
+    runs-on: ubuntu-latest
+    needs: codeql-analysis 
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '16.x'
+        npm-version: '7.x'
+
+    - name: Install Dependencies
+      run: npm install
+
+    - name: Run ESLint
+      run: npm run lint
+
+    - name: Run Unit Tests with Coverage
+      run: npm run test -- --coverage
+
+    - name: Upload Coverage as Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: coverage
+        path: ./coverage/lcov.info
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build-and-test
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2

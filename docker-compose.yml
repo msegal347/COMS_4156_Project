@@ -1,0 +1,38 @@
+version: '3'
+services:
+
+  # API Service
+  api:
+    build:
+      context: .
+      dockerfile: docker/api/Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongo
+    environment:
+      MONGO_URI: "mongodb://mongo:27017/foodlink"
+    networks:
+      - foodlink-network
+
+  # MongoDB Service
+  mongo:
+    build:
+      context: .
+      dockerfile: docker/mongo/Dockerfile
+    volumes:
+      - mongo-data:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - foodlink-network
+
+# Volumes
+volumes:
+  mongo-data:
+    driver: local
+
+# Networks
+networks:
+  foodlink-network:
+    driver: bridge
