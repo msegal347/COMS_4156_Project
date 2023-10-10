@@ -1,4 +1,3 @@
-// Select the FoodLink database. If it doesn't exist, it will be created.
 db = db.getSiblingDB('foodlink');
 
 // Create a user for the FoodLink database
@@ -22,7 +21,7 @@ db.createCollection('EntityProfiles', {
   validator: {
     $jsonSchema: {
       bsonType: 'object',
-      required: ['entityID', 'role', 'apiKey'],
+      required: ['entityID', 'role', 'apiKey', 'coordinates'],
       properties: {
         entityID: {
           bsonType: 'string',
@@ -34,9 +33,23 @@ db.createCollection('EntityProfiles', {
         apiKey: {
           bsonType: 'string',
         },
+        coordinates: {
+          bsonType: 'object',
+          required: ['latitude', 'longitude'],
+          properties: {
+            latitude: {
+              bsonType: 'double',
+            },
+            longitude: {
+              bsonType: 'double',
+            },
+          },
+        },
       },
     },
   },
+  validationLevel: 'moderate',
+  validationAction: 'warn',
 });
 
 // Resource Inventory Collection
@@ -51,6 +64,18 @@ db.createCollection('Inventory', {
         },
         metadata: {
           bsonType: 'object',
+          required: ['type', 'quantity', 'expirationDate'],
+          properties: {
+            type: {
+              bsonType: 'string',
+            },
+            quantity: {
+              bsonType: 'int',
+            },
+            expirationDate: {
+              bsonType: 'date',
+            },
+          },
         },
       },
     },
@@ -62,7 +87,7 @@ db.createCollection('Transactions', {
   validator: {
     $jsonSchema: {
       bsonType: 'object',
-      required: ['transactionID', 'sourceID', 'sinkID', 'resourceID'],
+      required: ['transactionID', 'sourceID', 'sinkID', 'resourceID', 'timestamp'],
       properties: {
         transactionID: {
           bsonType: 'string',
@@ -75,6 +100,9 @@ db.createCollection('Transactions', {
         },
         resourceID: {
           bsonType: 'string',
+        },
+        timestamp: {
+          bsonType: 'date',
         },
       },
     },
@@ -93,9 +121,27 @@ db.createCollection('Logistics', {
         },
         pickupLocation: {
           bsonType: 'object',
+          required: ['latitude', 'longitude'],
+          properties: {
+            latitude: {
+              bsonType: 'double',
+            },
+            longitude: {
+              bsonType: 'double',
+            },
+          },
         },
         dropOffLocation: {
           bsonType: 'object',
+          required: ['latitude', 'longitude'],
+          properties: {
+            latitude: {
+              bsonType: 'double',
+            },
+            longitude: {
+              bsonType: 'double',
+            },
+          },
         },
         status: {
           enum: ['scheduled', 'in_transit', 'completed', 'cancelled'],
@@ -105,3 +151,68 @@ db.createCollection('Logistics', {
     },
   },
 });
+
+// API Keys Collection
+db.createCollection('APIKeys', {
+  validator: {
+    $jsonSchema: {
+      bsonType: 'object',
+      required: ['apiKey', 'entityID'],
+      properties: {
+        apiKey: {
+          bsonType: 'string',
+        },
+        entityID: {
+          bsonType: 'string',
+        },
+      },
+    },
+  },
+});
+
+// Notifications Collection
+db.createCollection('Notifications', {
+  validator: {
+    $jsonSchema: {
+      bsonType: 'object',
+      required: ['notificationID', 'type', 'status'],
+      properties: {
+        notificationID: {
+          bsonType: 'string',
+        },
+        type: {
+          bsonType: 'string',
+        },
+        status: {
+          enum: ['sent', 'pending', 'failed'],
+          description: 'status can be one of the enum values',
+        },
+      },
+    },
+  },
+});
+
+// Analytics Data Collection
+db.createCollection('Analytics', {
+  validator: {
+    $jsonSchema: {
+      bsonType: 'object',
+      required: ['analyticsID', 'data'],
+      properties: {
+        analyticsID: {
+          bsonType: 'string',
+        },
+        data: {
+          bsonType: 'object',
+        },
+      },
+    },
+  },
+});
+
+// Creating indexes for optimization
+db.EntityProfiles.createIndex({ coordinates: '2dsphere' });
+db.Inventory.createIndex({ 'metadata.type': 1 });
+db.Transactions.createIndex({ timestamp: -1 });
+db.Logistics.createIndex({ 'pickupLocation.latitude': 1, 'pickupLocation.longitude': 1 });
+db.Logistics.createIndex({ 'dropOffLocation.latitude': 1, 'dropOffLocation.longitude': 1 });
