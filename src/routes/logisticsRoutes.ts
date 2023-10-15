@@ -1,13 +1,13 @@
 // src/routes/logisticsRoutes.ts
 
 import { Router } from 'express';
-import { 
-    createRoute, 
-    getRouteById, 
-    updateRouteById, 
-    deleteRouteById, 
-    getOptimalRoute,
-    getCoordinates
+import {
+  createRoute,
+  getRouteById,
+  updateRouteById,
+  deleteRouteById,
+  getOptimalRoute,
+  getCoordinates,
 } from '../controllers/logisticsController';
 
 const router = Router();

@@ -9,24 +9,24 @@ const connectDB = async (): Promise<void> => {
 
     // Check if MONGO_URI is set
     if (!mongoUri) {
-        console.error('MONGO_URI is not defined in environment variables.');
-        process.exit(1);
+      console.error('MONGO_URI is not defined in environment variables.');
+      process.exit(1);
     }
 
     // Establish connection to MongoDB using Mongoose
     const conn = await mongoose.connect(mongoUri, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        useCreateIndex: true,
-        useFindAndModify: false,
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useCreateIndex: true,
+      useFindAndModify: false,
     } as ConnectOptions & { useNewUrlParser: boolean });
 
     console.log(`MongoDB Connected: ${conn.connection.host}`);
-} catch (error: any) {
+  } catch (error: any) {
     console.error(`Error while connecting to MongoDB: ${error.message}`);
     // Exit the process with failure code
     process.exit(1);
-}
+  }
 };
 
 export default connectDB;

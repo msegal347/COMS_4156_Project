@@ -51,7 +51,10 @@ export const deleteRouteById = async (id: string): Promise<void> => {
 };
 
 // Calculate an optimal route given an origin and a list of destinations
-export const calculateOptimalRoute = async (origin: string, destinations: string[]): Promise<string[]> => {
+export const calculateOptimalRoute = async (
+  origin: string,
+  destinations: string[]
+): Promise<string[]> => {
   try {
     return await GoogleMaps.getOptimalRoute(origin, destinations);
   } catch (err) {
@@ -60,7 +63,9 @@ export const calculateOptimalRoute = async (origin: string, destinations: string
 };
 
 // Get coordinates for an address
-export const getCoordinates = async (address: string): Promise<{ latitude: number; longitude: number }> => {
+export const getCoordinates = async (
+  address: string
+): Promise<{ latitude: number; longitude: number }> => {
   try {
     return await GoogleMaps.getCoordinates(address);
   } catch (err) {

@@ -8,15 +8,8 @@ const customFormat = printf(({ level, message, label, timestamp }) => {
 });
 
 const winstonLogger = createLogger({
-  format: combine(
-    label({ label: 'FoodLink-API' }),
-    timestamp(),
-    customFormat
-  ),
-  transports: [
-    new transports.Console(),
-    new transports.File({ filename: 'combined.log' }),
-  ],
+  format: combine(label({ label: 'FoodLink-API' }), timestamp(), customFormat),
+  transports: [new transports.Console(), new transports.File({ filename: 'combined.log' })],
 });
 
 export const logger = (req: Request, res: Response, next: NextFunction) => {
@@ -25,4 +18,3 @@ export const logger = (req: Request, res: Response, next: NextFunction) => {
 };
 
 export default logger;
-

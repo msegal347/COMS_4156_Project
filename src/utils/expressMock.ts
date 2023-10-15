@@ -19,4 +19,3 @@ export const mockResponse = (): Partial<Response> => {
 export const mockNext = (): NextFunction => {
   return jest.fn();
 };
-
