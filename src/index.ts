@@ -33,6 +33,12 @@ app.get('/', (req, res) => {
 // Port and Server Initialization
 const port = process.env.PORT ?? 3000;
 
-app.listen(port, () => {
-  console.log(`FoodLink API listening at http://localhost:${port}`);
-});
+let server: any;
+
+if (process.env.NODE_ENV !== 'test') {
+  server = app.listen(port, () => {
+    console.log(`FoodLink API listening at http://localhost:${port}`);
+  });
+}
+
+export { server };

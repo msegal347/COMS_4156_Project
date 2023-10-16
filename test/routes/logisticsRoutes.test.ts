@@ -1,13 +1,13 @@
 import request from 'supertest';
-import { app } from '../../src/index';
+import { app, server } from '../../src/index';
 import * as LogisticsService from '../../src/services/logisticsService';
 
 // Mocking LogisticsService
 jest.mock('../../src/services/logisticsService');
 
 jest.mock('../../src/config/db', () => {
-    return jest.fn();  // mock connectDB as a function that does nothing
-  });
+  return jest.fn();  // mock connectDB as a function that does nothing
+});
 
 describe('Logistics Routes', () => {
   
@@ -78,4 +78,16 @@ describe('Logistics Routes', () => {
     expect(res.status).toBe(200);
     expect(res.body).toEqual(coordinates);
   });
+
+  afterAll((done) => {
+    if (server) {
+      server.close(done);
+    } else {
+      done();
+    }
+  });
+  
 });
+
+
+
