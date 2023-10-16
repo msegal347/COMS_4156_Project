@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 const AnalyticsSchema = new mongoose.Schema(
   {
-    origin: {
+    data: {
       type: Object,
       required: true,
     },

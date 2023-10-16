@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-export const createAnalyticsRecords = ({
+export const createAnalyticsRoutes = ({
   createRecord,
   getRecordById,
   updateRecordById,
