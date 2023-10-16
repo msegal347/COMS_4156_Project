@@ -7,18 +7,22 @@ const mockResponse = {} as Response;
 const mockNext: NextFunction = jest.fn();
 
 jest.mock('winston', () => ({
-  createLogger: jest.fn(),
-  format: {
-    combine: jest.fn(),
-    timestamp: jest.fn(),
-    label: jest.fn(),
-    printf: jest.fn()
-  },
-  transports: {
-    Console: jest.fn(),
-    File: jest.fn()
-  }
-}));
+    createLogger: jest.fn().mockReturnValue({
+      info: jest.fn(),
+      // add other methods you need
+    }),
+    format: {
+      combine: jest.fn(),
+      timestamp: jest.fn(),
+      label: jest.fn(),
+      printf: jest.fn()
+    },
+    transports: {
+      Console: jest.fn(),
+      File: jest.fn()
+    }
+  }));
+  
 
 describe('Logger Middleware', () => {
   beforeEach(() => {

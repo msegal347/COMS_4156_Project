@@ -3,11 +3,15 @@ module.exports = {
   
   transform: {
     '^.+\\.tsx?$': 'ts-jest',
+    '^.+\\.jsx?$': 'babel-jest',
+    'node_modules/axios': 'babel-jest',
   },
   
-  testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.tsx?$',
+  testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$',
   
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
+
+  extensionsToTreatAsEsm: ['.ts', '.tsx'],
   
   collectCoverage: true,
   coverageReporters: ['json', 'lcov', 'text', 'clover'],
@@ -18,7 +22,5 @@ module.exports = {
   
   testEnvironment: 'node',
 
-  transformIgnorePatterns: ['<rootDir>/node_modules/'],
-  
+  transformIgnorePatterns: ['<rootDir>/node_modules/', 'node_modules/(?!(axios)/)'],
 };
-  
