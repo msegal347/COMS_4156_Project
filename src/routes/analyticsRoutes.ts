@@ -1,25 +1,24 @@
-// src/routes/analyticsRoutes.ts
-
 import { Router } from 'express';
-import {
+
+export const createAnalyticsRecords = ({
   createRecord,
   getRecordById,
   updateRecordById,
   deleteRecordById,
-} from '../controllers/analyticsController';
+}) => {
+  const router = Router();
 
-const router = Router();
+  // Create a new analytics record
+  router.post('/', createRecord);
 
-// Create a new analytics record
-router.post('/', createRecord);
+  // Get a analytics record by ID
+  router.get('/:id', getRecordById);
 
-// Get an analytics record by ID
-router.get('/:id', getRecordById);
+  // Update a analytics record by ID
+  router.put('/:id', updateRecordById);
 
-// Update an analytics record by ID
-router.put('/:id', updateRecordById);
+  // Delete a analytics record by ID
+  router.delete('/:id', deleteRecordById);
 
-// Delete an analytics record by ID
-router.delete('/:id', deleteRecordById);
-
-export default router;
+  return router;
+};
