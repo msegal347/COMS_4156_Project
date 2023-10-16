@@ -10,13 +10,11 @@ export const MONGO_URI = process.env.MONGO_URI ?? '';
 export const PORT = process.env.PORT ?? '3000';
 export const API_KEY = process.env.API_KEY ?? '';
 
-// Validate essential environment variables
 if (!MONGO_URI) {
-  console.error('MONGO_URI is not defined in environment variables.');
-  process.exit(1);
+  throw new Error('MONGO_URI is not defined in environment variables.');
 }
 
 if (!API_KEY) {
-  console.error('API_KEY is not defined in environment variables.');
-  process.exit(1);
+  throw new Error('API_KEY is not defined in environment variables.');
 }
+
