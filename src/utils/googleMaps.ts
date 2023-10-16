@@ -10,10 +10,10 @@ export const getCoordinates = async (
       `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${apiKey}`
     );
 
-    get(url, (res) => {
+    get(url, res => {
       let data = '';
 
-      res.on('data', (chunk) => {
+      res.on('data', chunk => {
         data += chunk;
       });
 
@@ -22,7 +22,7 @@ export const getCoordinates = async (
         const location = response.results[0].geometry.location;
         resolve({ latitude: location.lat, longitude: location.lng });
       });
-    }).on('error', (err) => {
+    }).on('error', err => {
       reject(err);
     });
   });
@@ -35,31 +35,31 @@ export const getOptimalRoute = async (
   return new Promise((resolve, reject) => {
     const apiKey = process.env.GOOGLE_MAPS_API_KEY;
     const originStr = `origin=${origin}`;
-    
+
     // Copy the destinations array before popping the last element
     const destinationsCopy = [...destinations];
     const destinationStr = `destination=${destinationsCopy.pop()}`;
-    
+
     const waypointsStr = `waypoints=optimize:true|${destinationsCopy.join('|')}`;
     const url = new URL(
       `https://maps.googleapis.com/maps/api/directions/json?${originStr}&${destinationStr}&${waypointsStr}&key=${apiKey}`
     );
 
-    get(url, (res) => {
+    get(url, res => {
       let data = '';
 
-      res.on('data', (chunk) => {
+      res.on('data', chunk => {
         data += chunk;
       });
 
       res.on('end', () => {
         const response = JSON.parse(data);
         const route = response.routes[0].waypoint_order.map(
-          (index: number) => destinations[index]  // Use the original destinations array
+          (index: number) => destinations[index] // Use the original destinations array
         );
         resolve(route);
       });
-    }).on('error', (err) => {
+    }).on('error', err => {
       reject(err);
     });
   });

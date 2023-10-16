@@ -17,4 +17,3 @@ if (!MONGO_URI) {
 if (!API_KEY) {
   throw new Error('API_KEY is not defined in environment variables.');
 }
-
