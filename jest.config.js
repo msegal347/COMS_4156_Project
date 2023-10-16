@@ -1,4 +1,9 @@
 module.exports = {
+
+  //globalSetup: './config/setup.js',
+
+  //globalTeardown: './config/teardown.js',
+
   roots: ['<rootDir>/src', '<rootDir>/test'],
   
   transform: {

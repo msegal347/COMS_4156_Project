@@ -2,8 +2,8 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import connectDB from './config/db';
-import logisticsRoutes from './routes/logisticsRoutes';
 import logger from './config/logger';
+import { initializeGateway } from './gateway/gateway'; // Import the initializeGateway function
 
 // Load environment variables
 dotenv.config();
@@ -22,8 +22,8 @@ app.use(express.urlencoded({ extended: true }));
 // Initialize logger
 app.use(logger);
 
-// API Routes
-app.use('/api/logistics', logisticsRoutes);
+// Initialize API Gateway
+initializeGateway(app); // Initialize the Gateway passing the express app
 
 // Root Endpoint
 app.get('/', (req, res) => {
@@ -33,6 +33,12 @@ app.get('/', (req, res) => {
 // Port and Server Initialization
 const port = process.env.PORT ?? 3000;
 
-app.listen(port, () => {
-  console.log(`FoodLink API listening at http://localhost:${port}`);
-});
+let server: any;
+
+if (process.env.NODE_ENV !== 'test') {
+  server = app.listen(port, () => {
+    console.log(`FoodLink API listening at http://localhost:${port}`);
+  });
+}
+
+export { server };

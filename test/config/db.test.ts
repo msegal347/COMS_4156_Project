@@ -1,26 +1,29 @@
 import mongoose, { ConnectOptions } from 'mongoose';
 import connectDB from '../../src/config/db';
 
-// Mocking console.error and console.log for cleaner test output
 console.error = jest.fn();
 console.log = jest.fn();
+
+const mockExit = jest.spyOn(process, 'exit').mockImplementation((code?: number | undefined): never => {
+  return undefined as never;
+});
 
 describe('Database Connection', () => {
   let mockConnect: jest.SpyInstance;
   let originalEnv: NodeJS.ProcessEnv;
 
   beforeEach(() => {
-    // Backup original process.env
     originalEnv = { ...process.env };
-    // Reset the mock implementations before each test
     jest.clearAllMocks();
-    // Mock mongoose.connect method
     mockConnect = jest.spyOn(mongoose, 'connect');
   });
 
   afterEach(() => {
-    // Restore original process.env
     process.env = originalEnv;
+  });
+
+  afterAll(() => {
+    mockExit.mockRestore();
   });
 
   it('should successfully connect to the database', async () => {
@@ -39,10 +42,15 @@ describe('Database Connection', () => {
     process.env.MONGO_URI = 'mongodb://localhost:27017/testDB';
     mockConnect.mockRejectedValueOnce(new Error('Connection Error'));
 
-    await connectDB();
+    try {
+      await connectDB();
+    } catch (error) {
+      // Handle or ignore error
+    }
 
     expect(mockConnect).toBeCalled();
     expect(console.error).toBeCalledWith('Error while connecting to MongoDB: Connection Error');
+    expect(mockExit).toHaveBeenCalledWith(1);
   });
 
   it('should handle missing MONGO_URI environment variable', async () => {
