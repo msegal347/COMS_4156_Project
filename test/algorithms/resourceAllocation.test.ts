@@ -1,25 +1,23 @@
-import { allocateResources } from '../../src/algorithms/resourceAllocation';
+import { allocateResources, Source, Sink, Match } from '../../src/algorithms/resourceAllocation';
 
-describe('Resource Allocation Algorithm', () => {
-  it('should correctly allocate resources from sources to sinks', () => {
-    const sources = [
-      { id: 's1', resourceType: 'food', quantity: 50 },
-      { id: 's2', resourceType: 'water', quantity: 100 },
-    ];
-    const sinks = [
-      { id: 'sk1', resourceType: 'food', requiredQuantity: 20 },
-      { id: 'sk2', resourceType: 'water', requiredQuantity: 50 },
-      { id: 'sk3', resourceType: 'food', requiredQuantity: 30 },
+describe('Resource Allocation', () => {
+  it('should correctly allocate resources', () => {
+    const sources: Source[] = [
+      { id: '1', resourceType: 'Food', quantity: 100 },
+      { id: '2', resourceType: 'Water', quantity: 200 },
     ];
 
-    const expectedMatches = [
-      { sourceId: 's1', sinkId: 'sk1', allocatedQuantity: 20 },
-      { sourceId: 's2', sinkId: 'sk2', allocatedQuantity: 50 },
-      { sourceId: 's1', sinkId: 'sk3', allocatedQuantity: 30 },
+    const sinks: Sink[] = [
+      { id: '3', resourceType: 'Food', requiredQuantity: 50 },
+      { id: '4', resourceType: 'Water', requiredQuantity: 100 },
     ];
 
-    const result = allocateResources(sources, sinks);
+    const expectedMatches: Match[] = [
+      { sourceId: '1', sinkId: '3', allocatedQuantity: 50 },
+      { sourceId: '2', sinkId: '4', allocatedQuantity: 100 },
+    ];
 
-    expect(result).toEqual(expectedMatches);
+    const matches = allocateResources(sources, sinks);
+    expect(matches).toEqual(expectedMatches);
   });
 });

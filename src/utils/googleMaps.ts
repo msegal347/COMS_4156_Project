@@ -54,9 +54,7 @@ export const getOptimalRoute = async (
 
       res.on('end', () => {
         const response = JSON.parse(data);
-        const route = response.routes[0].waypoint_order.map(
-          (index: number) => destinations[index] // Use the original destinations array
-        );
+        const route = response.routes[0].waypoint_order.map((index: number) => destinations[index]);
         resolve(route);
       });
     }).on('error', err => {

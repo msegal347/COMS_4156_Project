@@ -38,15 +38,14 @@ describe('LogisticsController', () => {
   
     // Initialize params if it is undefined
     req.params = req.params || {};
-    req.params.id = '1'; // Now this should work without any issue
+    req.params.id = '1';
   
     await getRouteById(req, res, next);
   
-    // Debugging lines
     if (!res.status.mock.calls.length) console.log('res.status was never called');
     if (next.mock.calls.length) console.log('next was called with:', next.mock.calls[0][0]);
   
-    expect(LogisticsService.getRouteById).toHaveBeenCalled();  // New line to check if service method was called
+    expect(LogisticsService.getRouteById).toHaveBeenCalled();
     expect(res.status).toHaveBeenCalledWith(200);
     expect(res.json).toHaveBeenCalledWith(route);
   });
@@ -55,7 +54,7 @@ describe('LogisticsController', () => {
 
   it('should update a route by ID', async () => {
     const updatedRoute = { id: '1', origin: 'A', destinations: ['B', 'D'] };
-    req.params.id = '1';  // Set the ID
+    req.params.id = '1'; 
     (LogisticsService.updateRouteById as jest.Mock).mockResolvedValue(updatedRoute);
     
     await updateRouteById(req, res, next);
@@ -73,7 +72,7 @@ describe('LogisticsController', () => {
   });
 
   it('should delete a route by ID', async () => {
-    req.params.id = '1';  // Set the ID
+    req.params.id = '1'; 
     (LogisticsService.deleteRouteById as jest.Mock).mockResolvedValue(true);
     
     await deleteRouteById(req, res, next);

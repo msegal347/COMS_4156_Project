@@ -1,6 +1,6 @@
-type Source = { id: string; resourceType: string; quantity: number };
-type Sink = { id: string; resourceType: string; requiredQuantity: number };
-type Match = { sourceId: string; sinkId: string; allocatedQuantity: number };
+export type Source = { id: string; resourceType: string; quantity: number };
+export type Sink = { id: string; resourceType: string; requiredQuantity: number };
+export type Match = { sourceId: string; sinkId: string; allocatedQuantity: number };
 
 export const allocateResources = (sources: Source[], sinks: Sink[]): Match[] => {
   const matches: Match[] = [];
