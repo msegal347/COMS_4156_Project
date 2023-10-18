@@ -56,7 +56,7 @@ router.delete('/:id', async (req, res, next) => {
   try {
     const result = await entityController.deleteEntityById(req, res);
     if (result) {
-      res.status(204).send();  // No content to send back
+      res.status(204).send(); // No content to send back
     } else {
       res.status(404).send('Entity not found');
     }
