@@ -1,31 +1,26 @@
+#To access the Fuzz testing as a parent image
 FROM gcr.io/oss-fuzz-base/base-builder-javascript
 
-#ADD docker/fuzz/build.sh $SRC/
+#Create a clone of the reposotory
+RUN git clone https://github.com/msegal347/COMS_4156_Project.git --branch 8-configure-project-for-googles-oss-fuzz-testing
 
-RUN git clone https://github.com/msegal347/COMS_4156_Project.git
-
-#RUN mkdir -p $SRC/COMS_4156_Project/test/example/
-
-#ADD docker/fuzz/fuzz_explore_me.ts docker/fuzz/target.ts docker/fuzz/project.yaml $SRC/COMS_4156_Project/test/example/
-
-#ADD docker/fuzz/math.ts docker/fuzz/math.test.ts $SRC/COMS_4156_Project/test/example/
-
-#ADD package.json docker/fuzz/tsconfig.json $SRC/COMS_4156_Project/test/example/
-
-#RUN mkdir -p $SRC/COMS_4156_Project/test/fuzz/algorithms/
-
-#ADD docker/fuzz/resourceAllocation.fuzz.ts $SRC/COMS_4156_Project/test/fuzz/algorithms/
-
+#Switch the working directory to the test folder will all the tests are located
 WORKDIR $SRC/COMS_4156_Project/test
 
+#Install the dependencies
 RUN npm install
 
+#Install the Google OSS-Fuzz core
 RUN npm install --save-dev @jazzer.js/core
 
+#Install the Typescript Jest Compiler
 RUN npm install --save-dev jest typescript ts-jest @types/jest
 
+#Install the Jest Runner
 RUN npm install --save-dev @jazzer.js/jest-runner
 
+#Build the project
 RUN npm run build
 
+#Run the tests
 CMD ["npm", "test"]
