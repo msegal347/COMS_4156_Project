@@ -3,7 +3,7 @@ import { Types, ObjectId } from 'mongoose';
 
 export const notificationService = {
   // Create a new notification
-  async createNotification(data: INotification): Promise<INotification> {
+  async createNotification(data: any): Promise<INotification> {
     const notification = new Notification(data);
     return await notification.save();
   },
