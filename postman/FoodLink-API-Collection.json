@@ -1,0 +1,211 @@
+{
+    "info": {
+      "name": "FoodLink API Collection",
+      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+      {
+        "name": "Logistics",
+        "item": [
+          {
+            "name": "Create Route",
+            "request": {
+              "method": "POST",
+              "url": "{{baseUrl}}/api/logistics/",
+              "header": [
+                { "key": "Content-Type", "value": "application/json" }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\"start\":\"A\",\"end\":\"B\",\"distance\":10}"
+              }
+            }
+          },
+          {
+            "name": "Get Route by ID",
+            "request": {
+              "method": "GET",
+              "url": "{{baseUrl}}/api/logistics/:id",
+              "header": [
+                { "key": "Authorization", "value": "Bearer {{token}}" }
+              ]
+            }
+          },
+          {
+            "name": "Update Route by ID",
+            "request": {
+              "method": "PUT",
+              "url": "{{baseUrl}}/api/logistics/:id",
+              "header": [
+                { "key": "Content-Type", "value": "application/json" },
+                { "key": "Authorization", "value": "Bearer {{token}}" }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\"end\":\"C\",\"distance\":12}"
+              }
+            }
+          },
+          {
+            "name": "Delete Route by ID",
+            "request": {
+              "method": "DELETE",
+              "url": "{{baseUrl}}/api/logistics/:id",
+              "header": [
+                { "key": "Authorization", "value": "Bearer {{token}}" }
+              ]
+            }
+          },
+          {
+            "name": "Get Optimal Route",
+            "request": {
+              "method": "POST",
+              "url": "{{baseUrl}}/api/logistics/optimize",
+              "header": [
+                { "key": "Content-Type", "value": "application/json" },
+                { "key": "Authorization", "value": "Bearer {{token}}" }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\"routeIds\":[\"1\",\"2\",\"3\"]}"
+              }
+            }
+          },
+          {
+            "name": "Get Coordinates",
+            "request": {
+              "method": "GET",
+              "url": "{{baseUrl}}/api/logistics/coordinates/:address",
+              "header": [
+                { "key": "Authorization", "value": "Bearer {{token}}" }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "Analytics",
+        "item": [
+          {
+            "name": "Create Record",
+            "request": {
+              "method": "POST",
+              "url": "{{baseUrl}}/api/analytics/",
+              "header": [
+                {"key": "Content-Type", "value": "application/json"},
+                {"key": "Authorization", "value": "Bearer {{authToken}}"}
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\"key1\": \"value1\", \"key2\": \"value2\"}"
+              }
+            }
+          },
+          {
+            "name": "Get Record by ID",
+            "request": {
+              "method": "GET",
+              "url": "{{baseUrl}}/api/analytics/:id",
+              "header": [{"key": "Authorization", "value": "Bearer {{authToken}}"}],
+              "description": "Replace `:id` with the record ID you want to fetch."
+            }
+          },
+          {
+            "name": "Update Record by ID",
+            "request": {
+              "method": "PUT",
+              "url": "{{baseUrl}}/api/analytics/:id",
+              "header": [
+                {"key": "Content-Type", "value": "application/json"},
+                {"key": "Authorization", "value": "Bearer {{authToken}}"}
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\"key1\": \"new_value1\", \"key2\": \"new_value2\"}"
+              },
+              "description": "Replace `:id` with the record ID you want to update."
+            }
+          },
+          {
+            "name": "Delete Record by ID",
+            "request": {
+              "method": "DELETE",
+              "url": "{{baseUrl}}/api/analytics/:id",
+              "header": [{"key": "Authorization", "value": "Bearer {{authToken}}"}],
+              "description": "Replace `:id` with the record ID you want to delete."
+            }
+          }
+        ]     
+      },
+      {
+        "name": "Entities",
+        "item": [
+          {
+            "name": "Create Entity",
+            "request": {
+              "method": "POST",
+              "url": "{{baseUrl}}/api/entities/",
+              "header": [
+                { "key": "Content-Type", "value": "application/json" },
+                { "key": "Authorization", "value": "Bearer {{authToken}}" }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\"name\":\"EntityName\",\"type\":\"Type1\"}"
+              }
+            }
+          },
+          {
+            "name": "Get All Entities",
+            "request": {
+              "method": "GET",
+              "url": "{{baseUrl}}/api/entities/",
+              "header": [
+                { "key": "Authorization", "value": "Bearer {{authToken}}" }
+              ]
+            }
+          },
+          {
+            "name": "Get Entity by ID",
+            "request": {
+              "method": "GET",
+              "url": "{{baseUrl}}/api/entities/:id",
+              "header": [
+                { "key": "Authorization", "value": "Bearer {{authToken}}" }
+              ],
+              "description": "Replace `:id` with the entity ID you want to fetch."
+            }
+          },
+          {
+            "name": "Update Entity by ID",
+            "request": {
+              "method": "PUT",
+              "url": "{{baseUrl}}/api/entities/:id",
+              "header": [
+                { "key": "Content-Type", "value": "application/json" },
+                { "key": "Authorization", "value": "Bearer {{authToken}}" }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\"name\":\"UpdatedEntityName\",\"type\":\"UpdatedType\"}"
+              },
+              "description": "Replace `:id` with the entity ID you want to update."
+            }
+          },
+          {
+            "name": "Delete Entity by ID",
+            "request": {
+              "method": "DELETE",
+              "url": "{{baseUrl}}/api/entities/:id",
+              "header": [
+                { "key": "Authorization", "value": "Bearer {{authToken}}" }
+              ],
+              "description": "Replace `:id` with the entity ID you want to delete."
+            }
+          }
+        ]
+      }
+      
+    ]
+  }
+  

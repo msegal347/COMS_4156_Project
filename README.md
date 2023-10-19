@@ -17,7 +17,8 @@ FoodLink is a food redistribution service designed to minimize food waste and ad
   - [VS Code Dev Container](#vs-code-dev-container)
 - [Development Environment](#development-environment)
   - [Coding Standards](#coding-standards)
-  - [Testing](#testing)
+  - [Jest Testing](#jest-testing)
+  - [Postman Testing](#postman-testing)
   - [Continuous Integration](#continuous-integration)
 
 ## Technologies
@@ -111,13 +112,29 @@ To automatically fix code formatting issues, run:
 npm run prettier:fix
 ```
 
-### Testing
+### Jest Testing
 
 We use Jest for unit testing. To run tests with code coverage, execute:
 
 ```
 npm run test
 ```
+
+### Postman Testing
+
+We also provide a Postman collection for manual API testing. Follow these steps to use it:
+
+1. **Download Postman**: If you haven't installed Postman, download and install it from [here](https://www.postman.com/downloads/).
+
+2. **Import Collection**: Open Postman, go to the "Collections" tab, and click on the "Import" button. Upload the JSON file for the FoodLink API Postman collection.
+
+3. **Set Environment Variables**: If the collection uses environment variables like `{{baseUrl}}`, you'll need to set these up. Go to the gear icon in the upper right corner to manage environments. Add a new environment with variables like `baseUrl` set to your local or production API URL.
+
+4. **Run Requests**: Now you can run individual API requests in Postman. Click on a request to load it and then hit the "Send" button to execute it. You can view the results in the lower half of the Postman window.
+
+5. **View and Edit Headers and Body**: Before sending requests, you can view and edit headers and request body as needed.
+
+6. **Export Results**: After running tests, you can export the results by clicking on the "Export" button next to the collection name.
 
 ### Continuous Integration
 
