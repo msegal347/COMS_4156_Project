@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 
+// Creates a new allocation
 export const createAllocation = async (req: Request, res: Response) => {
   try {
     res.status(201).json({ message: 'Allocation created' });
@@ -8,6 +9,7 @@ export const createAllocation = async (req: Request, res: Response) => {
   }
 };
 
+// Gets the allocation with the given ID
 export const getAllocationById = async (req: Request, res: Response) => {
   try {
     res.status(200).json({ message: 'Allocation fetched' });
@@ -16,6 +18,7 @@ export const getAllocationById = async (req: Request, res: Response) => {
   }
 };
 
+// Updates the allocation with the given ID
 export const updateAllocationById = async (req: Request, res: Response) => {
   try {
     res.status(200).json({ message: 'Allocation updated' });
@@ -24,6 +27,7 @@ export const updateAllocationById = async (req: Request, res: Response) => {
   }
 };
 
+// Deletes the allocation with the given ID
 export const deleteAllocationById = async (req: Request, res: Response) => {
   try {
     res.status(204).json();

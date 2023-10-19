@@ -2,13 +2,12 @@ export type Source = { id: string; resourceType: string; quantity: number };
 export type Sink = { id: string; resourceType: string; requiredQuantity: number };
 export type Match = { sourceId: string; sinkId: string; allocatedQuantity: number };
 
-
 /**
  * Allocates resources from sources to sinks based on their types and quantities.
- * 
+ *
  * @param sources - Array of sources with available resources
  * @param sinks - Array of sinks requiring resources
- * 
+ *
  * @returns An array of matches detailing the allocations
  */
 export const allocateResources = (sources: Source[], sinks: Sink[]): Match[] => {
@@ -33,7 +32,7 @@ export const allocateResources = (sources: Source[], sinks: Sink[]): Match[] => 
       }
     }
   }
-  
+
   // Return the matches array
   return matches;
 };
