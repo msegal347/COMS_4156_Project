@@ -8,6 +8,7 @@
     "dev": "ts-node-dev src/index.ts",
     "build": "tsc",
     "test": "jest",
+    "fuzz": "JAZZER_FUZZ=1 jest",
     "coverage": "jest --coverage",
     "lint": "eslint src/**/*.{ts,tsx}",
     "lint:fix": "eslint src/**/*.{ts,tsx} --fix",
@@ -33,9 +34,10 @@
     "@babel/core": "^7.23.2",
     "@babel/preset-env": "^7.23.2",
     "@babel/preset-typescript": "^7.23.2",
+    "@jazzer.js/jest-runner": "1.1.0",
     "@jest/types": "^29.6.3",
     "@types/express": "^4.17.13",
-    "@types/jest": "^27.0.2",
+    "@types/jest": "^27.5.2",
     "@types/mongoose": "^5.11.97",
     "@types/node": "^16.11.0",
     "@typescript-eslint/eslint-plugin": "^5.62.0",
@@ -45,11 +47,32 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-jest": "^27.4.2",
     "eslint-plugin-prettier": "^4.0.0",
-    "jest": "^27.2.5",
+    "jest": "^27.5.1",
     "prettier": "^2.8.8",
     "ts-jest": "^27.1.5",
     "ts-node": "^10.2.1",
     "tsconfig-paths": "^3.11.0",
-    "typescript": "^4.4.3"
+    "typescript": "^4.9.5"
+  },
+  "jest": {
+    "projects": [
+      {
+        "displayName": "Jest",
+        "preset": "ts-jest"
+      },
+      {
+        "displayName": {
+          "name": "Jazzer.js",
+          "color": "cyan"
+        },
+        "preset": "ts-jest",
+        "runner": "@jazzer.js/jest-runner",
+        "testEnvironment": "node",
+        "testMatch": ["<rootDir>/*.fuzz.[jt]s"],
+        "testRunner": "@jazzer.js/jest-runner"
+      }
+    ],
+    "coveragePathIgnorePatterns": ["/node_modules/", "/dist/"],
+    "modulePathIgnorePatterns": ["/node_modules", "/dist/"]
   }
 }
