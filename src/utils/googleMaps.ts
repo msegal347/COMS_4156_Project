@@ -1,6 +1,7 @@
 import { get } from 'https';
 import { URL } from 'url';
 
+// Get the coordinates of an address
 export const getCoordinates = async (
   address: string
 ): Promise<{ latitude: number; longitude: number }> => {
@@ -28,6 +29,7 @@ export const getCoordinates = async (
   });
 };
 
+// Get the optimal route between an origin and a list of destinations
 export const getOptimalRoute = async (
   origin: string,
   destinations: string[]
