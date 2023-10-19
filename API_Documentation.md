@@ -69,7 +69,7 @@
 
 
 
-#### Analytics API
+### Analytics API
 
 #### Create Record
 
@@ -116,7 +116,7 @@
   - `204 No Content`: Successfully deleted the analytics record.
   - `404 Not Found`: Record with the given ID does not exist.
 
-#### Entity API
+### Entity API
 
 #### Create Entity
 
@@ -173,7 +173,7 @@
   - `204 No Content`: Successfully deleted the entity.
   - `404 Not Found`: Entity with the given ID does not exist.
 
-#### Logistics API
+### Logistics API
 
 #### Create Route
 
@@ -220,7 +220,7 @@
 - **Headers**: `Authorization: Bearer <token>`
 - **Status Codes**: `200 OK`, `404 Not Found`
 
-#### Notification API
+### Notification API
 
 #### Create Notification
 
@@ -277,7 +277,7 @@
   - `204 No Content`: Successfully deleted the notification.
   - `404 Not Found`: Notification with the given ID does not exist.
 
-#### Resource API
+### Resource API
 
 #### Create Resource
 
@@ -334,7 +334,7 @@
   - `204 No Content`: Successfully deleted the resource.
   - `404 Not Found`: Resource with the given ID does not exist.
 
-#### Transaction API
+### Transaction API
 
 #### Create Transaction
 
