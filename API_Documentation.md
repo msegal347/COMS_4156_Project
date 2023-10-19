@@ -10,6 +10,8 @@
 - [Resource API](#resource-api)
 - [Transaction API](#transaction-api)
 
+---
+
 ### Allocation API
 
 #### Create Allocation
@@ -67,7 +69,7 @@
   - `204 No Content`: Successfully deleted the allocation.
   - `404 Not Found`: Allocation with the given ID does not exist.
 
-
+---
 
 ### Analytics API
 
@@ -115,6 +117,8 @@
 - **Status Codes**: 
   - `204 No Content`: Successfully deleted the analytics record.
   - `404 Not Found`: Record with the given ID does not exist.
+
+---
 
 ### Entity API
 
@@ -173,6 +177,8 @@
   - `204 No Content`: Successfully deleted the entity.
   - `404 Not Found`: Entity with the given ID does not exist.
 
+---
+
 ### Logistics API
 
 #### Create Route
@@ -219,6 +225,8 @@
 - **Endpoint**: `/logistics/coordinates/:address`
 - **Headers**: `Authorization: Bearer <token>`
 - **Status Codes**: `200 OK`, `404 Not Found`
+
+---
 
 ### Notification API
 
@@ -277,6 +285,8 @@
   - `204 No Content`: Successfully deleted the notification.
   - `404 Not Found`: Notification with the given ID does not exist.
 
+---
+
 ### Resource API
 
 #### Create Resource
@@ -334,6 +344,8 @@
   - `204 No Content`: Successfully deleted the resource.
   - `404 Not Found`: Resource with the given ID does not exist.
 
+---
+
 ### Transaction API
 
 #### Create Transaction
@@ -390,3 +402,5 @@
 - **Status Codes**: 
   - `204 No Content`: Successfully deleted the transaction.
   - `404 Not Found`: Transaction with the given ID does not exist.
+
+---
