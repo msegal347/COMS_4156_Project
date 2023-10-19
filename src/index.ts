@@ -3,7 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import connectDB from './config/db';
 import logger from './config/logger';
-import { initializeGateway } from './gateway/gateway'; // Import the initializeGateway function
+import { initializeGateway } from './gateway/gateway';
 
 // Load environment variables
 dotenv.config();
