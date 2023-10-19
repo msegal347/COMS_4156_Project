@@ -20,6 +20,8 @@ FoodLink is a food redistribution service designed to minimize food waste and ad
   - [Jest Testing](#jest-testing)
   - [Postman Testing](#postman-testing)
   - [Continuous Integration](#continuous-integration)
+- [API Documentation](#api-documentation)
+
 
 ## Technologies
 
@@ -128,7 +130,7 @@ We also provide a Postman collection for manual API testing. Follow these steps 
 
 2. **Import Collection**: Open Postman, go to the "Collections" tab, and click on the "Import" button. Upload the JSON file for the FoodLink API Postman collection.
 
-3. **Set Environment Variables**: If the collection uses environment variables like `{{baseUrl}}`, you'll need to set these up. Go to the gear icon in the upper right corner to manage environments. Add a new environment with variables like `baseUrl` set to your local or production API URL.
+3. **Set Environment Variables**: Go to the gear icon in the upper right corner to manage environments. Add a new environment with variables like `baseUrl` set to your local or production API URL.
 
 4. **Run Requests**: Now you can run individual API requests in Postman. Click on a request to load it and then hit the "Send" button to execute it. You can view the results in the lower half of the Postman window.
 
@@ -145,4 +147,7 @@ GitHub Workflows are set up for Continuous Integration. On each push or pull req
 - Run ESLint
 - Execute unit tests and generate a coverage report
 
+### API Documentation
+
+For API documentation, see the [API Documentation](API_Documentation.md) file.
 ---
