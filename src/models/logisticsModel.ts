@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 
+// Define the logistics schema with the required fields
 const LogisticsSchema = new mongoose.Schema(
   {
     origin: {
@@ -24,6 +25,8 @@ const LogisticsSchema = new mongoose.Schema(
   }
 );
 
+// Create the Logistics model from the schema
 const LogisticsModel = mongoose.model('Logistics', LogisticsSchema);
 
+// Export the Logistics model
 export default LogisticsModel;

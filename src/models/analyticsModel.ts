@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 
+// Define the analytics schema with the required fields
 const AnalyticsSchema = new mongoose.Schema(
   {
     data: {
@@ -12,6 +13,7 @@ const AnalyticsSchema = new mongoose.Schema(
   }
 );
 
+// Create the Analytics model from the schema and export it
 const AnalyticsModel = mongoose.model('Analytics', AnalyticsSchema);
 
 export default AnalyticsModel;

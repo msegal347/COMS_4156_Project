@@ -1,10 +1,12 @@
 import mongoose, { Schema } from 'mongoose';
 
+// Define the nested object schema
 const NestedObjectSchema = new Schema({
   field1: { type: String, required: true },
   field2: { type: Number, required: true },
 });
 
+// Define the entity schema with the required fields
 const entitySchema = new Schema(
   {
     name: { type: String, required: true, unique: true },
@@ -22,4 +24,5 @@ const entitySchema = new Schema(
   }
 );
 
+// Create the Entity model from the schema and export it
 export const Entity = mongoose.model('Entity', entitySchema);

@@ -3,6 +3,7 @@
 import { Request, Response } from 'express';
 import { Entity } from '../models/entityModel';
 
+// Creates a new entity
 export const createEntity = async (req: Request, res: Response) => {
   try {
     const entityData = req.body;
@@ -13,6 +14,7 @@ export const createEntity = async (req: Request, res: Response) => {
   }
 };
 
+// Gets the entity with the given ID
 export const getEntityById = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
@@ -26,6 +28,7 @@ export const getEntityById = async (req: Request, res: Response) => {
   }
 };
 
+// Updates the entity with the given ID
 export const updateEntityById = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
@@ -40,6 +43,7 @@ export const updateEntityById = async (req: Request, res: Response) => {
   }
 };
 
+// Deletes the entity with the given ID
 export const deleteEntityById = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
@@ -53,6 +57,7 @@ export const deleteEntityById = async (req: Request, res: Response) => {
   }
 };
 
+// Gets all entities
 export const getAllEntities = async (req: Request, res: Response): Promise<void> => {
   try {
     const entities = await Entity.find({});
