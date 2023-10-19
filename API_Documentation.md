@@ -1,4 +1,4 @@
-### API Documentation
+# API Documentation
 
 ## Table of Contents
 
@@ -10,9 +10,9 @@
 - [Resource API](#resource-api)
 - [Transaction API](#transaction-api)
 
-#### Allocation API
+### Allocation API
 
-##### Create Allocation
+#### Create Allocation
 
 - **Method**: POST
 - **Endpoint**: `/api/allocations/`
@@ -24,7 +24,7 @@
   - `201 Created`: Successfully created a new allocation.
   - `400 Bad Request`: Invalid request payload.
 
-##### Get All Allocations
+#### Get All Allocations
 
 - **Method**: GET
 - **Endpoint**: `/api/allocations/`
@@ -34,7 +34,7 @@
   - `200 OK`: Successfully retrieved all allocations.
   - `404 Not Found`: No allocations exist.
 
-##### Get Allocation by ID
+#### Get Allocation by ID
 
 - **Method**: GET
 - **Endpoint**: `/api/allocations/:id`
@@ -44,7 +44,7 @@
   - `200 OK`: Successfully retrieved the allocation.
   - `404 Not Found`: Allocation with the given ID does not exist.
 
-##### Update Allocation by ID
+#### Update Allocation by ID
 
 - **Method**: PUT
 - **Endpoint**: `/api/allocations/:id`
@@ -57,7 +57,7 @@
   - `400 Bad Request`: Invalid request payload.
   - `404 Not Found`: Allocation with the given ID does not exist.
 
-##### Delete Allocation by ID
+#### Delete Allocation by ID
 
 - **Method**: DELETE
 - **Endpoint**: `/api/allocations/:id`
@@ -71,7 +71,7 @@
 
 #### Analytics API
 
-##### Create Record
+#### Create Record
 
 - **Method**: POST
 - **Endpoint**: `/analytics`
@@ -83,7 +83,7 @@
   - `201 Created`: Successfully created a new analytics record.
   - `400 Bad Request`: Invalid request payload.
 
-##### Get Record by ID
+#### Get Record by ID
 
 - **Method**: GET
 - **Endpoint**: `/analytics/:id`
@@ -93,7 +93,7 @@
   - `200 OK`: Successfully retrieved the analytics record.
   - `404 Not Found`: Record with the given ID does not exist.
 
-##### Update Record by ID
+#### Update Record by ID
 
 - **Method**: PUT
 - **Endpoint**: `/analytics/:id`
@@ -106,7 +106,7 @@
   - `400 Bad Request`: Invalid request payload.
   - `404 Not Found`: Record with the given ID does not exist.
 
-##### Delete Record by ID
+#### Delete Record by ID
 
 - **Method**: DELETE
 - **Endpoint**: `/analytics/:id`
@@ -118,7 +118,7 @@
 
 #### Entity API
 
-##### Create Entity
+#### Create Entity
 
 - **Method**: POST
 - **Endpoint**: `/api/entities/`
@@ -130,7 +130,7 @@
   - `201 Created`: Successfully created a new entity.
   - `400 Bad Request`: Invalid request payload.
 
-##### Get All Entities
+#### Get All Entities
 
 - **Method**: GET
 - **Endpoint**: `/api/entities/`
@@ -140,7 +140,7 @@
   - `200 OK`: Successfully retrieved all entities.
   - `404 Not Found`: No entities exist.
 
-##### Get Entity by ID
+#### Get Entity by ID
 
 - **Method**: GET
 - **Endpoint**: `/api/entities/:id`
@@ -150,7 +150,7 @@
   - `200 OK`: Successfully retrieved the entity.
   - `404 Not Found`: Entity with the given ID does not exist.
 
-##### Update Entity by ID
+#### Update Entity by ID
 
 - **Method**: PUT
 - **Endpoint**: `/api/entities/:id`
@@ -163,7 +163,7 @@
   - `400 Bad Request`: Invalid request payload.
   - `404 Not Found`: Entity with the given ID does not exist.
 
-##### Delete Entity by ID
+#### Delete Entity by ID
 
 - **Method**: DELETE
 - **Endpoint**: `/api/entities/:id`
@@ -175,7 +175,7 @@
 
 #### Logistics API
 
-##### Create Route
+#### Create Route
 
 - **Method**: POST
 - **Endpoint**: `/logistics`
@@ -183,14 +183,14 @@
 - **Body**: `{ "start": "A", "end": "B", "distance": 10 }`
 - **Status Codes**: `201 Created`, `400 Bad Request`
 
-##### Get Route by ID
+#### Get Route by ID
 
 - **Method**: GET
 - **Endpoint**: `/logistics/:id`
 - **Headers**: `Authorization: Bearer <token>`
 - **Status Codes**: `200 OK`, `404 Not Found`
 
-##### Update Route by ID
+#### Update Route by ID
 
 - **Method**: PUT
 - **Endpoint**: `/logistics/:id`
@@ -198,14 +198,14 @@
 - **Body**: `{ "end": "C", "distance": 12 }`
 - **Status Codes**: `200 OK`, `400 Bad Request`, `404 Not Found`
 
-##### Delete Route by ID
+#### Delete Route by ID
 
 - **Method**: DELETE
 - **Endpoint**: `/logistics/:id`
 - **Headers**: `Authorization: Bearer <token>`
 - **Status Codes**: `204 No Content`, `404 Not Found`
 
-##### Get Optimal Route
+#### Get Optimal Route
 
 - **Method**: POST
 - **Endpoint**: `/logistics/optimize`
@@ -213,7 +213,7 @@
 - **Body**: `{ "routeIds": ["1", "2", "3"] }`
 - **Status Codes**: `200 OK`, `400 Bad Request`
 
-##### Get Coordinates
+#### Get Coordinates
 
 - **Method**: GET
 - **Endpoint**: `/logistics/coordinates/:address`
@@ -222,7 +222,7 @@
 
 #### Notification API
 
-##### Create Notification
+#### Create Notification
 
 - **Method**: POST
 - **Endpoint**: `/api/notifications/`
@@ -234,7 +234,7 @@
   - `201 Created`: Successfully created a new notification.
   - `400 Bad Request`: Invalid request payload.
 
-##### Get All Notifications
+#### Get All Notifications
 
 - **Method**: GET
 - **Endpoint**: `/api/notifications/`
@@ -244,7 +244,7 @@
   - `200 OK`: Successfully retrieved all notifications.
   - `404 Not Found`: No notifications exist.
 
-##### Get Notification by ID
+#### Get Notification by ID
 
 - **Method**: GET
 - **Endpoint**: `/api/notifications/:id`
@@ -254,7 +254,7 @@
   - `200 OK`: Successfully retrieved the notification.
   - `404 Not Found`: Notification with the given ID does not exist.
 
-##### Update Notification by ID
+#### Update Notification by ID
 
 - **Method**: PUT
 - **Endpoint**: `/api/notifications/:id`
@@ -267,7 +267,7 @@
   - `400 Bad Request`: Invalid request payload.
   - `404 Not Found`: Notification with the given ID does not exist.
 
-##### Delete Notification by ID
+#### Delete Notification by ID
 
 - **Method**: DELETE
 - **Endpoint**: `/api/notifications/:id`
@@ -279,7 +279,7 @@
 
 #### Resource API
 
-##### Create Resource
+#### Create Resource
 
 - **Method**: POST
 - **Endpoint**: `/api/resources/`
@@ -291,7 +291,7 @@
   - `201 Created`: Successfully created a new resource.
   - `400 Bad Request`: Invalid request payload.
 
-##### Get All Resources
+#### Get All Resources
 
 - **Method**: GET
 - **Endpoint**: `/api/resources/`
@@ -301,7 +301,7 @@
   - `200 OK`: Successfully retrieved all resources.
   - `404 Not Found`: No resources exist.
 
-##### Get Resource by ID
+#### Get Resource by ID
 
 - **Method**: GET
 - **Endpoint**: `/api/resources/:id`
@@ -311,7 +311,7 @@
   - `200 OK`: Successfully retrieved the resource.
   - `404 Not Found`: Resource with the given ID does not exist.
 
-##### Update Resource by ID
+#### Update Resource by ID
 
 - **Method**: PUT
 - **Endpoint**: `/api/resources/:id`
@@ -324,7 +324,7 @@
   - `400 Bad Request`: Invalid request payload.
   - `404 Not Found`: Resource with the given ID does not exist.
 
-##### Delete Resource by ID
+#### Delete Resource by ID
 
 - **Method**: DELETE
 - **Endpoint**: `/api/resources/:id`
@@ -336,7 +336,7 @@
 
 #### Transaction API
 
-##### Create Transaction
+#### Create Transaction
 
 - **Method**: POST
 - **Endpoint**: `/api/transactions/`
@@ -348,7 +348,7 @@
   - `201 Created`: Successfully created a new transaction.
   - `400 Bad Request`: Invalid request payload.
 
-##### Get All Transactions
+#### Get All Transactions
 
 - **Method**: GET
 - **Endpoint**: `/api/transactions/`
@@ -358,7 +358,7 @@
   - `200 OK`: Successfully retrieved all transactions.
   - `404 Not Found`: No transactions exist.
 
-##### Get Transaction by ID
+#### Get Transaction by ID
 
 - **Method**: GET
 - **Endpoint**: `/api/transactions/:id`
@@ -368,7 +368,7 @@
   - `200 OK`: Successfully retrieved the transaction.
   - `404 Not Found`: Transaction with the given ID does not exist.
 
-##### Update Transaction by ID
+#### Update Transaction by ID
 
 - **Method**: PUT
 - **Endpoint**: `/api/transactions/:id`
@@ -381,7 +381,7 @@
   - `400 Bad Request`: Invalid request payload.
   - `404 Not Found`: Transaction with the given ID does not exist.
 
-##### Delete Transaction by ID
+#### Delete Transaction by ID
 
 - **Method**: DELETE
 - **Endpoint**: `/api/transactions/:id`
