@@ -27,6 +27,12 @@ services:
     networks:
       - foodlink-network
 
+  #Google OSS Fuzz Tester
+  fuzz:
+    build:
+      context: .
+      dockerfile: docker/fuzz/Dockerfile
+    
 # Volumes
 volumes:
   mongo-data:
