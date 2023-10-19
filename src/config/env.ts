@@ -6,14 +6,17 @@ if (existsSync('.env')) {
   dotenv.config();
 }
 
+// Export environment variables
 export const MONGO_URI = process.env.MONGO_URI ?? '';
 export const PORT = process.env.PORT ?? '3000';
 export const API_KEY = process.env.API_KEY ?? '';
 
+// Check if the environment variables are defined
 if (!MONGO_URI) {
   throw new Error('MONGO_URI is not defined in environment variables.');
 }
 
+// Check if the environment variables are defined
 if (!API_KEY) {
   throw new Error('API_KEY is not defined in environment variables.');
 }
