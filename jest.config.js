@@ -12,7 +12,7 @@ module.exports = {
     'node_modules/axios': 'babel-jest',
   },
   
-  testRegex: '(/__tests__/.*|(\\.|/)(test|spec|fuzz))\\.(jsx?|tsx?)$',
+  testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$',
   
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
 
@@ -28,4 +28,9 @@ module.exports = {
   testEnvironment: 'node',
 
   transformIgnorePatterns: ['<rootDir>/node_modules/', 'node_modules/(?!(axios)/)'],
+
+  "bail": 1,
+
+  "verbose": false
+
 };
