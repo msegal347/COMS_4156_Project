@@ -2,7 +2,7 @@
 FROM gcr.io/oss-fuzz-base/base-builder-javascript
 
 #Create a clone of the reposotory
-RUN git clone https://github.com/msegal347/COMS_4156_Project.git --branch 8-configure-project-for-googles-oss-fuzz-testing
+RUN git clone --single-branch --branch 8-configure-project-for-googles-oss-fuzz-testing https://github.com/msegal347/COMS_4156_Project.git
 
 #Switch the working directory to the test folder will all the tests are located
 WORKDIR $SRC/COMS_4156_Project/test
@@ -21,6 +21,9 @@ RUN npm install --save-dev @jazzer.js/jest-runner
 
 #Build the project
 RUN npm run build
+
+#Expose port
+EXPOSE 8080
 
 #Run the tests
 CMD ["npm", "test"]
