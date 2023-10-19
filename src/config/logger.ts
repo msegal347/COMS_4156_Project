@@ -16,6 +16,12 @@ const winstonLogger = createLogger({
 
 // Logger has request, response, and next function as parameters
 export const logger = (req: Request, res: Response, next: NextFunction) => {
+  if (typeof req.method !== 'string' || typeof req.url !== 'string') {
+    winstonLogger.error('Invalid request object');
+    next(new Error('Invalid request object'));
+    return;
+  }
+
   winstonLogger.info(`HTTP ${req.method} ${req.url}`);
   next();
 };

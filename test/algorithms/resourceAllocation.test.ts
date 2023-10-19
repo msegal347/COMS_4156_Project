@@ -20,4 +20,32 @@ describe('Resource Allocation', () => {
     const matches = allocateResources(sources, sinks);
     expect(matches).toEqual(expectedMatches);
   });
+
+  it('should return an empty array if sources are empty', () => {
+    const sources: Source[] = [];
+    const sinks: Sink[] = [{ id: '1', resourceType: 'Food', requiredQuantity: 50 }];
+    const matches = allocateResources(sources, sinks);
+    expect(matches).toEqual([]);
+  });
+
+  it('should return an empty array if sinks are empty', () => {
+    const sources: Source[] = [{ id: '1', resourceType: 'Food', quantity: 100 }];
+    const sinks: Sink[] = [];
+    const matches = allocateResources(sources, sinks);
+    expect(matches).toEqual([]);
+  });
+
+  it('should not allocate resources of different types', () => {
+    const sources: Source[] = [{ id: '1', resourceType: 'Food', quantity: 100 }];
+    const sinks: Sink[] = [{ id: '1', resourceType: 'Water', requiredQuantity: 50 }];
+    const matches = allocateResources(sources, sinks);
+    expect(matches).toEqual([]);
+  });
+
+  it('should not allocate if source quantity is insufficient', () => {
+    const sources: Source[] = [{ id: '1', resourceType: 'Food', quantity: 20 }];
+    const sinks: Sink[] = [{ id: '1', resourceType: 'Food', requiredQuantity: 50 }];
+    const matches = allocateResources(sources, sinks);
+    expect(matches).toEqual([]);
+  });
 });
