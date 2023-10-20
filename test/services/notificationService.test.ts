@@ -24,5 +24,6 @@ describe('NotificationService', () => {
     // Assertions
     expect(result).toEqual(mockResult);
   });
+  
 });
 

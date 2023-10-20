@@ -34,4 +34,48 @@ describe('NotificationModel', () => {
     const readDefaultValue = (NotificationModel.schema.path('read') as any).default();
     expect(readDefaultValue).toBeFalsy();
   });
+
+  it('should throw a validation error if userId is missing', async () => {
+    const invalidNotification = new NotificationModel({
+      content: 'Some content'
+    });
+
+    await expect(invalidNotification.save()).rejects.toThrow(mongoose.Error.ValidationError);
+  });
+
+  it('should throw a validation error if content is missing', async () => {
+    const invalidNotification = new NotificationModel({
+      userId: 'SomeUserId'
+    });
+
+    await expect(invalidNotification.save()).rejects.toThrow(mongoose.Error.ValidationError);
+  });
+
+  it('should throw a validation error if userId is not a string', async () => {
+    const invalidNotification = new NotificationModel({
+      userId: 12345,
+      content: 'Some content'
+    });
+
+    await expect(invalidNotification.save()).rejects.toThrow(mongoose.Error.ValidationError);
+  });
+
+  it('should throw a validation error if content is not a string', async () => {
+    const invalidNotification = new NotificationModel({
+      userId: 'SomeUserId',
+      content: 12345
+    });
+
+    await expect(invalidNotification.save()).rejects.toThrow(mongoose.Error.ValidationError);
+  });
+
+  it('should throw a validation error if read is not a boolean', async () => {
+    const invalidNotification = new NotificationModel({
+      userId: 'SomeUserId',
+      content: 'Some content',
+      read: 'NotABoolean'
+    });
+
+    await expect(invalidNotification.save()).rejects.toThrow(mongoose.Error.ValidationError);
+  });
 });
