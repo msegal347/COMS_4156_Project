@@ -14,5 +14,7 @@ const transactionSchema = new Schema({
   type: { type: String, enum: ['credit', 'debit'], required: true },
 });
 
-// Create the Transaction model from the schema and export it
-export default mongoose.model<ITransaction>('Transaction', transactionSchema);
+// Create the Transaction model from the schema
+const Transaction = mongoose.model<ITransaction>('Transaction', transactionSchema);
+
+export default Transaction;
