@@ -15,6 +15,6 @@ const transactionSchema = new Schema({
 });
 
 // Create the Transaction model from the schema
-const Transaction =  mongoose.model<ITransaction>('Transaction', transactionSchema);
+const Transaction = mongoose.model<ITransaction>('Transaction', transactionSchema);
 
 export default Transaction;
