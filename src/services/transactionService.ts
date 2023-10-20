@@ -2,7 +2,7 @@ import Transaction, { ITransaction } from '../models/transactionModel';
 
 export const transactionService = {
   // Create a new transaction
-  async createTransaction(data: ITransaction): Promise<ITransaction> {
+  async createTransaction(data: any): Promise<ITransaction> {
     const transaction = new Transaction(data);
     return await transaction.save();
   },
