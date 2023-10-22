@@ -1,80 +1,87 @@
-import request from 'supertest';
-import { app, server } from '../../src/index';
-import { resourceService } from '../../src/services/resourceService';
+import mongoose from 'mongoose';
+import NotificationModel from '../../src/models/notificationModel';
 
-// Mocking resourceService
-jest.mock('../../src/services/resourceService');
+describe('NotificationModel', () => {
+  // Check schema structure
+  describe('Schema', () => {
+    it('should have the correct schema', () => {
+      const schemaKeys = Object.keys(NotificationModel.schema.paths);
+      const expectedKeys = [
+        'userId',
+        'content',
+        'read',
+        '_id',
+        '__v', // This field is automatically created by Mongoose
+        'createdAt', // These are from the timestamp option
+        'updatedAt',
+      ];
+      expect(schemaKeys).toEqual(expect.arrayContaining(expectedKeys));
+    });
 
-jest.mock('../../src/config/db', () => {
-  return jest.fn(); // Mock connectDB as a function that does nothing
-});
+    it('should set timestamps', () => {
+      expect((NotificationModel.schema as any).options.timestamps).toBeTruthy();
+    });
 
-describe('Resource Routes', () => {
-  it('should create a new resource', async () => {
-    const mockResource = { name: 'Test Resource', type: 'Test Type' };
-    (resourceService.createResource as jest.Mock).mockResolvedValue(mockResource);
+    it('should have userId as a required field', () => {
+      const isUserIdRequired = (NotificationModel.schema.path('userId') as any).isRequired;
+      expect(isUserIdRequired).toBeTruthy();
+    });
 
-    const res = await (request(app) as any).post('/api/resource').send(mockResource);
+    it('should have content as a required field', () => {
+      const isContentRequired = (NotificationModel.schema.path('content') as any).isRequired;
+      expect(isContentRequired).toBeTruthy();
+    });
 
-    expect(res.status).toBe(201);
-    expect(res.body).toEqual(mockResource);
+    it('should have default value of read as false', () => {
+      const readDefaultValue = (NotificationModel.schema.path('read') as any).default();
+      expect(readDefaultValue).toBe(false); // Change to toBe instead of toBeFalsy
+    });
   });
 
-  it('should get all resources', async () => {
-    const mockResources = [
-      { name: 'Resource 1', type: 'Type A' },
-      { name: 'Resource 2', type: 'Type B' },
-    ];
-    (resourceService.getResources as jest.Mock).mockResolvedValue(mockResources);
+  // Validation checks
+  describe('Validation', () => {
+    it('should throw a validation error if userId is missing', async () => {
+      const invalidNotification = new NotificationModel({
+        content: 'Some content',
+      });
 
-    const res = await (request(app) as any).get('/api/resource');
+      await expect(invalidNotification.save()).rejects.toThrow(mongoose.Error.ValidationError);
+    });
 
-    expect(res.status).toBe(200);
-    expect(res.body).toEqual(mockResources);
+    it('should throw a validation error if content is missing', async () => {
+      const invalidNotification = new NotificationModel({
+        userId: 'SomeUserId',
+      });
+
+      await expect(invalidNotification.save()).rejects.toThrow(mongoose.Error.ValidationError);
+    });
+
+    it('should throw a validation error if userId is not a string', async () => {
+      const invalidNotification = new NotificationModel({
+        userId: 12345,
+        content: 'Some content',
+      });
+
+      await expect(invalidNotification.save()).rejects.toThrow(mongoose.Error.ValidationError);
+    });
+
+    it('should throw a validation error if content is not a string', async () => {
+      const invalidNotification = new NotificationModel({
+        userId: 'SomeUserId',
+        content: 12345,
+      });
+
+      await expect(invalidNotification.save()).rejects.toThrow(mongoose.Error.ValidationError);
+    });
+
+    it('should throw a validation error if read is not a boolean', async () => {
+      const invalidNotification = new NotificationModel({
+        userId: 'SomeUserId',
+        content: 'Some content',
+        read: 'NotABoolean',
+      });
+
+      await expect(invalidNotification.save()).rejects.toThrow(mongoose.Error.ValidationError);
+    });
   });
-
-  it('should get a resource by ID', async () => {
-    const resourceId = '1';
-    const mockResource = { _id: resourceId, name: 'Test Resource', type: 'Test Type' };
-    (resourceService.getResourceById as jest.Mock).mockResolvedValue(mockResource);
-
-    const res = await (request(app) as any).get(`/api/resource/${resourceId}`);
-
-    expect(res.status).toBe(200);
-    expect(res.body).toEqual(mockResource);
-  });
-
-  it('should update a resource by ID', async () => {
-    const resourceId = '1';
-    const updatedResource = { _id: resourceId, name: 'Updated Resource', type: 'Test Type' };
-    (resourceService.updateResource as jest.Mock).mockResolvedValue(updatedResource);
-
-    const res = await (request(app) as any)
-      .put(`/api/resource/${resourceId}`)
-      .send(updatedResource);
-
-    expect(res.status).toBe(200);
-    expect(res.body).toEqual(updatedResource);
-  });
-
-  it('should delete a resource by ID', async () => {
-    (resourceService.deleteResource as jest.Mock).mockResolvedValue(true);
-
-    const resourceId = '1';
-    const res = await (request(app) as any).delete(`/api/resource/${resourceId}`);
-
-    expect(res.status).toBe(204);
-    expect(res.body).toEqual({});
-  });
-
-  afterAll(
-    () =>
-      new Promise<void>(done => {
-        if (server) {
-          server.close(done);
-        } else {
-          done();
-        }
-      })
-  );
 });
