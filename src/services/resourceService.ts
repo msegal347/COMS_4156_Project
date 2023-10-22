@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 
 export const resourceService = {
   // Create a new resource
-  async createResource(data: IResource): Promise<IResource> {
+  async createResource(data: any): Promise<IResource> {
     const resource = new Resource(data);
     return await resource.save();
   },
