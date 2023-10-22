@@ -16,7 +16,12 @@ describe('ResourceModel', () => {
   });
 
   it('should set timestamps', () => {
-    expect(ResourceModel.schema.options.timestamps).toBeTruthy();
+    const schema = ResourceModel.schema as mongoose.Schema & {
+      options: {
+        timestamps: boolean;
+      };
+    };
+    expect(schema.options.timestamps).toBeTruthy();
   });
 
   it('should have name as a required field', () => {
