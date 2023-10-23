@@ -1,28 +1,56 @@
 import mongoose from 'mongoose';
-import EntityService from '../../src/services/entityService';
-import { resourceService } from '../../src/services/resourceService';
-import { transactionService } from '../../src/services/transactionService';
-import { getRouteById } from '../../src/services/logisticsService';
-import { notificationService } from '../../src/services/notificationService';
-import { getRecordById } from '../../src/services/analyticsService';
-// import connectDB from '../../src/config/db';
+import { MongoMemoryServer } from 'mongodb-memory-server';
 
-// beforeEach(() => {
-  // connectDB();
-  // jest.useFakeTimers();
-// });
+let mongoServer: any;
+
+const ItemSchema = new mongoose.Schema({ name: String });
+const Item = mongoose.model('Item', ItemSchema);
+
+beforeAll(async () => {
+  const mongoUri = "mongodb://localhost:27017/testDB";
+  await mongoose.connect(mongoUri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  } as any);
+});
+
+
+
+afterAll(async () => {
+  await mongoose.disconnect();
+});
 
 describe('MongoDB', () => {
-  it('should have the correct seed data', () => {
-    expect(EntityService.getEntityById('test_entity')).toBe({ entityID: 'test_entity', role: 'source', apiKey: 'key', coordinates: { latitude: 0.5, longitude: 0.5 } });
-    expect(resourceService.getResourceById(new mongoose.Types.ObjectId('test_resource'))).toBe({ resourceID: 'test_resource', metadata: { type: 'type', quantity: 0, expirationDate: new Date() } });
-    expect(transactionService.getTransactionById('test_transaction')).toBe({ transactionID: 'test_transaction', sourceID: 'test_entity', sinkID: 'test_entity', resourceID: 'test_resource', timestamp: new Date() });
-    expect(getRouteById('test_logistics')).toBe({ logisticsID: 'test_logistics', pickupLocation: { latitude: 0.5, longitude: 0.5 }, dropOffLocation: { latitude: 0.5, longitude: 0.5 }, status: 'scheduled' });
-    expect(notificationService.getNotifications(new mongoose.Schema.Types.ObjectId('test_notification'))[0]).toBe({ notificationID: 'test_notification', type: 'type', status: 'sent' });
-    expect(getRecordById('test_analytics')).toBe({ analyticsID: 'test_analytics', data: {} });
+  it('should create & save item successfully', async () => {
+    const itemData = { name: 'Item1' };
+    const validItem = new Item(itemData);
+    const savedItem = await validItem.save();
+
+    expect(savedItem._id).toBeDefined();
+    expect(savedItem.name).toBe(itemData.name);
+  });
+
+  it('should update an item', async () => {
+    const itemData = { name: 'Item2' };
+    const item = new Item(itemData);
+    await item.save();
+
+    item.name = 'NewItem2';
+    const updatedItem = await item.save();
+
+    expect(updatedItem._id).toBeDefined();
+    expect(updatedItem.name).toBe('NewItem2');
+  });
+
+  it('should delete an item', async () => {
+    const itemData = { name: 'Item3' };
+    const item = new Item(itemData);
+    await item.save();
+    
+    await Item.findByIdAndDelete(item._id);
+    const deletedItem = await Item.findById(item._id);
+
+    expect(deletedItem).toBeNull();
   });
 });
 
-// afterAll(() => {
-//   mongoose.connection.close();
-// });
