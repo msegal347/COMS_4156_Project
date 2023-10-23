@@ -216,3 +216,12 @@ db.Inventory.createIndex({ 'metadata.type': 1 });
 db.Transactions.createIndex({ timestamp: -1 });
 db.Logistics.createIndex({ 'pickupLocation.latitude': 1, 'pickupLocation.longitude': 1 });
 db.Logistics.createIndex({ 'dropOffLocation.latitude': 1, 'dropOffLocation.longitude': 1 });
+
+// Seed the database
+db.EntityProfiles.insertOne({ entityID: 'test_entity', role: 'source', apiKey: 'key', coordinates: { latitude: 0.5, longitude: 0.5 } });
+db.Inventory.insertOne({ resourceID: 'test_resource', metadata: { type: 'type', quantity: 0, expirationDate: new Date() } });
+db.Transactions.insertOne({ transactionID: 'test_transaction', sourceID: 'test_entity', sinkID: 'test_entity', resourceID: 'test_resource', timestamp: new Date() });
+db.Logistics.insertOne({ logisticsID: 'test_logistics', pickupLocation: { latitude: 0.5, longitude: 0.5 }, dropOffLocation: { latitude: 0.5, longitude: 0.5 }, status: 'scheduled' });
+db.APIKeys.insertOne({ apiKey: 'test_apikey', entityID: 'test_entity' });
+db.Notifications.insertOne({ notificationID: 'test_notification', type: 'type', status: 'sent' });
+db.Analytics.insertOne({ analyticsID: 'test_analytics', data: {} });
