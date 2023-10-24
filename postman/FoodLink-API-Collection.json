@@ -11,7 +11,7 @@
             "name": "Create Allocation",
             "request": {
               "method": "POST",
-              "url": "{{baseUrl}}/api/allocation/",
+              "url": "{{baseUrl}}/api/allocations/",
               "header": [
                 { "key": "Content-Type", "value": "application/json" }
               ],
@@ -25,7 +25,7 @@
             "name": "Get Allocation by ID",
             "request": {
               "method": "GET",
-              "url": "{{baseUrl}}/api/allocation/:id",
+              "url": "{{baseUrl}}/api/allocations/:id",
               "header": [
                 { "key": "Authorization", "value": "Bearer {{token}}" }
               ]
@@ -35,7 +35,7 @@
             "name": "Update Allocation by ID",
             "request": {
               "method": "PUT",
-              "url": "{{baseUrl}}/api/allocation/:id",
+              "url": "{{baseUrl}}/api/allocations/:id",
               "header": [
                 { "key": "Content-Type", "value": "application/json" },
                 { "key": "Authorization", "value": "Bearer {{token}}" }
@@ -50,7 +50,7 @@
             "name": "Delete Allocation by ID",
             "request": {
               "method": "DELETE",
-              "url": "{{baseUrl}}/api/allocation/:id",
+              "url": "{{baseUrl}}/api/allocations/:id",
               "header": [
                 { "key": "Authorization", "value": "Bearer {{token}}" }
               ]
@@ -266,7 +266,7 @@
             "name": "Create Notification",
             "request": {
               "method": "POST",
-              "url": "{{baseUrl}}/api/notification/",
+              "url": "{{baseUrl}}/api/notifications/",
               "header": [
                 { "key": "Content-Type", "value": "application/json" }
               ],
@@ -280,7 +280,7 @@
             "name": "Get Notifications by User ID",
             "request": {
               "method": "GET",
-              "url": "{{baseUrl}}/api/notification/:userId",
+              "url": "{{baseUrl}}/api/notifications/:userId",
               "header": [
                 { "key": "Authorization", "value": "Bearer {{token}}" }
               ]
@@ -290,7 +290,7 @@
             "name": "Update Notification by ID",
             "request": {
               "method": "PUT",
-              "url": "{{baseUrl}}/api/notification/:id",
+              "url": "{{baseUrl}}/api/notifications/:id",
               "header": [
                 { "key": "Content-Type", "value": "application/json" },
                 { "key": "Authorization", "value": "Bearer {{token}}" }
@@ -305,7 +305,7 @@
             "name": "Delete Notification by ID",
             "request": {
               "method": "DELETE",
-              "url": "{{baseUrl}}/api/notification/:id",
+              "url": "{{baseUrl}}/api/notifications/:id",
               "header": [
                 { "key": "Authorization", "value": "Bearer {{token}}" }
               ]
@@ -320,7 +320,7 @@
             "name": "Create Resource",
             "request": {
               "method": "POST",
-              "url": "{{baseUrl}}/api/resource/",
+              "url": "{{baseUrl}}/api/resources/",
               "header": [
                 { "key": "Content-Type", "value": "application/json" }
               ],
@@ -334,7 +334,7 @@
             "name": "Get All Resources",
             "request": {
               "method": "GET",
-              "url": "{{baseUrl}}/api/resource/",
+              "url": "{{baseUrl}}/api/resources/",
               "header": [
                 { "key": "Authorization", "value": "Bearer {{token}}" }
               ]
@@ -344,7 +344,7 @@
             "name": "Get Resource by ID",
             "request": {
               "method": "GET",
-              "url": "{{baseUrl}}/api/resource/:id",
+              "url": "{{baseUrl}}/api/resources/:id",
               "header": [
                 { "key": "Authorization", "value": "Bearer {{token}}" }
               ]
@@ -354,7 +354,7 @@
             "name": "Update Resource by ID",
             "request": {
               "method": "PUT",
-              "url": "{{baseUrl}}/api/resource/:id",
+              "url": "{{baseUrl}}/api/resources/:id",
               "header": [
                 { "key": "Content-Type", "value": "application/json" },
                 { "key": "Authorization", "value": "Bearer {{token}}" }
@@ -369,7 +369,7 @@
             "name": "Delete Resource by ID",
             "request": {
               "method": "DELETE",
-              "url": "{{baseUrl}}/api/resource/:id",
+              "url": "{{baseUrl}}/api/resources/:id",
               "header": [
                 { "key": "Authorization", "value": "Bearer {{token}}" }
               ]
@@ -384,7 +384,7 @@
             "name": "Create Transaction",
             "request": {
               "method": "POST",
-              "url": "{{baseUrl}}/api/transaction/",
+              "url": "{{baseUrl}}/api/transactions/",
               "header": [
                 { "key": "Content-Type", "value": "application/json" }
               ],
@@ -398,7 +398,7 @@
             "name": "Get Transaction by ID",
             "request": {
               "method": "GET",
-              "url": "{{baseUrl}}/api/transaction/:id",
+              "url": "{{baseUrl}}/api/transactions/:id",
               "header": [
                 { "key": "Authorization", "value": "Bearer {{token}}" }
               ]
@@ -408,7 +408,7 @@
             "name": "Get Transactions by User ID",
             "request": {
               "method": "GET",
-              "url": "{{baseUrl}}/api/transaction/user/:userId",
+              "url": "{{baseUrl}}/api/transactions/user/:userId",
               "header": [
                 { "key": "Authorization", "value": "Bearer {{token}}" }
               ]
@@ -418,7 +418,7 @@
             "name": "Update Transaction by ID",
             "request": {
               "method": "PUT",
-              "url": "{{baseUrl}}/api/transaction/:id",
+              "url": "{{baseUrl}}/api/transactions/:id",
               "header": [
                 { "key": "Content-Type", "value": "application/json" },
                 { "key": "Authorization", "value": "Bearer {{token}}" }
@@ -433,7 +433,7 @@
             "name": "Delete Transaction by ID",
             "request": {
               "method": "DELETE",
-              "url": "{{baseUrl}}/api/transaction/:id",
+              "url": "{{baseUrl}}/api/transactions/:id",
               "header": [
                 { "key": "Authorization", "value": "Bearer {{token}}" }
               ]

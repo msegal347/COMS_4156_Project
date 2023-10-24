@@ -7,13 +7,16 @@ const ItemSchema = new mongoose.Schema({ name: String });
 const Item = mongoose.model('Item', ItemSchema);
 
 beforeAll(async () => {
-  const mongoUri = "mongodb://localhost:27017/testDB";
-  await mongoose.connect(mongoUri, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  } as any);
-});
+  // Connect to a test database
+  const url = process.env.MONGO_URI || "mongodb://localhost:27017/testDB";
+  
+  // Define the connection options
+  const options: mongoose.ConnectOptions & {useNewUrlParser: boolean} = {
+      useNewUrlParser: true,
+  };
 
+  await mongoose.connect(url, options);
+});
 
 
 afterAll(async () => {

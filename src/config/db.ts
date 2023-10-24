@@ -28,8 +28,8 @@ const connectDB = async (): Promise<void> => {
     const conn = await mongoose.connect(mongoUri, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
-      useCreateIndex: true,
-      useFindAndModify: false,
+      //useCreateIndex: true,
+      //useFindAndModify: false,
     } as ConnectOptions & { useNewUrlParser: boolean });
 
     // Log the connection host

@@ -1,7 +1,5 @@
 version: '3'
 services:
-
-  # API Service
   api:
     build:
       context: .
@@ -11,11 +9,10 @@ services:
     depends_on:
       - mongo
     environment:
-      MONGO_URI: "mongodb://mongo:27017/foodlink"
+      MONGO_URI: "mongodb://mongo:27017/testDB"
     networks:
       - foodlink-network
 
-  # MongoDB Service
   mongo:
     build:
       context: .
@@ -24,15 +21,15 @@ services:
       - mongo-data:/data/db
     ports:
       - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: "testDB" 
     networks:
       - foodlink-network
 
-# Volumes
 volumes:
   mongo-data:
     driver: local
 
-# Networks
 networks:
   foodlink-network:
     driver: bridge
