@@ -43,8 +43,8 @@ module.exports = {
       testRunner: "@jazzer.js/jest-runner",
 			testEnvironment: "node",
       ////testRegex: '(/__tests__/.*|(\\.|/)(fuzz))\\.(jsx?|tsx?)$',
-      //testMatch: ["<rootDir>/**/*.fuzz.[jt]s"]
-      testMatch: ["<rootDir>/docker/fuzz/math.fuzz.ts"],
+      testMatch: ["<rootDir>/**/*.fuzz.[jt]s"],
+      //testMatch: ["<rootDir>/docker/fuzz/math.fuzz.ts"],
       transform: {
         '^.+\\.fuzz.(ts|tsx)$': 'ts-jest',
       },
