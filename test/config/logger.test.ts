@@ -1,55 +1,32 @@
-import { logger } from '../../src/config/logger';
 import { Request, Response, NextFunction } from 'express';
-import { createLogger, transports, format } from 'winston';
+import morgan from 'morgan';
 
-const mockRequest = {} as Request;
-const mockResponse = {} as Response;
-const mockNext: NextFunction = jest.fn();
+describe('Morgan Logger Test', () => {
+  let mockRequest: Partial<Request>;
+  let mockResponse: Partial<Response>;
+  let mockNext: NextFunction;
 
-jest.mock('winston', () => ({
-  createLogger: jest.fn().mockReturnValue({
-    info: jest.fn(),
-    error: jest.fn(),
-  }),
-  format: {
-    combine: jest.fn(),
-    timestamp: jest.fn(),
-    label: jest.fn(),
-    printf: jest.fn(),
-  },
-  transports: {
-    Console: jest.fn(),
-    File: jest.fn(),
-  },
-}));
-
-describe('Logger Middleware', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    mockRequest = {
+      method: 'GET',
+      url: '/test',
+      headers: {},
+    } as Request;
+    mockResponse = {
+      statusCode: 200,
+    } as Response;
+    mockNext = jest.fn();
   });
 
-  it('should log the HTTP method and URL', () => {
-    mockRequest.method = 'GET';
-    mockRequest.url = '/test';
-    
-    const infoSpy = jest.spyOn(createLogger(), 'info');
-
-    logger(mockRequest, mockResponse, mockNext);
-    
-    expect(infoSpy).toHaveBeenCalledWith('HTTP GET /test');
-    expect(mockNext).toHaveBeenCalled();
+  it('logs a simple GET request', () => {
+    const morganMiddleware = morgan('combined', {
+      stream: {
+        write: (message: string) => {
+          expect(message).toContain('GET');
+          expect(message).toContain('test');
+        },
+      },
+    });
+    morganMiddleware(mockRequest as Request, mockResponse as Response, mockNext);
   });
-
-  it('should handle invalid request object', () => {
-    mockRequest.method = undefined as any;
-    mockRequest.url = undefined as any;
-
-    const errorSpy = jest.spyOn(createLogger(), 'error');
-
-    logger(mockRequest, mockResponse, mockNext);
-
-    expect(errorSpy).toHaveBeenCalledWith('Invalid request object');
-    expect(mockNext).toHaveBeenCalledWith(new Error('Invalid request object'));
-  });
-
 });

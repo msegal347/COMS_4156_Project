@@ -20,7 +20,13 @@ const createEntity = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         res.status(201).json(newEntity);
     }
     catch (error) {
-        res.status(500).json({ error: 'Internal Server Error' });
+        console.error(error);
+        if (error instanceof Error && error.code === 11000) {
+            res.status(400).json({ error: 'Entity name must be unique' });
+        }
+        else {
+            res.status(500).json({ error: 'Internal Server Error' });
+        }
     }
 });
 exports.createEntity = createEntity;
