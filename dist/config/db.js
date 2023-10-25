@@ -38,8 +38,8 @@ const connectDB = () => __awaiter(void 0, void 0, void 0, function* () {
         const conn = yield mongoose_1.default.connect(mongoUri, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
-            useCreateIndex: true,
-            useFindAndModify: false,
+            //useCreateIndex: true,
+            //useFindAndModify: false,
         });
         // Log the connection host
         console.log(`MongoDB Connected: ${conn.connection.host}`);

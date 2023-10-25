@@ -1,0 +1,192 @@
+{
+	"info": {
+		"_postman_id": "8eb6f6e9-4854-4234-8784-fc9fc32f4107",
+		"name": "Notifications",
+		"description": "### Overview\n\nThis collection includes test sets for creating, reading, updating, and deleting notifications.\n\n### API Endpoints\n\n#### POST /api/notifications/\n\nCreates a new notification record. Returns a 201 Created status code upon successful creation.\n\n**Tests included:**\n\n- Status code is 201\n    \n- Response includes a `content` property\n    \n- The created notification's ID is stored in a global variable for future tests\n    \n\n#### GET /api/notifications/:userId\n\nFetches all notifications for a given user ID. Returns a 200 OK status code.\n\n**Tests included:**\n\n- Status code is 200\n    \n- Response is an array\n    \n\n#### PUT /api/notifications/:id\n\nUpdates an existing notification by its ID. Returns a 200 OK status code if the update is successful.\n\n**Tests included:**\n\n- Status code is 200\n    \n- The `read` property is updated to `true`\n    \n\n#### DELETE /api/notifications/:id\n\nDeletes a notification by its ID. Returns a 204 No Content status code upon successful deletion.\n\n**Tests included:**\n\n- Status code is 204\n    \n\n### Data Model\n\nThe data model for a notification is defined as follows:\n\n- `userId` (String): The ID of the user associated with the notification\n    \n- `content` (String): The content of the notification\n    \n- `read` (Boolean): A flag indicating whether the notification has been read",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30606958"
+	},
+	"item": [
+		{
+			"name": "POST /api/notifications/",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 201', function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"pm.test('Response has content property', function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.have.property('content');",
+							"    pm.globals.set('createdNotificationId', jsonData._id);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const generatedId = \"603cbed0e779f3fb2b5e3eb8\"; \r",
+							"\r",
+							"pm.environment.set(\"testUserId\", generatedId);\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"userId\": \"{{testUserId}}\",\n  \"content\": \"Test Content\",\n  \"read\": false\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/notifications/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"notifications",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /api/notifications/:userId",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 200', function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test('Response is an array', function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(Array.isArray(jsonData)).to.be.true;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/notifications/{{testUserId}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"notifications",
+						"{{testUserId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT /api/notifications/:id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 200', function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test('Read is updated to true', function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.read).to.eql(true);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"read\": true\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/notifications/{{createdNotificationId}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"notifications",
+						"{{createdNotificationId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE /api/notifications/:id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 204', function () {",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/notifications/{{createdNotificationId}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"notifications",
+						"{{createdNotificationId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

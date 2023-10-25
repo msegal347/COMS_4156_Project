@@ -10,7 +10,12 @@ export const createEntity = async (req: Request, res: Response) => {
     const newEntity = await Entity.create(entityData);
     res.status(201).json(newEntity);
   } catch (error) {
-    res.status(500).json({ error: 'Internal Server Error' });
+    console.error(error);
+    if (error instanceof Error && (error as any).code === 11000) {
+      res.status(400).json({ error: 'Entity name must be unique' });
+    } else {
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
   }
 };
 

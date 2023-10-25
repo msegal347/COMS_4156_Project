@@ -1,0 +1,225 @@
+{
+	"info": {
+		"_postman_id": "88111d9e-cf8a-451e-936b-868049ae61b0",
+		"name": "Resources",
+		"description": "### Overview\n\nThis collection tests creating, retrieving, updating, and deleting resources, along with a mechanism to fetch all resources.\n\n---\n\n### API Endpoints\n\n#### POST /api/resources/\n\n**Description**: Adds a new resource to the database.  \n**Status**: Returns a `201 Created` status code upon successful addition.\n\n**Tests included**:\n\n- Assert that HTTP status code is `201`.\n- Ensure that the response includes a `_id` property and caches this ID for future tests.\n    \n\n---\n\n#### GET /api/resources/:id\n\n**Description**: Retrieves a resource by its ID from the database.  \n**Status**: Returns a `200 OK` status code if the resource is found.\n\n**Tests included**:\n\n- Assert that HTTP status code is `200`.\n- Verify that the response body contains a `name` property.\n    \n\n---\n\n#### PUT /api/resources/:id\n\n**Description**: Modifies an existing resource, identified by its ID.  \n**Status**: Returns a `200 OK` status code if the resource is successfully updated.\n\n**Tests included**:\n\n- Assert that HTTP status code is `200`.\n- Validate that the `name` property is updated to `Updated Resource Name`.\n    \n\n---\n\n#### DELETE /api/resources/:id\n\n**Description**: Eliminates a resource by its ID from the database.  \n**Status**: Returns a `204 No Content` status code upon successful deletion.\n\n**Tests included**:\n\n- Assert that HTTP status code is `204`.\n    \n\n---\n\n#### GET /api/resources/\n\n**Description**: Obtains all the resources from the database.  \n**Status**: Returns a `200 OK` status code.\n\n**Tests included**:\n\n- Assert that HTTP status code is `200`.\n- Confirm that the response body is an array.\n    \n\n---\n\n### Data Model\n\nThe resource object is structured as follows:\n\n- `name` (String): The moniker of the resource.\n- `type` (String): The classification type of the resource.\n    \n\n---\n\n### Unique Constraints\n\nThe `name` attribute must possess uniqueness across resources. An attempt to instantiate a resource with a duplicate name will trigger a `400 Bad Request` response.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30606958"
+	},
+	"item": [
+		{
+			"name": "POST /api/resources/",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test('Status code is 201', function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"let jsonData = pm.response.json();",
+							"pm.environment.set('createdResourceId', jsonData._id);"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\": \"Test Resource\", \"type\": \"Test Type\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/resources/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"resources",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /api/resources/",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test('Status code is 200', function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test('Response is an array', function () {",
+							"    pm.expect(Array.isArray(pm.response.json())).to.be.true;",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/resources/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"resources",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /api/resources/:id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test('Status code is 200', function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test('Response has name property', function () {",
+							"    pm.expect(pm.response.json()).to.have.property('name');",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/resources/{{createdResourceId}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"resources",
+						"{{createdResourceId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT /api/resources/:id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test('Status code is 200', function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test('Response has updated name', function () {",
+							"    pm.expect(pm.response.json().name).to.eql('Updated Resource Name');",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\": \"Updated Resource Name\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/resources/{{createdResourceId}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"resources",
+						"{{createdResourceId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE /api/resources/:id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test('Status code is 204', function () {",
+							"    pm.response.to.have.status(204);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/resources/{{createdResourceId}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"resources",
+						"{{createdResourceId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -1,0 +1,221 @@
+{
+	"info": {
+		"_postman_id": "7b59b13b-d816-42fb-b68c-43b66814e45d",
+		"name": "Entities",
+		"description": "## Overview\n\nThis Postman collection is designed to facilitate the testing of CRUD (Create, Read, Update, Delete) operations for the Entities API. It includes a set of predefined tests to ensure that the API endpoints function as expected. The collection tests endpoints for creating, retrieving, updating, and deleting entities, as well as fetching all entities.\n\n## API Endpoints\n\n### POST /api/entities/\n\nCreates a new entity in the database. Returns a `201 Created` status on successful creation.\n\n- Tests included:\n    1. Status code is `201`\n    2. Response includes a `name` property and caches the created entity's ID for subsequent tests.\n\n### GET /api/entities/:id\n\nRetrieves an entity by its ID. Returns a `200 OK` status if the entity exists.\n\n- Tests included:\n    1. Status code is `200`\n    2. Response includes a `name` property.\n\n### PUT /api/entities/:id\n\nUpdates an existing entity by its ID. Returns a `200 OK` status if the entity exists and is successfully updated.\n\n- Tests included:\n    1. Status code is `200`\n    2. The `name` property is updated to `UpdatedEntityName`.\n\n### DELETE /api/entities/:id\n\nDeletes an entity by its ID. Returns a `204 No Content` status if the entity is successfully deleted.\n\n- Tests included:\n    1. Status code is `204`.\n\n### GET /api/entities/\n\nRetrieves all entities. Returns a `200 OK` status.\n\n- Tests included:\n    1. Status code is `200`\n    2. Response is an array.\n\n## Data Model\n\nThe entity object is defined as follows:\n\n- `name` (String): The name of the entity, must be unique.\n- `attribute` (String): An attribute of the entity.\n- `type` (String): The type classification for the entity.\n- `isActive` (Boolean): Indicates if the entity is active.\n- `nestedObject` (Object): Contains additional, nested fields like `field1` and `field2`.\n    \n\n## Unique Constraints\n\n- The `name` attribute must be unique among entities. Attempting to create an entity with a duplicate name will result in a `400 Bad Request`.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30606958"
+	},
+	"item": [
+		{
+			"name": "POST /api/entities/",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 201', function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"pm.test('Response has name property', function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.have.property('name');",
+							"    pm.globals.set('createdEntityId', jsonData._id);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"EntityName\",\n  \"attribute\": \"Attribute1\",\n  \"type\": \"Type1\",\n  \"isActive\": true,\n  \"nestedObject\": {\n    \"field1\": \"Field1\",\n    \"field2\": 1\n  }\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/entities/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"entities",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /api/entities/:id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 200', function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test('Response has name property', function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.have.property('name');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/entities/{{createdEntityId}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"entities",
+						"{{createdEntityId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT /api/entities/:id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 200', function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test('Name is updated', function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.name).to.eql('UpdatedEntityName');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"UpdatedEntityName\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/entities/{{createdEntityId}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"entities",
+						"{{createdEntityId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE /api/entities/:id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 204', function () {",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/entities/{{createdEntityId}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"entities",
+						"{{createdEntityId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /api/entities/",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 200', function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test('Response is an array', function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(Array.isArray(jsonData)).to.eql(true);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/entities/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"entities",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

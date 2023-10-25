@@ -130,7 +130,11 @@ We also provide a Postman collection for manual API testing. Follow these steps 
 
 2. **Import Collection**: Open Postman, go to the "Collections" tab, and click on the "Import" button. Upload the JSON file for the FoodLink API Postman collection.
 
-3. **Set Environment Variables**: Go to the gear icon in the upper right corner to manage environments. Add a new environment with variables like `baseUrl` set to your local or production API URL.
+3. **Set Environment Variables**: Go to the gear icon in the upper right corner to manage environments. Add new environment variables:
+
+- `base_url` and set the value to `http://127.0.0.1:3000` or whatever URL and Port you set for you API Docker container.
+
+- `mongo_db_url` and set the value to `http://127.0.0.1:27017/testDB` or whatever URL and Port you set for you MongoDB Docker container.
 
 4. **Run Requests**: Now you can run individual API requests in Postman. Click on a request to load it and then hit the "Send" button to execute it. You can view the results in the lower half of the Postman window.
 

@@ -1,0 +1,234 @@
+{
+	"info": {
+		"_postman_id": "b62eb63d-b1e2-4cd5-ad1b-dd769e174751",
+		"name": "Transactions",
+		"description": "### Overview\n\nThis collection includes tests for creating, retrieving by ID, retrieving by User ID, updating, and deleting transactions.\n\n### API Endpoints\n\n#### POST /api/transactions/\n\nCreates a new transaction in the database. Returns a 201 Created status upon successful creation.  \n**Tests included:**\n\n- Status code is 201\n    \n- The test caches the created transaction's ID for future tests.\n    \n\n#### GET /api/transactions/:id\n\nRetrieves a transaction by its unique ID. Returns a 200 OK status if the transaction exists.  \n**Tests included:**\n\n- Status code is 200\n    \n- Response includes an `amount` property.\n    \n\n#### GET /api/transactions/user/:userId\n\nRetrieves all transactions associated with a given user ID. Returns a 200 OK status.  \n**Tests included:**\n\n- Status code is 200\n    \n- Response is an array.\n    \n\n#### PUT /api/transactions/:id\n\nUpdates an existing transaction by its ID. Returns a 200 OK status if the transaction is successfully updated.  \n**Tests included:**\n\n- Status code is 200\n    \n- The `amount` property is updated to a new value (e.g., 200).\n    \n\n#### DELETE /api/transactions/:id\n\nDeletes a transaction by its ID. Returns a 204 No Content status if the transaction is successfully deleted.  \n**Tests included:**\n\n- Status code is 204\n    \n\n### Data Model\n\nThe transaction object is defined as follows:\n\n- `userId` (String): The ID of the user related to the transaction.\n    \n- `amount` (Number): The amount involved in the transaction.\n    \n- `type` (String): The type of transaction (e.g., credit, debit).",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30606958"
+	},
+	"item": [
+		{
+			"name": "POST /api/transactions/",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 201', function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"let jsonData = pm.response.json();",
+							"pm.environment.set('createdTransactionId', jsonData._id);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const generatedId = \"603cbed0e779f3fb2b5e3eb9\"; \r",
+							"\r",
+							"pm.environment.set(\"testUserId\", generatedId);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"userId\": \"{{testUserId}}\", \"amount\": 100, \"type\": \"credit\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/transactions/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"transactions",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /api/transactions/:id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 200', function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test('Response has amount property', function () {",
+							"    pm.expect(pm.response.json()).to.have.property('amount');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/transactions/{{createdTransactionId}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"transactions",
+						"{{createdTransactionId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /api/transactions/user/:userId",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 200', function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test('Response is an array', function () {",
+							"    pm.expect(Array.isArray(pm.response.json())).to.be.true;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/transactions/user/{{testUserId}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"transactions",
+						"user",
+						"{{testUserId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT /api/transactions/:id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 200', function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test('Response has updated amount', function () {",
+							"    pm.expect(pm.response.json().amount).to.eql(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"amount\": 200}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/transactions/{{createdTransactionId}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"transactions",
+						"{{createdTransactionId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE /api/transactions/:id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 204', function () {",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/transactions/{{createdTransactionId}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"transactions",
+						"{{createdTransactionId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"const generatedId = '603cbed0e779f3fb2b5e3eb9';",
+					"pm.environment.set('testUserId', generatedId);"
+				]
+			}
+		}
+	]
+}

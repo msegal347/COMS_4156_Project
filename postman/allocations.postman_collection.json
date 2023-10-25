@@ -1,0 +1,182 @@
+{
+	"info": {
+		"_postman_id": "c36594be-b443-4f84-be26-d488e05b7ea1",
+		"name": "Allocations",
+		"description": "## Overview\n\nThis collection examines endpoints for creating, retrieving, updating, and deleting allocations.\n\n---\n\n## API Endpoints\n\n### POST /api/allocations/\n\n- **Purpose**: Creates a new allocation resource in the database.\n    \n- **Response**: Returns a 201 Created status on successful creation.\n    \n- **Tests included**:\n    \n    - `Status code is 201`: Checks that the HTTP status code of the response is 201.\n        \n    - `Response has required fields`: Verifies that the response includes properties `name`, `resource`, and `amount`. It also caches the created allocation's ID for subsequent tests.\n        \n\n### GET /api/allocations/:id\n\n- **Purpose**: Fetches an allocation by its ID.\n    \n- **Response**: Returns a 200 OK status if the allocation exists.\n    \n- **Tests included**:\n    \n    - `Status code is 200`: Checks that the HTTP status code of the response is 200.\n        \n    - `Response has name property`: Verifies that the response includes the `name` property.\n        \n\n### PUT /api/allocations/:id\n\n- **Purpose**: Updates an existing allocation by its ID.\n    \n- **Response**: Returns a 200 OK status if the allocation exists and is successfully updated.\n    \n- **Tests included**:\n    \n    - `Status code is 200`: Checks that the HTTP status code of the response is 200.\n        \n    - `Amount is updated to 20`: Verifies that the `amount` property in the response has been updated to 20.\n        \n\n### DELETE /api/allocations/:id\n\n- **Purpose**: Deletes an allocation by its ID.\n    \n- **Response**: Returns a 204 No Content status if the allocation is successfully deleted.\n    \n- **Tests included**:\n    \n    - `Status code is 204`: Checks that the HTTP status code of the response is 204.\n        \n\n---\n\n## Data Model\n\nThe allocation object is defined as follows:\n\n- `name` (String): The name of the allocation.\n    \n- `resource` (String): The resource type to which the allocation pertains.\n    \n- `amount` (Number): The amount allocated.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30606958"
+	},
+	"item": [
+		{
+			"name": "POST /api/allocations/",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 201', function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"pm.test('Response has required fields', function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.have.property('name');",
+							"    pm.expect(jsonData).to.have.property('resource');",
+							"    pm.expect(jsonData).to.have.property('amount');",
+							"    pm.globals.set('createdAllocationId', jsonData._id);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"Test Allocation\",\n  \"resource\": \"Test Resource\",\n  \"amount\": 10\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/allocations/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"allocations",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /api/allocations/:id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 200', function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test('Response has name property', function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.have.property('name');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/allocations/{{createdAllocationId}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"allocations",
+						"{{createdAllocationId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT /api/allocations/:id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 200', function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test('Amount is updated to 20', function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.amount).to.eql(20);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"amount\": 20\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/allocations/{{createdAllocationId}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"allocations",
+						"{{createdAllocationId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE /api/allocations/:id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 204', function () {",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/allocations/{{createdAllocationId}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"allocations",
+						"{{createdAllocationId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

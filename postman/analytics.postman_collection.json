@@ -1,0 +1,181 @@
+{
+	"info": {
+		"_postman_id": "6421b662-4e95-45e5-8326-4ed95745093c",
+		"name": "Analytics",
+		"description": "### Overview\n\nThis collection includes tests for creating, retrieving, updating, and deleting analytics records, along with specific response expectations.\n\n### API Endpoints\n\n#### POST /api/analytics/\n\nCreates a new analytics record and stores it in the database. On successful creation, returns a 201 Created status.\n\n**Tests included:**\n\n- Status code is 201\n    \n- Response includes a `data` property, which is then cached as `createdRecordId` for use in subsequent tests.\n    \n\n#### GET /api/analytics/:id\n\nRetrieves an analytics record by its ID. A 200 OK status is returned if the record exists.\n\n**Tests included:**\n\n- Status code is 200\n    \n- Response includes a `data` property.\n    \n\n#### PUT /api/analytics/:id\n\nUpdates an existing analytics record identified by its ID. Returns a 200 OK status upon successful update.\n\n**Tests included:**\n\n- Status code is 200\n    \n- `data.metric1` and `data.metric2` are updated to new values: `updatedValue1` and `updatedValue2` respectively.\n    \n\n#### DELETE /api/analytics/:id\n\nDeletes an analytics record by its ID. Returns a 204 No Content status upon successful deletion.\n\n**Tests included:**\n\n- Status code is 204\n    \n\n### Data Model\n\nThe analytics record is modeled as a JSON object with a nested `data` object, described by the following schema:\n\n- `data` (Object): Contains metrics of the analytics record\n    \n    - `metric1` (String): Represents a specific analytical value.\n        \n    - `metric2` (String): Represents another specific analytical value.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30606958"
+	},
+	"item": [
+		{
+			"name": "POST /api/analytics/",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 201', function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"pm.test('Response has data property', function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.have.property('data');",
+							"    pm.globals.set('createdRecordId', jsonData._id);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"data\": {\n    \"metric1\": \"value1\",\n    \"metric2\": \"value2\"\n  }\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/analytics/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"analytics",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /api/analytics/:id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 200', function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test('Response has data property', function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.have.property('data');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/analytics/{{createdRecordId}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"analytics",
+						"{{createdRecordId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT /api/analytics/:id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 200', function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test('Metrics are updated', function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.data.metric1).to.eql('updatedValue1');",
+							"    pm.expect(jsonData.data.metric2).to.eql('updatedValue2');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"data\": {\n    \"metric1\": \"updatedValue1\",\n    \"metric2\": \"updatedValue2\"\n  }\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/analytics/{{createdRecordId}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"analytics",
+						"{{createdRecordId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE /api/analytics/:id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 204', function () {",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/analytics/{{createdRecordId}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"analytics",
+						"{{createdRecordId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -24,10 +24,11 @@ afterAll(async () => {
 // Test POST
 describe('POST /api/entities/', () => {
     it('should create a new entity and return 201 status code', async () => {
+        const uniqueName = `EntityName_${Date.now()}`;
         const res = await request(app)
             .post('/api/entities/')
             .send({
-                name: 'EntityName',
+                name: uniqueName,
                 attribute: 'Attribute1',
                 type: 'Type1',
                 isActive: true,
@@ -36,11 +37,11 @@ describe('POST /api/entities/', () => {
                     field2: 1
                 }
             });
-        expect(res.statusCode).toEqual(201);
-        expect(res.body).toHaveProperty('name');
-        createdEntityId = res.body._id;
+            expect(res.statusCode).toEqual(201);
+            expect(res.body).toHaveProperty('name');
+            createdEntityId = res.body._id;
+        });
     });
-});
 
 // Test GET by ID
 describe('GET /api/entities/:id', () => {

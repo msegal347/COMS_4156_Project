@@ -1,8 +1,6 @@
-// allocationIntegration.test.ts
-
 import request from 'supertest';
 import mongoose, { ConnectOptions } from 'mongoose';
-import { app } from '../../src/index';  // Ensure this import path is correct
+import { app } from '../../src/index';
 import { beforeAll, afterAll } from '@jest/globals';
 
 let createdAllocationId: string;
