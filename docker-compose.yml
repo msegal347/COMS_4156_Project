@@ -4,10 +4,15 @@ services:
     build:
       context: .
       dockerfile: docker/api/Dockerfile
+    volumes:
+      - certs:/usr/share/elasticsearch/config/certs
     ports:
       - "3000:3000"
     depends_on:
-      - mongo
+      mongo:
+        condition: service_started
+      setup:
+        condition: service_healthy
     environment:
       MONGO_URI: "mongodb://mongo:27017/testDB"
     networks:
@@ -73,8 +78,8 @@ services:
         fi;
         echo "Setting file permissions"
         chown -R root:root config/certs;
-        find . -type d -exec chmod 750 \{\} \;;
-        find . -type f -exec chmod 640 \{\} \;;
+        find . -type d -exec chmod 777 \{\} \;;
+        find . -type f -exec chmod 777 \{\} \;;
         echo "Waiting for Elasticsearch availability";
         until curl -s --cacert config/certs/ca/ca.crt https://es01:9200 | grep -q "missing authentication credentials"; do sleep 30; done;
         echo "Setting kibana_system password";
@@ -86,6 +91,8 @@ services:
       interval: 1s
       timeout: 5s
       retries: 120
+    networks:
+      - foodlink-network
 
   es01:
     depends_on:
@@ -129,6 +136,8 @@ services:
       interval: 10s
       timeout: 10s
       retries: 120
+    networks:
+      - foodlink-network
 
   es02:
     depends_on:
@@ -168,6 +177,8 @@ services:
       interval: 10s
       timeout: 10s
       retries: 120
+    networks:
+      - foodlink-network
 
   es03:
     depends_on:
@@ -207,6 +218,8 @@ services:
       interval: 10s
       timeout: 10s
       retries: 120
+    networks:
+      - foodlink-network
 
   kibana:
     depends_on:
@@ -238,6 +251,8 @@ services:
       interval: 10s
       timeout: 10s
       retries: 120
+    networks:
+      - foodlink-network
 
 volumes:
   mongo-data:
