@@ -7,40 +7,36 @@ const esClient = new Client({
   node: 'https://es01:9200',
   auth: {
     username: 'elastic',
-    password: process.env.ELASTIC_PASSWORD || 'changeme'
+    password: process.env.ELASTIC_PASSWORD || 'changeme',
   },
   tls: {
     ca: fs.readFileSync('/usr/share/elasticsearch/config/certs/ca/ca.crt'),
-    rejectUnauthorized: false
+    rejectUnauthorized: false,
   },
   headers: {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json'
-  }
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
+  },
 });
 
 export const consoleLogger = morgan('combined');
 
 export const esLogger = morgan(
-  morganJson(
-    {
-      method: ':method',
-      url: ':url',
-      status: ':status',
-      responseTime: ':response-time',
-      length: ':res[content-length]'
-    }
-  ),
+  morganJson({
+    method: ':method',
+    url: ':url',
+    status: ':status',
+    responseTime: ':response-time',
+    length: ':res[content-length]',
+  }),
   {
     stream: {
       write: (message: string) => {
-        esClient.index(
-          {
-            index: 'logs',
-            body: JSON.parse(message)
-          }
-        );
+        esClient.index({
+          index: 'logs',
+          body: JSON.parse(message),
+        });
       },
-    }
+    },
   }
 );
