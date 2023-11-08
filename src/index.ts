@@ -21,7 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Initialize loggers
 app.use(consoleLogger);
-app.use(esLogger);
+if (esLogger) app.use(esLogger);
 
 // Initialize API Gateway
 initializeGateway(app); // Initialize the Gateway passing the express app
