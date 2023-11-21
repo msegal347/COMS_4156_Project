@@ -1,7 +1,7 @@
 // src/pages/SinkPage.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import styles from './SinkPage.module.css'; // Make sure to create this CSS module
+import styles from './SinkPage.module.css';
 
 const SinkPage = () => {
   const [materials, setMaterials] = useState([]);
@@ -10,7 +10,7 @@ const SinkPage = () => {
   useEffect(() => {
     const fetchMaterials = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/api/materials'); // Update with the actual API endpoint
+        const response = await axios.get('http://localhost:3001/api/materials'); 
         setMaterials(response.data);
       } catch (error) {
         console.error('Error fetching materials', error);
@@ -27,9 +27,7 @@ const SinkPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Submit the requests to the backend
       await axios.post('http://localhost:3001/api/requests', { requests });
-      // Handle success (e.g., showing a confirmation message)
     } catch (error) {
       console.error('Error submitting requests', error);
     }

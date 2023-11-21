@@ -14,7 +14,6 @@ import { Bar } from 'react-chartjs-2';
 import GoogleMapReact from 'google-map-react';
 import styles from './AuditorPage.module.css';
 
-// Register ChartJS components
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -30,12 +29,10 @@ const AuditorPage = () => {
   const [analyticsData, setAnalyticsData] = useState({
     materials: [],
     transfers: [],
-    // Add more analytics data as needed
   });
 
   const [locations, setLocations] = useState([]);
 
-  // Chart data and options
   const materialsChartData = {
     labels: analyticsData.materials.map((data) => data.name),
     datasets: [
@@ -74,14 +71,11 @@ const AuditorPage = () => {
   useEffect(() => {
     const fetchAnalyticsData = async () => {
       try {
-        // Replace with the actual API endpoint to fetch analytics data
         const materialsResponse = await axios.get('http://localhost:3001/api/analytics/materials');
         const transfersResponse = await axios.get('http://localhost:3001/api/analytics/transfers');
-        // Fetch more analytics data as needed
         setAnalyticsData({
           materials: materialsResponse.data,
           transfers: transfersResponse.data,
-          // Set more analytics data here
         });
       } catch (error) {
         console.error('Error fetching analytics data', error);
@@ -90,8 +84,8 @@ const AuditorPage = () => {
 
     const fetchLocations = async () => {
         try {
-          const response = await axios.get('http://localhost:3001/api/locations'); // Update with the actual API endpoint
-          setLocations(response.data); // Expecting data in the form [{ lat: Number, lng: Number, name: String }]
+          const response = await axios.get('http://localhost:3001/api/locations');
+          setLocations(response.data);
         } catch (error) {
           console.error('Error fetching location data', error);
         }
@@ -111,16 +105,14 @@ const AuditorPage = () => {
     });
   };
 
-    // Define the map component with markers
     const MapWithMarkers = () => (
         <GoogleMapReact
-          bootstrapURLKeys={{ key: 'YOUR_GOOGLE_MAPS_API_KEY' }} // Replace with your API key
-          defaultCenter={{ lat: 59.95, lng: 30.33 }} // Update this with a central position
+          bootstrapURLKeys={{ key: 'YOUR_GOOGLE_MAPS_API_KEY' }} 
+          defaultCenter={{ lat: 59.95, lng: 30.33 }} 
           defaultZoom={8}
           onGoogleApiLoaded={({ map, maps }) => renderMarkers(map, maps)}
           yesIWantToUseGoogleMapApiInternals
         >
-          {/* If using custom markers */}
           {locations.map((location, index) => (
             <AnyReactComponent
               key={index}

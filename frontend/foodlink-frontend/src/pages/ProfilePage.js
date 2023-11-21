@@ -1,20 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import styles from './ProfilePage.module.css'; // You'll create a corresponding CSS module for styling
+import styles from './ProfilePage.module.css';
 
 const ProfilePage = () => {
   const [profile, setProfile] = useState({
-    // Initial state with placeholder properties
     name: '',
     email: '',
     address: '',
-    // ...other profile fields
   });
 
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        // Replace with actual API call
         const profileData = await axios.get('/api/user/profile');
         setProfile(profileData.data);
       } catch (error) {
@@ -36,12 +33,9 @@ const ProfilePage = () => {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     try {
-      // Replace with actual API call
       await axios.put('/api/user/profile', profile);
-      // Add success notification
     } catch (error) {
       console.error('Error updating profile', error);
-      // Add error notification
     }
   };
 
@@ -49,7 +43,6 @@ const ProfilePage = () => {
     <div className={styles.profileContainer}>
       <h1 className={styles.title}>My Profile</h1>
       <form className={styles.profileForm} onSubmit={handleFormSubmit}>
-        {/* Name field */}
         <label htmlFor="name">Name:</label>
         <input
           id="name"
@@ -59,7 +52,6 @@ const ProfilePage = () => {
           onChange={handleInputChange}
         />
 
-        {/* Email field */}
         <label htmlFor="email">Email:</label>
         <input
           id="email"
@@ -69,7 +61,6 @@ const ProfilePage = () => {
           onChange={handleInputChange}
         />
 
-        {/* Address field */}
         <label htmlFor="address">Address:</label>
         <input
           id="address"
@@ -78,8 +69,6 @@ const ProfilePage = () => {
           value={profile.address}
           onChange={handleInputChange}
         />
-
-        {/* ...other input fields */}
 
         <button type="submit" className={styles.saveButton}>Save Changes</button>
       </form>

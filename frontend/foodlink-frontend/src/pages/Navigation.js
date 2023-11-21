@@ -46,7 +46,6 @@ const Navigation = () => {
             Admin
           </NavLink>
         </li>
-        {/* More navigation items as needed */}
       </ul>
     </nav>
   );

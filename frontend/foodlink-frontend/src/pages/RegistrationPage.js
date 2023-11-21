@@ -28,10 +28,8 @@ const RegistrationPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Replace with your actual registration endpoint
       const response = await axios.post('http://localhost:3001/api/registration', formData);
       console.log(response.data);
-      // Handle navigation to the user-specific page here
     } catch (error) {
       console.error('Registration error', error.response.data);
     }

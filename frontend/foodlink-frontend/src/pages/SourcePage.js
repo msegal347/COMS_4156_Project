@@ -24,9 +24,7 @@ const SourcePage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Implement the logic to submit the data to the backend
       console.log(materialData);
-      // Reset the form after successful submission
       setMaterialData({
         category: '',
         quantity: '',

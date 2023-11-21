@@ -15,23 +15,20 @@
   
   .chartContainer {
     width: 100%;
-    max-width: 800px; /* Adjust as needed */
+    max-width: 800px;
     margin-bottom: 2rem;
   }
-  
-  /* Add styles for the Google Map container */
+
   .mapContainer {
-    height: 400px; /* Set a fixed height for the map */
+    height: 400px; 
     width: 100%;
-    max-width: 800px; /* Adjust as needed */
+    max-width: 800px; 
     margin-bottom: 2rem;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2); /* Optional: Adds a shadow for some depth */
-    border-radius: 8px; /* Optional: Rounds the corners of the map container */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2); 
+    border-radius: 8px; 
   }
   
-  /* Styling for any custom map marker if needed */
   .marker {
-    /* Style your map marker here */
     background-color: #007bff;
     color: #ffffff;
     padding: 4px 8px;
@@ -39,10 +36,9 @@
     font-size: 0.875rem;
   }
   
-  /* Responsive adjustments */
   @media (max-width: 768px) {
     .chartContainer, .mapContainer {
-      width: 100%; /* Full width on smaller screens */
+      width: 100%;
       max-width: 100%;
     }
   }
