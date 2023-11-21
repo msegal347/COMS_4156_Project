@@ -1,0 +1,82 @@
+/* src/pages/SinkPage.module.css */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+  }
+  
+  .title {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .form {
+    max-width: 500px;
+    width: 100%;
+  }
+  
+  .materialItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    background-color: #f7f7f7;
+    padding: 1rem;
+    border-radius: 8px;
+  }
+  
+  .materialName {
+    font-weight: bold;
+  }
+  
+  .availableQuantity {
+    margin-left: 1rem;
+  }
+  
+  .quantityInput {
+    margin-left: auto;
+    padding: 0.5rem;
+    width: 100px;
+  }
+  
+  .submitButton {
+    padding: 0.75rem 1.5rem;
+    background-color: #37a596;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.05rem;
+    margin-top: 1rem;
+  }
+  
+  .submitButton:hover {
+    background-color: #218838;
+  }
+  
+  .materialsTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1rem;
+  }
+  
+  .materialsTable th,
+  .materialsTable td {
+    border: 1px solid #ddd;
+    padding: 0.75rem;
+    text-align: left;
+  }
+  
+  .materialsTable th {
+    background-color: #f3f3f3;
+  }
+  
+  .noAvailable {
+    text-align: center;
+    padding: 1rem;
+  }

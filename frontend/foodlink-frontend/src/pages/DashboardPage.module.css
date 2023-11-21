@@ -1,0 +1,28 @@
+.dashboardContainer {
+    padding: 2rem;
+    background: #f9f9f9;
+    min-height: 100vh;
+  }
+  
+  .title {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+  
+  .dashboardSection {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+  }
+  
+  .dashboardSection h2 {
+    color: #333;
+    margin-bottom: 1.5rem;
+  }
+  
+  /* Add additional styles for table, list items, buttons, etc., as needed */
+  

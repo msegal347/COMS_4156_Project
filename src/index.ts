@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import connectDB from './config/db';
 import logger from './config/logger';
 import { initializeGateway } from './gateway/gateway';
+import registrationRoutes from './routes/registrationRoutes';
 
 // Load environment variables
 dotenv.config();
@@ -24,6 +25,9 @@ app.use(logger);
 
 // Initialize API Gateway
 initializeGateway(app); // Initialize the Gateway passing the express app
+
+// Register the registration routes
+app.use('/api', registrationRoutes);
 
 // Root Endpoint
 app.get('/', (req, res) => {
