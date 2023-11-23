@@ -42,7 +42,6 @@ const DashboardPage = () => {
           <div key={request.id}>{request.summary}</div>
         ))}
       </section>
-
     </div>
   );
 };

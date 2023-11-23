@@ -16,6 +16,32 @@ db.createUser(
 
 // Create collections
 
+// Users Collection
+db.createCollection('Users', {
+  validator: {
+    $jsonSchema: {
+      bsonType: 'object',
+      required: ['email', 'password', 'role'],
+      properties: {
+        email: {
+          bsonType: 'string',
+          description: 'must be a string and is required'
+        },
+        password: {
+          bsonType: 'string',
+          description: 'must be a string and is required'
+        },
+        role: {
+          enum: ['source', 'sink', 'auditor', 'admin'],
+          description: 'can only be one of the enumerated values and is required'
+        },
+      },
+    },
+  },
+  validationLevel: 'moderate',
+  validationAction: 'warn',
+});
+
 // Entity Profiles Collection
 db.createCollection('EntityProfiles', {
   validator: {

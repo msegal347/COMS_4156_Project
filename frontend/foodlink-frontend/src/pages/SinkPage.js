@@ -10,7 +10,7 @@ const SinkPage = () => {
   useEffect(() => {
     const fetchMaterials = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/api/materials'); 
+        const response = await axios.get('http://localhost:3001/api/materials');
         setMaterials(response.data);
       } catch (error) {
         console.error('Error fetching materials', error);
@@ -24,7 +24,7 @@ const SinkPage = () => {
     setRequests({ ...requests, [materialId]: quantity });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async e => {
     e.preventDefault();
     try {
       await axios.post('http://localhost:3001/api/requests', { requests });
@@ -47,7 +47,7 @@ const SinkPage = () => {
           </thead>
           <tbody>
             {materials.length > 0 ? (
-              materials.map((material) => (
+              materials.map(material => (
                 <tr key={material.id}>
                   <td>{material.name}</td>
                   <td>{material.availableQuantity}</td>
@@ -57,7 +57,7 @@ const SinkPage = () => {
                       min="0"
                       max={material.availableQuantity}
                       value={requests[material.id] || ''}
-                      onChange={(e) => handleQuantityChange(material.id, e.target.value)}
+                      onChange={e => handleQuantityChange(material.id, e.target.value)}
                       className={styles.quantityInput}
                     />
                   </td>
@@ -65,12 +65,16 @@ const SinkPage = () => {
               ))
             ) : (
               <tr>
-                <td colSpan="3" className={styles.noAvailable}>No materials available</td>
+                <td colSpan="3" className={styles.noAvailable}>
+                  No materials available
+                </td>
               </tr>
             )}
           </tbody>
         </table>
-        <button type="submit" className={styles.submitButton}>Submit Request</button>
+        <button type="submit" className={styles.submitButton}>
+          Submit Request
+        </button>
       </form>
     </div>
   );

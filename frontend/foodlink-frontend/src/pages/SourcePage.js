@@ -10,18 +10,33 @@ const SourcePage = () => {
   });
 
   const foodCategories = [
-    'Fruits', 'Vegetables', 'Dairy', 'Meat & Poultry', 'Seafood', 'Baked Goods',
-    'Frozen Foods', 'Deli Items', 'Canned Goods', 'Dry Goods & Pasta', 'Snacks',
-    'Beverages', 'Condiments & Sauces', 'Spices & Herbs', 'Breakfast Foods',
-    'Sweets & Chocolates', 'Health Foods', 'International Cuisine', 'Baby Food',
+    'Fruits',
+    'Vegetables',
+    'Dairy',
+    'Meat & Poultry',
+    'Seafood',
+    'Baked Goods',
+    'Frozen Foods',
+    'Deli Items',
+    'Canned Goods',
+    'Dry Goods & Pasta',
+    'Snacks',
+    'Beverages',
+    'Condiments & Sauces',
+    'Spices & Herbs',
+    'Breakfast Foods',
+    'Sweets & Chocolates',
+    'Health Foods',
+    'International Cuisine',
+    'Baby Food',
     'Pet Food',
   ];
 
-  const handleChange = (e) => {
+  const handleChange = e => {
     setMaterialData({ ...materialData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async e => {
     e.preventDefault();
     try {
       console.log(materialData);
@@ -38,7 +53,7 @@ const SourcePage = () => {
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Material Submission</h1>
-        <form className={styles.form} onSubmit={handleSubmit}>
+      <form className={styles.form} onSubmit={handleSubmit}>
         <div className={styles.inputField}>
           <label htmlFor="category">Food Category</label>
           <select
@@ -79,7 +94,9 @@ const SourcePage = () => {
           />
         </div>
         <div className={styles.buttonContainer}>
-          <button className={styles.submitButton} type="submit">Submit</button>
+          <button className={styles.submitButton} type="submit">
+            Submit
+          </button>
         </div>
       </form>
     </div>

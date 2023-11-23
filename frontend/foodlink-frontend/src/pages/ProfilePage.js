@@ -22,15 +22,15 @@ const ProfilePage = () => {
     fetchProfile();
   }, []);
 
-  const handleInputChange = (event) => {
+  const handleInputChange = event => {
     const { name, value } = event.target;
     setProfile(prevProfile => ({
       ...prevProfile,
-      [name]: value
+      [name]: value,
     }));
   };
 
-  const handleFormSubmit = async (event) => {
+  const handleFormSubmit = async event => {
     event.preventDefault();
     try {
       await axios.put('/api/user/profile', profile);
@@ -70,7 +70,9 @@ const ProfilePage = () => {
           onChange={handleInputChange}
         />
 
-        <button type="submit" className={styles.saveButton}>Save Changes</button>
+        <button type="submit" className={styles.saveButton}>
+          Save Changes
+        </button>
       </form>
     </div>
   );

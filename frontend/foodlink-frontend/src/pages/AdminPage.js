@@ -17,14 +17,15 @@ const AdminPage = () => {
     const fetchData = async () => {
       try {
         // Simultaneous requests if possible
-        const [usersRes, resourcesRes, transactionsRes, auditLogsRes, issuesRes, analyticsRes] = await Promise.all([
-          axios.get('/api/users'),
-          axios.get('/api/resources'),
-          axios.get('/api/transactions'),
-          axios.get('/api/audit-logs'),
-          axios.get('/api/support-issues'),
-          axios.get('/api/analytics')
-        ]);
+        const [usersRes, resourcesRes, transactionsRes, auditLogsRes, issuesRes, analyticsRes] =
+          await Promise.all([
+            axios.get('/api/users'),
+            axios.get('/api/resources'),
+            axios.get('/api/transactions'),
+            axios.get('/api/audit-logs'),
+            axios.get('/api/support-issues'),
+            axios.get('/api/analytics'),
+          ]);
 
         // Update state with fetched data
         setUsers(usersRes.data);
@@ -43,11 +44,11 @@ const AdminPage = () => {
   }, []);
 
   // Handle changes in settings
-  const handleSettingsChange = (event) => {
+  const handleSettingsChange = event => {
     const { name, value } = event.target;
     setSettings(prevSettings => ({
       ...prevSettings,
-      [name]: value
+      [name]: value,
     }));
     // TODO: Implement logic to persist changes to backend
   };
@@ -56,7 +57,6 @@ const AdminPage = () => {
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Admin Dashboard</h1>
-      
 
       {/* User Management Section */}
       <section className={styles.section}>
@@ -88,8 +88,8 @@ const AdminPage = () => {
         <div>{JSON.stringify(analytics)}</div>
       </section>
 
-        {/* System Settings Section */}
-        <section className={styles.section}>
+      {/* System Settings Section */}
+      <section className={styles.section}>
         <h2>System Settings</h2>
         <label htmlFor="sampleSetting">Sample Setting:</label>
         <input

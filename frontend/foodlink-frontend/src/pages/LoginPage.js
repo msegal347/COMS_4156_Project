@@ -11,11 +11,11 @@ const LoginPage = () => {
   const [error, setError] = useState('');
   const Navigate = useNavigate();
 
-  const handleChange = (e) => {
+  const handleChange = e => {
     setLoginData({ ...loginData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async e => {
     e.preventDefault();
     try {
       const response = await axios.post('http://localhost:3001/api/login', loginData);
@@ -66,7 +66,9 @@ const LoginPage = () => {
         </div>
         {error && <div className={styles.error}>{error}</div>}
         <div className={styles.buttonContainer}>
-          <button className={styles.submitButton} type="submit">Login</button>
+          <button className={styles.submitButton} type="submit">
+            Login
+          </button>
         </div>
       </form>
     </div>
