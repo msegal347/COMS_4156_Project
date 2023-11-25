@@ -18,26 +18,26 @@ const RegistrationPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Assuming getRoles is already defined and returns an array of roles
     const fetchRoles = async () => {
       try {
-        const roles = await getRoles();
-        setRoles(roles);
+        const rolesData = await getRoles();
+        setRoles(rolesData);
       } catch (error) {
-        setError('Failed to fetch roles');
+        const errorMessage = error.response?.data?.message || error.message || 'Failed to fetch roles';
+        setError(errorMessage);
+        console.error(errorMessage);
       }
     };
-
+  
     fetchRoles();
   }, []);
+  
 
   const validateForm = () => {
-    // Simple validation logic (could be expanded)
     if (!formData.email || !formData.password || !formData.role) {
       setError('Please fill in all fields');
       return false;
     }
-    // Add any other validation checks here
     return true;
   };
 
@@ -57,7 +57,6 @@ const RegistrationPage = () => {
       const response = await axios.post('http://localhost:3001/api/registration', formData);
       setSuccess('Registration successful!');
       setLoading(false);
-      // Redirect to login or another page
       navigate('/login');
     } catch (error) {
       setError(error.response?.data?.message || 'Registration failed');

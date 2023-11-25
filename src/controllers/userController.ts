@@ -4,11 +4,11 @@ import UserService from '../services/userService';
 class UserController {
   async register(req: Request, res: Response) {
     try {
-      const { email, password, role } = req.body;
+      const { email, password, role, address } = req.body;
       if (!email || !password || !role) {
         return res.status(400).json({ message: 'Missing required fields' });
       }
-      const user = await UserService.register(email, password, role);
+      const user = await UserService.register(email, password, role, address);
       const { password: _, ...userWithoutPassword } = user.toObject();
       res.status(201).json(userWithoutPassword);
     } catch (error) {

@@ -24,4 +24,31 @@
     margin-bottom: 1.5rem;
   }
   
+  .transactionTable {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .transactionTable th,
+  .transactionTable td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .transactionTable th {
+    background-color: #f2f2f2;
+    color: black;
+  }
+  
+  .selectedRow {
+    background-color: #e8e8e8;
+  }
+  
+  .mapContainer {
+    height: 400px;
+    width: '100%';
+    position: 'relative';
+    margin-top: '1rem';
+  }
   
