@@ -32,23 +32,32 @@ const AuditorPage = () => {
     { id: 't5', foodType: 'Peaches', quantity: 80, start: { lat: 40.730610, lng: -73.935242 }, end: { lat: 40.7128, lng: -74.0060 } },
   ];
 
+  // Placeholder for available materials
+  const availableMaterials = [
+    { name: 'Apples', quantity: 200 },
+    { name: 'Oranges', quantity: 150 },
+    { name: 'Bananas', quantity: 180 },
+    { name: 'Grapes', quantity: 210 },
+    { name: 'Peaches', quantity: 170 },
+  ];
+
   const materialsChartData = {
-    labels: analyticsData.materials.map(material => material.name),
+    labels: availableMaterials.map(material => material.name),
     datasets: [
       {
-        label: 'Quantity',
-        data: analyticsData.materials.map(material => material.quantity),
+        label: 'Available Quantity',
+        data: availableMaterials.map(material => material.quantity),
         backgroundColor: 'rgba(53, 162, 235, 0.5)',
       },
     ],
   };
 
   const transfersChartData = {
-    labels: analyticsData.transfers.map(transfer => transfer.material),
+    labels: placeholderTransactions.map(transfer => transfer.foodType),
     datasets: [
       {
-        label: 'Quantity',
-        data: analyticsData.transfers.map(transfer => transfer.quantity),
+        label: 'Transferred Quantity',
+        data: placeholderTransactions.map(transfer => transfer.quantity),
         backgroundColor: 'rgba(255, 99, 132, 0.5)',
       },
     ],
