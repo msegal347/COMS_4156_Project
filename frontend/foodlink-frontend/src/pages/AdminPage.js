@@ -1,10 +1,30 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import styles from './AdminPage.module.css';
+import axios from 'axios';
+
+const CollapsibleComponent = ({ title, children }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <div className={styles.collapsibleComponent}>
+      <button className={styles.collapsibleTitle} onClick={() => setIsOpen(!isOpen)}>
+        {title}
+      </button>
+      {isOpen && <div className={styles.collapsibleContent}>{children}</div>}
+    </div>
+  );
+};
 
 const AdminPage = () => {
+  // Placeholder users for the user management component
+  const placeholderUsers = [
+    { id: 'u1', name: 'Alice', role: 'source' },
+    { id: 'u2', name: 'Bob', role: 'sink' },
+    { id: 'u3', name: 'Charlie', role: 'auditor' },
+  ];
+
   // States for various sections
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState(placeholderUsers);
   const [resources, setResources] = useState([]);
   const [transactions, setTransactions] = useState([]);
   const [analytics, setAnalytics] = useState({});
@@ -17,18 +37,15 @@ const AdminPage = () => {
     const fetchData = async () => {
       try {
         // Simultaneous requests if possible
-        const [usersRes, resourcesRes, transactionsRes, auditLogsRes, issuesRes, analyticsRes] =
-          await Promise.all([
-            axios.get('/api/users'),
-            axios.get('/api/resources'),
-            axios.get('/api/transactions'),
-            axios.get('/api/audit-logs'),
-            axios.get('/api/support-issues'),
-            axios.get('/api/analytics'),
-          ]);
+        const [resourcesRes, transactionsRes, auditLogsRes, issuesRes, analyticsRes] = await Promise.all([
+          axios.get('/api/resources'),
+          axios.get('/api/transactions'),
+          axios.get('/api/audit-logs'),
+          axios.get('/api/support-issues'),
+          axios.get('/api/analytics'),
+        ]);
 
         // Update state with fetched data
-        setUsers(usersRes.data);
         setResources(resourcesRes.data);
         setTransactions(transactionsRes.data);
         setAuditLogs(auditLogsRes.data);
@@ -44,9 +61,9 @@ const AdminPage = () => {
   }, []);
 
   // Handle changes in settings
-  const handleSettingsChange = event => {
+  const handleSettingsChange = (event) => {
     const { name, value } = event.target;
-    setSettings(prevSettings => ({
+    setSettings((prevSettings) => ({
       ...prevSettings,
       [name]: value,
     }));
@@ -59,12 +76,33 @@ const AdminPage = () => {
       <h1 className={styles.title}>Admin Dashboard</h1>
 
       {/* User Management Section */}
-      <section className={styles.section}>
-        <h2>User Management</h2>
-        {users.map(user => (
-          <div key={user.id}>{user.name}</div>
-        ))}
-      </section>
+      <CollapsibleComponent title="User Management">
+        <table className={styles.userTable}>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Role</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {users.map((user) => (
+              <tr key={user.id}>
+                <td>{user.id}</td>
+                <td>{user.name}</td>
+                <td>{user.role}</td>
+                <td>
+                  {/* Buttons for editing and removing users could be added here */}
+                  <button onClick={() => alert('Edit user')}>Edit</button>
+                  <button onClick={() => alert('Remove user')}>Remove</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <button onClick={() => alert('Create new user')}>Create New User</button>
+      </CollapsibleComponent>
 
       {/* Resource Oversight Section */}
       <section className={styles.section}>
