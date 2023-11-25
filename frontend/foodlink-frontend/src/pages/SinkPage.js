@@ -4,7 +4,16 @@ import axios from 'axios';
 import styles from './SinkPage.module.css';
 
 const SinkPage = () => {
-  const [materials, setMaterials] = useState([]);
+
+  const placeholderMaterials = [
+    { id: 1, name: 'Apples', availableQuantity: 200 },
+    { id: 2, name: 'Oranges', availableQuantity: 150 },
+    { id: 3, name: 'Bananas', availableQuantity: 180 },
+    { id: 4, name: 'Grapes', availableQuantity: 210 },
+    { id: 5, name: 'Peaches', availableQuantity: 170 },
+  ];
+
+  const [materials, setMaterials] = useState(placeholderMaterials);
   const [requests, setRequests] = useState({});
 
   useEffect(() => {
@@ -26,12 +35,20 @@ const SinkPage = () => {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    try {
-      await axios.post('http://localhost:3001/api/requests', { requests });
-    } catch (error) {
-      console.error('Error submitting requests', error);
-    }
+    // Logic to handle submission
+    console.log('Submitted requests:', requests);
+    // Reset request quantities after submission
+    setRequests({});
   };
+
+  //const handleSubmit = async e => {
+   // e.preventDefault();
+   // try {
+    //  await axios.post('http://localhost:3001/api/requests', { requests });
+   // } catch (error) {
+   //   console.error('Error submitting requests', error);
+   // }
+ // };
 
   return (
     <div className={styles.container}>
