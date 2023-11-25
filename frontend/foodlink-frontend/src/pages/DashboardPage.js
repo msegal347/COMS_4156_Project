@@ -17,7 +17,7 @@ const DashboardPage = () => {
   const placeholderTransactions = [
     {
       id: 't1',
-      materials: [{ type: 'Apples', quantity: 100 }],
+      materials: [{ foodType: 'Apples', quantity: 100 }],
       origin: 'Central Park, NY',
       destination: 'Times Square, NY',
       orderDate: new Date('2023-11-25T09:00:00Z'),
@@ -27,7 +27,7 @@ const DashboardPage = () => {
     },
     {
       id: 't2',
-      materials: [{ type: 'Oranges', quantity: 150 }],
+      materials: [{ foodType: 'Oranges', quantity: 150 }],
       origin: 'Empire State Building, NY',
       destination: 'Statue of Liberty, NY',
       orderDate: new Date('2023-11-25T10:00:00Z'),
@@ -37,7 +37,7 @@ const DashboardPage = () => {
     },
     {
       id: 't3',
-      materials: [{ type: 'Bananas', quantity: 120 }],
+      materials: [{ foodType: 'Bananas', quantity: 120 }],
       origin: 'Brooklyn Bridge, NY',
       destination: 'Wall Street, NY',
       orderDate: new Date('2023-11-25T11:00:00Z'),
@@ -47,7 +47,7 @@ const DashboardPage = () => {
     },
     {
       id: 't4',
-      materials: [{ type: 'Grapes', quantity: 90 }],
+      materials: [{ foodType: 'Grapes', quantity: 90 }],
       origin: 'Madison Square Garden, NY',
       destination: 'Yankee Stadium, NY',
       orderDate: new Date('2023-11-25T12:00:00Z'),
@@ -57,7 +57,7 @@ const DashboardPage = () => {
     },
     {
       id: 't5',
-      materials: [{ type: 'Peaches', quantity: 80 }],
+      materials: [{ foodType: 'Peaches', quantity: 80 }],
       origin: 'Central Park Zoo, NY',
       destination: 'Coney Island, NY',
       orderDate: new Date('2023-11-25T13:00:00Z'),
@@ -154,7 +154,7 @@ const DashboardPage = () => {
       <thead>
         <tr>
           <th>ID</th>
-          <th>Type</th>
+          <th>Food Type</th>
           <th>Quantity</th>
           <th>Start</th>
           <th>End</th>
@@ -167,8 +167,8 @@ const DashboardPage = () => {
         {placeholderTransactions.map((transaction) => (
           <tr key={transaction.id}>
             <td>{transaction.id}</td>
-            <td>{transaction.type}</td>
-            <td>{transaction.quantity}</td>
+            <td>{transaction.materials[0].foodType}</td>
+            <td>{transaction.materials[0].quantity}</td>
             <td>{`${transaction.start.lat.toFixed(4)}, ${transaction.start.lng.toFixed(4)}`}</td>
             <td>{`${transaction.end.lat.toFixed(4)}, ${transaction.end.lng.toFixed(4)}`}</td>
             <td>{transaction.orderDate.toLocaleString()}</td>
@@ -181,6 +181,7 @@ const DashboardPage = () => {
       </tbody>
     </table>
   );
+  
 
   const Map = ({ transaction }) => {
     useEffect(() => {

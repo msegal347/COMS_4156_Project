@@ -25,13 +25,57 @@ const AuditorPage = () => {
 
   // Define placeholder transaction data
   const placeholderTransactions = [
-    { id: 't1', foodType: 'Apples', quantity: 100, start: { lat: 40.7128, lng: -74.0060 }, end: { lat: 40.7580, lng: -73.9855 } },
-    { id: 't2', foodType: 'Oranges', quantity: 150, start: { lat: 40.730610, lng: -73.935242 }, end: { lat: 40.7128, lng: -74.0060 } },
-    { id: 't3', foodType: 'Bananas', quantity: 120, start: { lat: 40.7580, lng: -73.9855 }, end: { lat: 40.730610, lng: -73.935242 } },
-    { id: 't4', foodType: 'Grapes', quantity: 90, start: { lat: 40.7128, lng: -74.0060 }, end: { lat: 40.7580, lng: -73.9855 } },
-    { id: 't5', foodType: 'Peaches', quantity: 80, start: { lat: 40.730610, lng: -73.935242 }, end: { lat: 40.7128, lng: -74.0060 } },
+    {
+      id: 't1',
+      materials: [{ foodType: 'Apples', quantity: 100 }],
+      origin: 'Central Park, NY',
+      destination: 'Times Square, NY',
+      orderDate: new Date('2023-11-25T09:00:00Z'),
+      expectedDelivery: new Date('2023-11-26T09:00:00Z'),
+      start: { lat: 40.7812, lng: -73.9665 },
+      end: { lat: 40.7580, lng: -73.9855 },
+    },
+    {
+      id: 't2',
+      materials: [{ foodType: 'Oranges', quantity: 150 }],
+      origin: 'Empire State Building, NY',
+      destination: 'Statue of Liberty, NY',
+      orderDate: new Date('2023-11-25T10:00:00Z'),
+      expectedDelivery: new Date('2023-11-26T10:00:00Z'),
+      start: { lat: 40.748817, lng: -73.985428 },
+      end: { lat: 40.689247, lng: -74.044502 },
+    },
+    {
+      id: 't3',
+      materials: [{ foodType: 'Bananas', quantity: 120 }],
+      origin: 'Brooklyn Bridge, NY',
+      destination: 'Wall Street, NY',
+      orderDate: new Date('2023-11-25T11:00:00Z'),
+      expectedDelivery: new Date('2023-11-26T11:00:00Z'),
+      start: { lat: 40.7061, lng: -73.9969 },
+      end: { lat: 40.7074, lng: -74.0113 },
+    },
+    {
+      id: 't4',
+      materials: [{ foodType: 'Grapes', quantity: 90 }],
+      origin: 'Madison Square Garden, NY',
+      destination: 'Yankee Stadium, NY',
+      orderDate: new Date('2023-11-25T12:00:00Z'),
+      expectedDelivery: new Date('2023-11-26T12:00:00Z'),
+      start: { lat: 40.7505, lng: -73.9934 },
+      end: { lat: 40.8296, lng: -73.9262 },
+    },
+    {
+      id: 't5',
+      materials: [{ foodType: 'Peaches', quantity: 80 }],
+      origin: 'Central Park Zoo, NY',
+      destination: 'Coney Island, NY',
+      orderDate: new Date('2023-11-25T13:00:00Z'),
+      expectedDelivery: new Date('2023-11-26T13:00:00Z'),
+      start: { lat: 40.7678, lng: -73.9718 },
+      end: { lat: 40.5749, lng: -73.9857 },
+    },
   ];
-
   // Placeholder for available materials
   const availableMaterials = [
     { name: 'Apples', quantity: 200 },
@@ -53,15 +97,15 @@ const AuditorPage = () => {
   };
 
   const transfersChartData = {
-    labels: placeholderTransactions.map(transfer => transfer.foodType),
+    labels: placeholderTransactions.map(transfer => transfer.materials[0].foodType),
     datasets: [
       {
         label: 'Transferred Quantity',
-        data: placeholderTransactions.map(transfer => transfer.quantity),
+        data: placeholderTransactions.map(transfer => transfer.materials[0].quantity),
         backgroundColor: 'rgba(255, 99, 132, 0.5)',
       },
     ],
-  };
+  };  
 
   const chartOptions = {
     responsive: true,
@@ -189,34 +233,35 @@ const AuditorPage = () => {
     <table className={styles.transactionTable}>
       <thead>
         <tr>
-          <th>Select</th>
           <th>ID</th>
           <th>Food Type</th>
           <th>Quantity</th>
-          <th>Source</th>
-          <th>Destination</th>
+          <th>Start</th>
+          <th>End</th>
+          <th>Order Date</th>
+          <th>Expected Delivery</th>
+          <th>Select</th>
         </tr>
       </thead>
       <tbody>
-        {placeholderTransactions.map(transaction => (
-          <tr key={transaction.id} className={selectedTransaction?.id === transaction.id ? styles.selectedRow : ''}>
-            <td>
-              <input
-                type="checkbox"
-                checked={selectedTransaction?.id === transaction.id}
-                onChange={() => handleTransactionSelect(transaction)}
-              />
-            </td>
+        {placeholderTransactions.map((transaction) => (
+          <tr key={transaction.id}>
             <td>{transaction.id}</td>
-            <td>{transaction.foodType}</td>
-            <td>{transaction.quantity}</td>
-            <td>{transaction.start.lat.toFixed(4)}, {transaction.start.lng.toFixed(4)}</td>
-            <td>{transaction.end.lat.toFixed(4)}, {transaction.end.lng.toFixed(4)}</td>
+            <td>{transaction.materials[0].foodType}</td>
+            <td>{transaction.materials[0].quantity}</td>
+            <td>{`${transaction.start.lat.toFixed(4)}, ${transaction.start.lng.toFixed(4)}`}</td>
+            <td>{`${transaction.end.lat.toFixed(4)}, ${transaction.end.lng.toFixed(4)}`}</td>
+            <td>{transaction.orderDate.toLocaleString()}</td>
+            <td>{transaction.expectedDelivery.toLocaleString()}</td>
+            <td>
+              <button onClick={() => handleTransactionSelect(transaction)}>Select</button>
+            </td>
           </tr>
         ))}
       </tbody>
     </table>
   );
+  
 
   return (
     <div className={styles.container}>
