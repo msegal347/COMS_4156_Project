@@ -299,24 +299,6 @@ const AdminPage = () => {
         </div>
       </CollapsibleComponent>
 
-      {/* System Settings Section */}
-      <section className={styles.section}>
-        <h2>System Settings</h2>
-        <label htmlFor="sampleSetting">Sample Setting:</label>
-        <input
-          type="text"
-          id="sampleSetting"
-          name="sampleSetting"
-          value={settings.sampleSetting || ''}
-          onChange={handleSettingsChange}
-        />
-        {/* Displaying the current settings */}
-        <div>
-          <h3>Current Settings:</h3>
-          <pre>{JSON.stringify(settings, null, 2)}</pre>
-        </div>
-      </section>
-
       {/* Audit Logs Section */}
       <CollapsibleComponent title="Audit Logs">
         <table className={styles.auditLogsTable}>
@@ -340,14 +322,6 @@ const AdminPage = () => {
           </tbody>
         </table>
       </CollapsibleComponent>
-
-      {/* Support and Issue Management Section */}
-      <section className={styles.section}>
-        <h2>Support and Issue Management</h2>
-        {issues.map(issue => (
-          <div key={issue.id}>{issue.description}</div>
-        ))}
-      </section>
     </div>
   );
 };
