@@ -1,28 +1,16 @@
 {
-    "compilerOptions": {
-      "target": "es6",
-      "module": "CommonJS", 
-      "moduleResolution": "node",
-      "outDir": "./dist",
-      "emitDecoratorMetadata": true,
-      "experimentalDecorators": true,
-      "sourceMap": true,
-      "esModuleInterop": true,
-      "resolveJsonModule": true,
-      "allowJs": true,
-		  "checkJs": true,
-      "skipLibCheck": true,
-      "forceConsistentCasingInFileNames": true,
-      "strict": true,
-      "noImplicitAny": false,
-      "strictNullChecks": true,
-      "strictFunctionTypes": true,
-      "strictBindCallApply": true,
-      "strictPropertyInitialization": false,
-      "noImplicitThis": true,
-      "alwaysStrict": true
-    },
-    "include": ["src/**/*.ts"],
-    "exclude": ["node_modules"]
+	"compilerOptions": {
+		"target": "ES2022",
+		"module": "NodeNext",
+		"allowJs": true,
+		"outDir": "./dist",
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true,
+		"strict": true,
+    	"noImplicitAny": false,
+		"skipLibCheck": true,
+		"declaration": true,
+		"composite": true,
+		"sourceMap": true
+	}
 }
-  

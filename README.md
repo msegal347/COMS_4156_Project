@@ -119,6 +119,11 @@ We use Jest for unit testing. To run tests with code coverage, execute:
 npm run test
 ```
 
+For more detailed infromation on the Fuzz Testing, execute: 
+
+```
+npm run fuzz
+```
 ### Continuous Integration
 
 GitHub Workflows are set up for Continuous Integration. On each push or pull request to the `main` branch, the workflow will:
