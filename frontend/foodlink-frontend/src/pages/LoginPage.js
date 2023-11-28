@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import styles from './LoginPage.module.css';
+import { loginUser } from '../services/api';
 
 const LoginPage = () => {
   const [loginData, setLoginData] = useState({
@@ -9,7 +9,7 @@ const LoginPage = () => {
     password: '',
   });
   const [error, setError] = useState('');
-  const Navigate = useNavigate();
+  const navigate = useNavigate();
 
   const handleChange = e => {
     setLoginData({ ...loginData, [e.target.name]: e.target.value });
@@ -17,26 +17,32 @@ const LoginPage = () => {
 
   const handleSubmit = async e => {
     e.preventDefault();
+    setError('');
     try {
-      const response = await axios.post('http://localhost:3001/api/login', loginData);
+      const response = await loginUser(loginData);
       const { role, token } = response.data;
 
       localStorage.setItem('token', token);
 
-      if (role === 'source') {
-        Navigate('/source');
-      } else if (role === 'sink') {
-        Navigate('/sink');
-      } else if (role === 'auditor') {
-        Navigate('/auditor');
-      } else if (role === 'admin') {
-        Navigate('/admin');
-      } else {
-        Navigate('/');
+      switch (role) {
+        case 'source':
+          navigate('/source');
+          break;
+        case 'sink':
+          navigate('/sink');
+          break;
+        case 'auditor':
+          navigate('/auditor');
+          break;
+        case 'admin':
+          navigate('/admin');
+          break;
+        default:
+          navigate('/');
       }
-    } catch (error) {
+    } catch (err) {
       setError('Invalid login credentials');
-      console.error('Login error', error.response.data);
+      console.error('Login error', err.response?.data || err.message);
     }
   };
 

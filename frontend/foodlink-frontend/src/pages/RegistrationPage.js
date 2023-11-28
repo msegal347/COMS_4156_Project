@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getRoles } from '../services/roleService';
-import axios from 'axios';
+import { registerUser } from '../services/api';
 import styles from './RegistrationPage.module.css';
 
 const RegistrationPage = () => {
-  const [roles, setRoles] = useState([]);
+  const roles = ['source', 'sink', 'auditor', 'admin'];
+  
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -16,22 +16,6 @@ const RegistrationPage = () => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const fetchRoles = async () => {
-      try {
-        const rolesData = await getRoles();
-        setRoles(rolesData);
-      } catch (error) {
-        const errorMessage = error.response?.data?.message || error.message || 'Failed to fetch roles';
-        setError(errorMessage);
-        console.error(errorMessage);
-      }
-    };
-  
-    fetchRoles();
-  }, []);
-  
 
   const validateForm = () => {
     if (!formData.email || !formData.password || !formData.role) {
@@ -54,7 +38,7 @@ const RegistrationPage = () => {
 
     setLoading(true);
     try {
-      const response = await axios.post('http://localhost:3001/api/registration', formData);
+      await registerUser(formData);
       setSuccess('Registration successful!');
       setLoading(false);
       navigate('/login');
@@ -91,7 +75,12 @@ const RegistrationPage = () => {
           />
         </div>
         <div className={styles.inputField}>
-          <select name="role" value={formData.role} onChange={handleChange} required>
+          <select
+            name="role"
+            value={formData.role}
+            onChange={handleChange}
+            required
+          >
             <option value="">Select Role</option>
             {roles.map((role, index) => (
               <option key={index} value={role}>

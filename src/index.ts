@@ -4,8 +4,10 @@ import dotenv from 'dotenv';
 import connectDB from './config/db';
 import logger from './config/logger';
 import { initializeGateway } from './gateway/gateway';
-import registrationRoutes from './routes/registrationRoutes';
+import registrationRoutes from './routes/userRoutes';
 import roleRoutes from './routes/roleRoutes';
+import { Server as WebSocketServer } from 'ws';
+import http from 'http';
 
 // Load environment variables
 dotenv.config();
@@ -15,6 +17,21 @@ connectDB();
 
 // Initialize the Express application
 export const app = express();
+const server = http.createServer(app);
+const wss = new WebSocketServer({ server });
+
+wss.on('connection', (ws) => {
+  console.log('WebSocket connection established.');
+
+  ws.on('message', (message) => {
+    console.log('Received:', message);
+    ws.send(`Echoing: ${message}`);
+  });
+
+  ws.on('close', () => {
+    console.log('WebSocket connection closed.');
+  });
+});
 
 // Use middlewares
 app.use(cors());
@@ -25,7 +42,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(logger);
 
 // Initialize API Gateway
-initializeGateway(app); // Initialize the Gateway passing the express app
+initializeGateway(app);
 
 // Register the registration routes
 app.use('/api', registrationRoutes);
@@ -37,13 +54,11 @@ app.get('/', (req, res) => {
 });
 
 // Port and Server Initialization
-const port = process.env.PORT ?? 3001;
-
-let server: any;
+const port = 3001;
 
 if (process.env.NODE_ENV !== 'test') {
-  server = app.listen(port, () => {
-    console.log(`FoodLink API listening at http://localhost:${port}`);
+  server.listen(port, () => {
+    console.log(`FoodLink API with WebSocket listening at http://localhost:${port}`);
   });
 }
 

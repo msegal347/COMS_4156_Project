@@ -20,9 +20,9 @@ import {
   updateRecordById,
   deleteRecordById,
 } from '../controllers/analyticsController';
+import userRoutes from '../routes/userRoutes';
 
 export const initializeGateway = (app: Express) => {
-  // Initialize logistics routes with controllers
   const logisticsRouter = createLogisticsRoutes({
     createRoute,
     getRouteById,
@@ -32,7 +32,6 @@ export const initializeGateway = (app: Express) => {
     getCoordinates,
   });
 
-  // Initialize analytics routes with controllers
   const analyticsRouter = createAnalyticsRoutes({
     createRecord,
     getRecordById,
@@ -40,7 +39,6 @@ export const initializeGateway = (app: Express) => {
     deleteRecordById,
   });
 
-  // Use the routers as middleware on their respective paths
   app.use('/api/logistics', logisticsRouter);
   app.use('/api/analytics', analyticsRouter);
   app.use('/api/entities', entityRoutes);
@@ -48,4 +46,5 @@ export const initializeGateway = (app: Express) => {
   app.use('/api/resources', resourceRoutes);
   app.use('/api/transactions', transactionRoutes);
   app.use('/api/allocations', allocationRoutes);
+  app.use('/api', userRoutes);
 };

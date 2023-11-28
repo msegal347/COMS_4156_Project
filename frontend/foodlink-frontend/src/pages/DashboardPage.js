@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import GoogleMapReact from 'google-map-react';
 import styles from './DashboardPage.module.css';
+import { getRecentTransactions, getPendingRequests } from '../services/api';
 
 const AnyReactComponent = ({ text }) => <div>{text}</div>;
 
@@ -11,7 +12,8 @@ const DashboardPage = () => {
     pendingRequests: [],
   });
   const [selectedTransaction, setSelectedTransaction] = useState(null);
-  const [showDetails, setShowDetails] = useState(null);
+  const mapRef = useRef(null);
+  const mapsRef = useRef(null);
   
 
   const placeholderTransactions = [
@@ -67,14 +69,11 @@ const DashboardPage = () => {
     },
   ];
 
-  const mapRef = useRef(null);
-  const mapsRef = useRef(null);
-
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
-        const recentTransactionsData = await axios.get('/api/transactions/recent');
-        const pendingRequestsData = await axios.get('/api/requests/pending');
+        const recentTransactionsData = await getRecentTransactions();
+        const pendingRequestsData = await getPendingRequests();
         setDashboardData({
           recentTransactions: recentTransactionsData.data,
           pendingRequests: pendingRequestsData.data,
@@ -87,7 +86,6 @@ const DashboardPage = () => {
     fetchDashboardData();
   }, []);
 
-  // Handle the details pop-out for materials and quantities
   const toggleDetails = (id) => {
     setShowDetails(showDetails === id ? null : id);
   };

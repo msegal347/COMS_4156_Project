@@ -14,8 +14,6 @@ db.createUser(
   },
 );
 
-// Create collections
-
 // Users Collection
 db.createCollection('Users', {
   validator: {
@@ -97,6 +95,7 @@ db.createCollection('Inventory', {
             },
             quantity: {
               bsonType: 'int',
+              minimum: 0, 
             },
             expirationDate: {
               bsonType: 'date',
@@ -106,7 +105,10 @@ db.createCollection('Inventory', {
       },
     },
   },
+  validationLevel: 'moderate',
+  validationAction: 'warn',
 });
+
 
 // Transaction History Collection
 db.createCollection('Transactions', {
@@ -245,7 +247,14 @@ db.Logistics.createIndex({ 'dropOffLocation.latitude': 1, 'dropOffLocation.longi
 
 // Seed the database
 db.EntityProfiles.insertOne({ entityID: 'test_entity', role: 'source', apiKey: 'key', coordinates: { latitude: 0.5, longitude: 0.5 } });
-db.Inventory.insertOne({ resourceID: 'test_resource', metadata: { type: 'type', quantity: 0, expirationDate: new Date() } });
+db.Inventory.insertOne({
+  resourceID: 'test_resource',
+  metadata: {
+    type: 'Apples',
+    quantity: 100, 
+    expirationDate: new Date()
+  }
+});
 db.Transactions.insertOne({ transactionID: 'test_transaction', sourceID: 'test_entity', sinkID: 'test_entity', resourceID: 'test_resource', timestamp: new Date() });
 db.Logistics.insertOne({ logisticsID: 'test_logistics', pickupLocation: { latitude: 0.5, longitude: 0.5 }, dropOffLocation: { latitude: 0.5, longitude: 0.5 }, status: 'scheduled' });
 db.APIKeys.insertOne({ apiKey: 'test_apikey', entityID: 'test_entity' });

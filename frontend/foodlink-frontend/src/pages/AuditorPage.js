@@ -12,18 +12,16 @@ import {
 import { Bar } from 'react-chartjs-2';
 import GoogleMapReact from 'google-map-react';
 import styles from './AuditorPage.module.css';
+import { getMaterials, getTransfers, getTransactions } from '../services/api';
 
-// Register the chart components
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-// Define the AuditorPage component
 const AuditorPage = () => {
   const [analyticsData, setAnalyticsData] = useState({ materials: [], transfers: [] });
   const [locations, setLocations] = useState([]);
   const [selectedTransaction, setSelectedTransaction] = useState(null);
   const AnyReactComponent = ({ text }) => <div style={{ color: 'blue' }}>{text}</div>;
 
-  // Define placeholder transaction data
   const placeholderTransactions = [
     {
       id: 't1',
@@ -123,8 +121,8 @@ const AuditorPage = () => {
   useEffect(() => {
     const fetchAnalyticsData = async () => {
       try {
-        const materialsResponse = await axios.get('http://localhost:3001/api/analytics/materials');
-        const transfersResponse = await axios.get('http://localhost:3001/api/analytics/transfers');
+        const materialsResponse = await getMaterials();
+        const transfersResponse = await getTransfers();
         setAnalyticsData({
           materials: materialsResponse.data,
           transfers: transfersResponse.data,
@@ -133,9 +131,6 @@ const AuditorPage = () => {
         console.error('Error fetching analytics data', error);
       }
     };
-
-    fetchAnalyticsData();
-  }, []);
 
   const renderMarkers = (map, maps) => {
     placeholderTransactions.forEach(transaction => {
@@ -173,21 +168,19 @@ const AuditorPage = () => {
     setSelectedTransaction(transaction);
   };
 
-  useEffect(() => {
-    // Fetch transactions with start and end points
-    const fetchTransactions = async () => {
-      try {
-        const response = await axios.get('http://localhost:3001/api/transactions');
-        setLocations(response.data);
-      } catch (error) {
-        console.error('Error fetching transactions', error);
-      }
-    };
+  const fetchTransactions = async () => {
+    try {
+      const response = await getTransactions();
+      setLocations(response.data);
+    } catch (error) {
+      console.error('Error fetching transactions', error);
+    }
+  };
 
-    fetchTransactions();
-  }, []);
+  fetchAnalyticsData();
+  fetchTransactions();
+}, []);
 
-  // Function to handle selection of a transaction
   const handleTransactionSelect = (transaction) => {
     if (selectedTransaction && selectedTransaction.id === transaction.id) {
       setSelectedTransaction(null);
@@ -228,7 +221,6 @@ const AuditorPage = () => {
   );
 
 
-  // Render a table of transactions with checkboxes for selection
   const renderTransactionsTable = () => (
     <table className={styles.transactionTable}>
       <thead>
