@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://35.245.182.19:3000';
+const API_BASE_URL = 'http://35.245.182.19:5000';
 
 const createEndpoint = (path) => `${API_BASE_URL}${path}`;
 

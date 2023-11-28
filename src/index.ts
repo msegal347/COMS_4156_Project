@@ -54,7 +54,7 @@ app.get('/', (req, res) => {
 });
 
 // Port and Server Initialization
-const port = 3001;
+const port = 5000;
 
 if (process.env.NODE_ENV !== 'test') {
   server.listen(port, () => {

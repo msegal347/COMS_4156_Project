@@ -30,7 +30,7 @@ exports.app.get('/', (req, res) => {
     res.send('Hello, FoodLink API!');
 });
 // Port and Server Initialization
-const port = (_a = process.env.PORT) !== null && _a !== void 0 ? _a : 3000;
+const port = (_a = process.env.PORT) !== null && _a !== void 0 ? _a : 5000;
 let server;
 exports.server = server;
 if (process.env.NODE_ENV !== 'test') {
