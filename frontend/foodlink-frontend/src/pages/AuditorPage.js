@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -12,7 +11,7 @@ import {
 import { Bar } from 'react-chartjs-2';
 import GoogleMapReact from 'google-map-react';
 import styles from './AuditorPage.module.css';
-import { getMaterials, getTransfers, getTransactions } from '../services/api';
+import { getResources, getTransfers, getTransactions } from '../services/api';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 

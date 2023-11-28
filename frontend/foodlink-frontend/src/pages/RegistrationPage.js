@@ -33,16 +33,23 @@ const RegistrationPage = () => {
     e.preventDefault();
     setError('');
     setSuccess('');
-
-    if (!validateForm()) return;
-
+  
+    if (!validateForm()) {
+      console.warn("Form validation failed", formData); // Warning log for form validation failure
+      return;
+    }
+  
     setLoading(true);
+    console.log('Sending registration data:', formData); // Log the data being sent
+  
     try {
-      await registerUser(formData);
+      const response = await registerUser(formData);
+      console.log('Registration response:', response); // Log the response received
       setSuccess('Registration successful!');
       setLoading(false);
       navigate('/login');
     } catch (error) {
+      console.error('Registration error:', error); // Detailed error logging
       setError(error.response?.data?.message || 'Registration failed');
       setLoading(false);
     }

@@ -44,10 +44,6 @@ app.use(logger);
 // Initialize API Gateway
 initializeGateway(app);
 
-// Register the registration routes
-app.use('/api', registrationRoutes);
-app.use('/api', roleRoutes);
-
 // Root Endpoint
 app.get('/', (req, res) => {
   res.send('Hello, FoodLink API!');

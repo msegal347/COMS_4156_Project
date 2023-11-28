@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://35.245.182.19:5000';
+const API_BASE_URL = 'http://34.48.4.68:5000/api';
+//const API_BASE_URL = 'http://localhost:5000/api';
 
 const createEndpoint = (path) => `${API_BASE_URL}${path}`;
 

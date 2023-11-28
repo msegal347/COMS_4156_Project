@@ -21,8 +21,17 @@ import {
   deleteRecordById,
 } from '../controllers/analyticsController';
 import userRoutes from '../routes/userRoutes';
+import logger from '../config/logger';
 
 export const initializeGateway = (app: Express) => {
+
+  // Initialize logger
+  app.use(logger);
+
+  app.get('/api/test', (req, res) => {
+    res.send('API is working');
+  });
+
   const logisticsRouter = createLogisticsRoutes({
     createRoute,
     getRouteById,
@@ -47,4 +56,10 @@ export const initializeGateway = (app: Express) => {
   app.use('/api/transactions', transactionRoutes);
   app.use('/api/allocations', allocationRoutes);
   app.use('/api', userRoutes);
+
+  // Additional middleware to log unhandled requests
+  app.use((req, res, next) => {
+    console.log(`Unhandled request to ${req.path}`);
+    res.status(404).send('Endpoint not found');
+  });
 };
