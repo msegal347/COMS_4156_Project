@@ -24,10 +24,12 @@ module.exports = {
     'src/**/*.{ts,tsx}',
     '!src/main.ts', 
   ],
+
+  moduleNameMapper: {"axios": "axios/dist/node/axios.cjs"},
   
   testEnvironment: 'node',
 
-  transformIgnorePatterns: ['<rootDir>/node_modules/', 'node_modules/(?!(axios)/)'],
+  transformIgnorePatterns: ['<rootDir>/node_modules/', 'node_modules/(?!(axios)/)', 'node_modules/axios/'],
 
   preset: '@shelf/jest-mongodb',
 };

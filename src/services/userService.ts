@@ -14,7 +14,7 @@ class UserService {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    let coordinates: { latitude: number; longitude: number; } | undefined;
+    let coordinates: { latitude: number; longitude: number } | undefined;
     if ((role === 'source' || role === 'sink') && address) {
       coordinates = await getCoordinates(address);
     }
@@ -27,7 +27,7 @@ class UserService {
 
   async validateUser(email: string, password: string) {
     const user = await User.findOne({ email });
-    if (user && await bcrypt.compare(password, user.password)) {
+    if (user && (await bcrypt.compare(password, user.password))) {
       return user;
     } else {
       return null;
