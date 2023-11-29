@@ -1,0 +1,77 @@
+
+> FoodLink@1.0.0 lint
+> eslint src/**/*.{ts,tsx}
+
+
+/workspace/src/config/db.ts
+  15:7   warning  Unexpected console statement              no-console
+  22:7   warning  Unexpected console statement              no-console
+  36:5   warning  Unexpected console statement              no-console
+  37:19  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  38:5   warning  Unexpected console statement              no-console
+
+/workspace/src/controllers/allocationController.ts
+  5:29  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/workspace/src/controllers/entityController.ts
+  13:5   warning  Unexpected console statement              no-console
+  14:45  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/workspace/src/controllers/userController.ts
+  13:25  warning  '_' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+/workspace/src/gateway/gateway.ts
+  27:1   error    Delete `⏎`                        prettier/prettier
+  61:22  warning  'next' is defined but never used  @typescript-eslint/no-unused-vars
+  62:5   warning  Unexpected console statement      no-console
+
+/workspace/src/index.ts
+   7:8   warning  'registrationRoutes' is defined but never used  @typescript-eslint/no-unused-vars
+   8:8   warning  'roleRoutes' is defined but never used          @typescript-eslint/no-unused-vars
+  23:22  error    Replace `(ws)` with `ws`                        prettier/prettier
+  24:3   warning  Unexpected console statement                    no-console
+  26:20  error    Replace `(message)` with `message`              prettier/prettier
+  27:5   warning  Unexpected console statement                    no-console
+  32:5   warning  Unexpected console statement                    no-console
+  58:5   warning  Unexpected console statement                    no-console
+
+/workspace/src/services/allocationService.ts
+   5:46  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  15:62  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  25:55  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/workspace/src/services/analyticsService.ts
+   4:48  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   4:62  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  15:58  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  28:65  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  28:79  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/workspace/src/services/logisticsService.ts
+   5:46  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   5:60  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  16:57  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  29:64  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  29:78  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/workspace/src/services/notificationService.ts
+  2:10  warning  'Types' is defined but never used         @typescript-eslint/no-unused-vars
+  6:34  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/workspace/src/services/resourceService.ts
+  6:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/workspace/src/services/transactionService.ts
+  5:33  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/workspace/src/utils/googleMaps.ts
+   1:10  warning  'get' is defined but never used                                                                                 @typescript-eslint/no-unused-vars
+   2:10  warning  'URL' is defined but never used                                                                                 @typescript-eslint/no-unused-vars
+  12:87  error    Replace `address` with `⏎········address⏎······`                                                                prettier/prettier
+  39:65  error    Replace `.map(encodeURIComponent)` with `⏎······.map(encodeURIComponent)⏎······`                                prettier/prettier
+  45:64  error    Replace `(index:·number)·=>·destinations[index]` with `⏎········(index:·number)·=>·destinations[index]⏎······`  prettier/prettier
+  57:3   error    Insert `⏎`                                                                                                      prettier/prettier
+
+✖ 43 problems (7 errors, 36 warnings)
+  7 errors and 0 warnings potentially fixable with the `--fix` option.
+

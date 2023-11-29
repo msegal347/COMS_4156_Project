@@ -1,0 +1,754 @@
+2023-11-08T01:50:39.0417160Z Requested labels: ubuntu-latest
+2023-11-08T01:50:39.0417570Z Job defined at: msegal347/COMS_4156_Project/.github/workflows/main.yml@refs/pull/33/merge
+2023-11-08T01:50:39.0417749Z Waiting for a runner to pick up this job...
+2023-11-08T01:50:39.6151768Z Job is waiting for a hosted runner to come online.
+2023-11-08T01:50:42.3709555Z Job is about to start running on the hosted runner: GitHub Actions 2 (hosted)
+2023-11-08T01:50:44.8919692Z Current runner version: '2.311.0'
+2023-11-08T01:50:44.8951339Z ##[group]Operating System
+2023-11-08T01:50:44.8952170Z Ubuntu
+2023-11-08T01:50:44.8952752Z 22.04.3
+2023-11-08T01:50:44.8953202Z LTS
+2023-11-08T01:50:44.8953664Z ##[endgroup]
+2023-11-08T01:50:44.8954230Z ##[group]Runner Image
+2023-11-08T01:50:44.8954775Z Image: ubuntu-22.04
+2023-11-08T01:50:44.8955399Z Version: 20231030.2.0
+2023-11-08T01:50:44.8956812Z Included Software: https://github.com/actions/runner-images/blob/ubuntu22/20231030.2/images/linux/Ubuntu2204-Readme.md
+2023-11-08T01:50:44.8958802Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu22%2F20231030.2
+2023-11-08T01:50:44.8959959Z ##[endgroup]
+2023-11-08T01:50:44.8960728Z ##[group]Runner Image Provisioner
+2023-11-08T01:50:44.8961413Z 2.0.312.1
+2023-11-08T01:50:44.8961930Z ##[endgroup]
+2023-11-08T01:50:44.8963304Z ##[group]GITHUB_TOKEN Permissions
+2023-11-08T01:50:44.8965337Z Contents: read
+2023-11-08T01:50:44.8965954Z Metadata: read
+2023-11-08T01:50:44.8966754Z Packages: read
+2023-11-08T01:50:44.8967399Z ##[endgroup]
+2023-11-08T01:50:44.8971191Z Secret source: Actions
+2023-11-08T01:50:44.8971969Z Prepare workflow directory
+2023-11-08T01:50:44.9719476Z Prepare all required actions
+2023-11-08T01:50:44.9911165Z Getting action download info
+2023-11-08T01:50:45.2297271Z Download action repository 'actions/checkout@v3' (SHA:f43a0e5ff2bd294095638e18286ca9a3d1956744)
+2023-11-08T01:50:45.4010674Z Download action repository 'actions/setup-node@v2' (SHA:7c12f8017d5436eb855f1ed4399f037a36fbd9e8)
+2023-11-08T01:50:45.4836126Z Download action repository 'actions/upload-artifact@v2' (SHA:82c141cc518b40d92cc801eee768e7aafc9c2fa2)
+2023-11-08T01:50:45.5284576Z Download action repository 'coverallsapp/github-action@v2' (SHA:3dfc5567390f6fa9267c0ee9c251e4c8c3f18949)
+2023-11-08T01:50:45.8851005Z Complete job name: build-and-test
+2023-11-08T01:50:45.9850170Z ##[group]Run actions/checkout@v3
+2023-11-08T01:50:45.9850793Z with:
+2023-11-08T01:50:45.9851227Z   repository: msegal347/COMS_4156_Project
+2023-11-08T01:50:45.9852174Z   token: ***
+2023-11-08T01:50:45.9852579Z   ssh-strict: true
+2023-11-08T01:50:45.9853038Z   persist-credentials: true
+2023-11-08T01:50:45.9853563Z   clean: true
+2023-11-08T01:50:45.9854016Z   sparse-checkout-cone-mode: true
+2023-11-08T01:50:45.9854587Z   fetch-depth: 1
+2023-11-08T01:50:45.9855013Z   fetch-tags: false
+2023-11-08T01:50:45.9855443Z   lfs: false
+2023-11-08T01:50:45.9855848Z   submodules: false
+2023-11-08T01:50:45.9856298Z   set-safe-directory: true
+2023-11-08T01:50:45.9856796Z ##[endgroup]
+2023-11-08T01:50:46.2867593Z Syncing repository: msegal347/COMS_4156_Project
+2023-11-08T01:50:46.2870476Z ##[group]Getting Git version info
+2023-11-08T01:50:46.2871710Z Working directory is '/home/runner/work/COMS_4156_Project/COMS_4156_Project'
+2023-11-08T01:50:46.2874484Z [command]/usr/bin/git version
+2023-11-08T01:50:46.3023878Z git version 2.42.0
+2023-11-08T01:50:46.3026357Z ##[endgroup]
+2023-11-08T01:50:46.3041128Z Temporarily overriding HOME='/home/runner/work/_temp/c204008c-c9a5-459b-b85b-d6cf88b63155' before making global git config changes
+2023-11-08T01:50:46.3043736Z Adding repository directory to the temporary git global config as a safe directory
+2023-11-08T01:50:46.3045795Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/COMS_4156_Project/COMS_4156_Project
+2023-11-08T01:50:46.3081530Z Deleting the contents of '/home/runner/work/COMS_4156_Project/COMS_4156_Project'
+2023-11-08T01:50:46.3086224Z ##[group]Initializing the repository
+2023-11-08T01:50:46.3090081Z [command]/usr/bin/git init /home/runner/work/COMS_4156_Project/COMS_4156_Project
+2023-11-08T01:50:46.3205030Z hint: Using 'master' as the name for the initial branch. This default branch name
+2023-11-08T01:50:46.3206638Z hint: is subject to change. To configure the initial branch name to use in all
+2023-11-08T01:50:46.3208238Z hint: of your new repositories, which will suppress this warning, call:
+2023-11-08T01:50:46.3209459Z hint: 
+2023-11-08T01:50:46.3210300Z hint: 	git config --global init.defaultBranch <name>
+2023-11-08T01:50:46.3211589Z hint: 
+2023-11-08T01:50:46.3212562Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2023-11-08T01:50:46.3214005Z hint: 'development'. The just-created branch can be renamed via this command:
+2023-11-08T01:50:46.3215170Z hint: 
+2023-11-08T01:50:46.3215960Z hint: 	git branch -m <name>
+2023-11-08T01:50:46.3220618Z Initialized empty Git repository in /home/runner/work/COMS_4156_Project/COMS_4156_Project/.git/
+2023-11-08T01:50:46.3232998Z [command]/usr/bin/git remote add origin https://github.com/msegal347/COMS_4156_Project
+2023-11-08T01:50:46.3291072Z ##[endgroup]
+2023-11-08T01:50:46.3292184Z ##[group]Disabling automatic garbage collection
+2023-11-08T01:50:46.3294136Z [command]/usr/bin/git config --local gc.auto 0
+2023-11-08T01:50:46.3329837Z ##[endgroup]
+2023-11-08T01:50:46.3330847Z ##[group]Setting up auth
+2023-11-08T01:50:46.3336319Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2023-11-08T01:50:46.3373450Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2023-11-08T01:50:46.3812822Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2023-11-08T01:50:46.3850896Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2023-11-08T01:50:46.4093921Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2023-11-08T01:50:46.4135173Z ##[endgroup]
+2023-11-08T01:50:46.4136513Z ##[group]Fetching the repository
+2023-11-08T01:50:46.4145643Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --progress --no-recurse-submodules --depth=1 origin +41a114d8a147d025efd381acb10ea7319c37d580:refs/remotes/pull/33/merge
+2023-11-08T01:50:46.6268766Z remote: Enumerating objects: 226, done.        
+2023-11-08T01:50:46.6270232Z remote: Counting objects:   0% (1/226)        
+2023-11-08T01:50:46.6271669Z remote: Counting objects:   1% (3/226)        
+2023-11-08T01:50:46.6272870Z remote: Counting objects:   2% (5/226)        
+2023-11-08T01:50:46.6274051Z remote: Counting objects:   3% (7/226)        
+2023-11-08T01:50:46.6275127Z remote: Counting objects:   4% (10/226)        
+2023-11-08T01:50:46.6276468Z remote: Counting objects:   5% (12/226)        
+2023-11-08T01:50:46.6277514Z remote: Counting objects:   6% (14/226)        
+2023-11-08T01:50:46.6278873Z remote: Counting objects:   7% (16/226)        
+2023-11-08T01:50:46.6279857Z remote: Counting objects:   8% (19/226)        
+2023-11-08T01:50:46.6281271Z remote: Counting objects:   9% (21/226)        
+2023-11-08T01:50:46.6282425Z remote: Counting objects:  10% (23/226)        
+2023-11-08T01:50:46.6283662Z remote: Counting objects:  11% (25/226)        
+2023-11-08T01:50:46.6284724Z remote: Counting objects:  12% (28/226)        
+2023-11-08T01:50:46.6286039Z remote: Counting objects:  13% (30/226)        
+2023-11-08T01:50:46.6287082Z remote: Counting objects:  14% (32/226)        
+2023-11-08T01:50:46.6288337Z remote: Counting objects:  15% (34/226)        
+2023-11-08T01:50:46.6289429Z remote: Counting objects:  16% (37/226)        
+2023-11-08T01:50:46.6290607Z remote: Counting objects:  17% (39/226)        
+2023-11-08T01:50:46.6291662Z remote: Counting objects:  18% (41/226)        
+2023-11-08T01:50:46.6293909Z remote: Counting objects:  19% (43/226)        
+2023-11-08T01:50:46.6294759Z remote: Counting objects:  20% (46/226)        
+2023-11-08T01:50:46.6295661Z remote: Counting objects:  21% (48/226)        
+2023-11-08T01:50:46.6296432Z remote: Counting objects:  22% (50/226)        
+2023-11-08T01:50:46.6297285Z remote: Counting objects:  23% (52/226)        
+2023-11-08T01:50:46.6298169Z remote: Counting objects:  24% (55/226)        
+2023-11-08T01:50:46.6299006Z remote: Counting objects:  25% (57/226)        
+2023-11-08T01:50:46.6300051Z remote: Counting objects:  26% (59/226)        
+2023-11-08T01:50:46.6300937Z remote: Counting objects:  27% (62/226)        
+2023-11-08T01:50:46.6301794Z remote: Counting objects:  28% (64/226)        
+2023-11-08T01:50:46.6302577Z remote: Counting objects:  29% (66/226)        
+2023-11-08T01:50:46.6303472Z remote: Counting objects:  30% (68/226)        
+2023-11-08T01:50:46.6304304Z remote: Counting objects:  31% (71/226)        
+2023-11-08T01:50:46.6305133Z remote: Counting objects:  32% (73/226)        
+2023-11-08T01:50:46.6306027Z remote: Counting objects:  33% (75/226)        
+2023-11-08T01:50:46.6306800Z remote: Counting objects:  34% (77/226)        
+2023-11-08T01:50:46.6307611Z remote: Counting objects:  35% (80/226)        
+2023-11-08T01:50:46.6308508Z remote: Counting objects:  36% (82/226)        
+2023-11-08T01:50:46.6309320Z remote: Counting objects:  37% (84/226)        
+2023-11-08T01:50:46.6310085Z remote: Counting objects:  38% (86/226)        
+2023-11-08T01:50:46.6310971Z remote: Counting objects:  39% (89/226)        
+2023-11-08T01:50:46.6311803Z remote: Counting objects:  40% (91/226)        
+2023-11-08T01:50:46.6312628Z remote: Counting objects:  41% (93/226)        
+2023-11-08T01:50:46.6313739Z remote: Counting objects:  42% (95/226)        
+2023-11-08T01:50:46.6314671Z remote: Counting objects:  43% (98/226)        
+2023-11-08T01:50:46.6315664Z remote: Counting objects:  44% (100/226)        
+2023-11-08T01:50:46.6316612Z remote: Counting objects:  45% (102/226)        
+2023-11-08T01:50:46.6317399Z remote: Counting objects:  46% (104/226)        
+2023-11-08T01:50:46.6318383Z remote: Counting objects:  47% (107/226)        
+2023-11-08T01:50:46.6319295Z remote: Counting objects:  48% (109/226)        
+2023-11-08T01:50:46.6320314Z remote: Counting objects:  49% (111/226)        
+2023-11-08T01:50:46.6323121Z remote: Counting objects:  50% (113/226)        
+2023-11-08T01:50:46.6324484Z remote: Counting objects:  51% (116/226)        
+2023-11-08T01:50:46.6325423Z remote: Counting objects:  52% (118/226)        
+2023-11-08T01:50:46.6327043Z remote: Counting objects:  53% (120/226)        
+2023-11-08T01:50:46.6328719Z remote: Counting objects:  54% (123/226)        
+2023-11-08T01:50:46.6329998Z remote: Counting objects:  55% (125/226)        
+2023-11-08T01:50:46.6330962Z remote: Counting objects:  56% (127/226)        
+2023-11-08T01:50:46.6335461Z remote: Counting objects:  57% (129/226)        
+2023-11-08T01:50:46.6336452Z remote: Counting objects:  58% (132/226)        
+2023-11-08T01:50:46.6337317Z remote: Counting objects:  59% (134/226)        
+2023-11-08T01:50:46.6338149Z remote: Counting objects:  60% (136/226)        
+2023-11-08T01:50:46.6463980Z remote: Counting objects:  61% (138/226)        
+2023-11-08T01:50:46.6464765Z remote: Counting objects:  62% (141/226)        
+2023-11-08T01:50:46.6465513Z remote: Counting objects:  63% (143/226)        
+2023-11-08T01:50:46.6466230Z remote: Counting objects:  64% (145/226)        
+2023-11-08T01:50:46.6466942Z remote: Counting objects:  65% (147/226)        
+2023-11-08T01:50:46.6467653Z remote: Counting objects:  66% (150/226)        
+2023-11-08T01:50:46.6468369Z remote: Counting objects:  67% (152/226)        
+2023-11-08T01:50:46.6469079Z remote: Counting objects:  68% (154/226)        
+2023-11-08T01:50:46.6469773Z remote: Counting objects:  69% (156/226)        
+2023-11-08T01:50:46.6470486Z remote: Counting objects:  70% (159/226)        
+2023-11-08T01:50:46.6471198Z remote: Counting objects:  71% (161/226)        
+2023-11-08T01:50:46.6471908Z remote: Counting objects:  72% (163/226)        
+2023-11-08T01:50:46.6472596Z remote: Counting objects:  73% (165/226)        
+2023-11-08T01:50:46.6473307Z remote: Counting objects:  74% (168/226)        
+2023-11-08T01:50:46.6474013Z remote: Counting objects:  75% (170/226)        
+2023-11-08T01:50:46.6474725Z remote: Counting objects:  76% (172/226)        
+2023-11-08T01:50:46.6475427Z remote: Counting objects:  77% (175/226)        
+2023-11-08T01:50:46.6476435Z remote: Counting objects:  78% (177/226)        
+2023-11-08T01:50:46.6477146Z remote: Counting objects:  79% (179/226)        
+2023-11-08T01:50:46.6477858Z remote: Counting objects:  80% (181/226)        
+2023-11-08T01:50:46.6478554Z remote: Counting objects:  81% (184/226)        
+2023-11-08T01:50:46.6479267Z remote: Counting objects:  82% (186/226)        
+2023-11-08T01:50:46.6479983Z remote: Counting objects:  83% (188/226)        
+2023-11-08T01:50:46.6480901Z remote: Counting objects:  84% (190/226)        
+2023-11-08T01:50:46.6481602Z remote: Counting objects:  85% (193/226)        
+2023-11-08T01:50:46.6482310Z remote: Counting objects:  86% (195/226)        
+2023-11-08T01:50:46.6483013Z remote: Counting objects:  87% (197/226)        
+2023-11-08T01:50:46.6483708Z remote: Counting objects:  88% (199/226)        
+2023-11-08T01:50:46.6484403Z remote: Counting objects:  89% (202/226)        
+2023-11-08T01:50:46.6485100Z remote: Counting objects:  90% (204/226)        
+2023-11-08T01:50:46.6485796Z remote: Counting objects:  91% (206/226)        
+2023-11-08T01:50:46.6486486Z remote: Counting objects:  92% (208/226)        
+2023-11-08T01:50:46.6487168Z remote: Counting objects:  93% (211/226)        
+2023-11-08T01:50:46.6487862Z remote: Counting objects:  94% (213/226)        
+2023-11-08T01:50:46.6488550Z remote: Counting objects:  95% (215/226)        
+2023-11-08T01:50:46.6489254Z remote: Counting objects:  96% (217/226)        
+2023-11-08T01:50:46.6489954Z remote: Counting objects:  97% (220/226)        
+2023-11-08T01:50:46.6490643Z remote: Counting objects:  98% (222/226)        
+2023-11-08T01:50:46.6491348Z remote: Counting objects:  99% (224/226)        
+2023-11-08T01:50:46.6492056Z remote: Counting objects: 100% (226/226)        
+2023-11-08T01:50:46.6492799Z remote: Counting objects: 100% (226/226), done.        
+2023-11-08T01:50:46.6493740Z remote: Compressing objects:   0% (1/179)        
+2023-11-08T01:50:46.6494504Z remote: Compressing objects:   1% (2/179)        
+2023-11-08T01:50:46.6495245Z remote: Compressing objects:   2% (4/179)        
+2023-11-08T01:50:46.6495970Z remote: Compressing objects:   3% (6/179)        
+2023-11-08T01:50:46.6498149Z remote: Compressing objects:   4% (8/179)        
+2023-11-08T01:50:46.6498908Z remote: Compressing objects:   5% (9/179)        
+2023-11-08T01:50:46.6503269Z remote: Compressing objects:   6% (11/179)        
+2023-11-08T01:50:46.6504039Z remote: Compressing objects:   7% (13/179)        
+2023-11-08T01:50:46.6504809Z remote: Compressing objects:   8% (15/179)        
+2023-11-08T01:50:46.6509939Z remote: Compressing objects:   9% (17/179)        
+2023-11-08T01:50:46.6512467Z remote: Compressing objects:  10% (18/179)        
+2023-11-08T01:50:46.6513226Z remote: Compressing objects:  11% (20/179)        
+2023-11-08T01:50:46.6513991Z remote: Compressing objects:  12% (22/179)        
+2023-11-08T01:50:46.6514760Z remote: Compressing objects:  13% (24/179)        
+2023-11-08T01:50:46.6515508Z remote: Compressing objects:  14% (26/179)        
+2023-11-08T01:50:46.6516266Z remote: Compressing objects:  15% (27/179)        
+2023-11-08T01:50:46.6517014Z remote: Compressing objects:  16% (29/179)        
+2023-11-08T01:50:46.6517751Z remote: Compressing objects:  17% (31/179)        
+2023-11-08T01:50:46.6518497Z remote: Compressing objects:  18% (33/179)        
+2023-11-08T01:50:46.6519240Z remote: Compressing objects:  19% (35/179)        
+2023-11-08T01:50:46.6519991Z remote: Compressing objects:  20% (36/179)        
+2023-11-08T01:50:46.6520922Z remote: Compressing objects:  21% (38/179)        
+2023-11-08T01:50:46.6521679Z remote: Compressing objects:  22% (40/179)        
+2023-11-08T01:50:46.6522421Z remote: Compressing objects:  23% (42/179)        
+2023-11-08T01:50:46.6523176Z remote: Compressing objects:  24% (43/179)        
+2023-11-08T01:50:46.6523933Z remote: Compressing objects:  25% (45/179)        
+2023-11-08T01:50:46.6524696Z remote: Compressing objects:  26% (47/179)        
+2023-11-08T01:50:46.6525431Z remote: Compressing objects:  27% (49/179)        
+2023-11-08T01:50:46.6526433Z remote: Compressing objects:  28% (51/179)        
+2023-11-08T01:50:46.6527180Z remote: Compressing objects:  29% (52/179)        
+2023-11-08T01:50:46.6527938Z remote: Compressing objects:  30% (54/179)        
+2023-11-08T01:50:46.6528676Z remote: Compressing objects:  31% (56/179)        
+2023-11-08T01:50:46.6529432Z remote: Compressing objects:  32% (58/179)        
+2023-11-08T01:50:46.6530185Z remote: Compressing objects:  33% (60/179)        
+2023-11-08T01:50:46.6530932Z remote: Compressing objects:  34% (61/179)        
+2023-11-08T01:50:46.6531665Z remote: Compressing objects:  35% (63/179)        
+2023-11-08T01:50:46.6532416Z remote: Compressing objects:  36% (65/179)        
+2023-11-08T01:50:46.6533169Z remote: Compressing objects:  37% (67/179)        
+2023-11-08T01:50:46.6533926Z remote: Compressing objects:  38% (69/179)        
+2023-11-08T01:50:46.6534669Z remote: Compressing objects:  39% (70/179)        
+2023-11-08T01:50:46.6535423Z remote: Compressing objects:  40% (72/179)        
+2023-11-08T01:50:46.6536182Z remote: Compressing objects:  41% (74/179)        
+2023-11-08T01:50:46.6536938Z remote: Compressing objects:  42% (76/179)        
+2023-11-08T01:50:46.6537679Z remote: Compressing objects:  43% (77/179)        
+2023-11-08T01:50:46.6538433Z remote: Compressing objects:  44% (79/179)        
+2023-11-08T01:50:46.6539187Z remote: Compressing objects:  45% (81/179)        
+2023-11-08T01:50:46.6539943Z remote: Compressing objects:  46% (83/179)        
+2023-11-08T01:50:46.6540689Z remote: Compressing objects:  47% (85/179)        
+2023-11-08T01:50:46.6541442Z remote: Compressing objects:  48% (86/179)        
+2023-11-08T01:50:46.6542195Z remote: Compressing objects:  49% (88/179)        
+2023-11-08T01:50:46.6542949Z remote: Compressing objects:  50% (90/179)        
+2023-11-08T01:50:46.6543828Z remote: Compressing objects:  51% (92/179)        
+2023-11-08T01:50:46.6544597Z remote: Compressing objects:  52% (94/179)        
+2023-11-08T01:50:46.6545353Z remote: Compressing objects:  53% (95/179)        
+2023-11-08T01:50:46.6546114Z remote: Compressing objects:  54% (97/179)        
+2023-11-08T01:50:46.6546857Z remote: Compressing objects:  55% (99/179)        
+2023-11-08T01:50:46.6547625Z remote: Compressing objects:  56% (101/179)        
+2023-11-08T01:50:46.6548433Z remote: Compressing objects:  57% (103/179)        
+2023-11-08T01:50:46.6549210Z remote: Compressing objects:  58% (104/179)        
+2023-11-08T01:50:46.6549972Z remote: Compressing objects:  59% (106/179)        
+2023-11-08T01:50:46.6550736Z remote: Compressing objects:  60% (108/179)        
+2023-11-08T01:50:46.6552684Z remote: Compressing objects:  61% (110/179)        
+2023-11-08T01:50:46.6553458Z remote: Compressing objects:  62% (111/179)        
+2023-11-08T01:50:46.6554235Z remote: Compressing objects:  63% (113/179)        
+2023-11-08T01:50:46.6590651Z remote: Compressing objects:  64% (115/179)        
+2023-11-08T01:50:46.6595002Z remote: Compressing objects:  65% (117/179)        
+2023-11-08T01:50:46.6596726Z remote: Compressing objects:  66% (119/179)        
+2023-11-08T01:50:46.6597538Z remote: Compressing objects:  67% (120/179)        
+2023-11-08T01:50:46.6598300Z remote: Compressing objects:  68% (122/179)        
+2023-11-08T01:50:46.6599073Z remote: Compressing objects:  69% (124/179)        
+2023-11-08T01:50:46.6599839Z remote: Compressing objects:  70% (126/179)        
+2023-11-08T01:50:46.6600737Z remote: Compressing objects:  71% (128/179)        
+2023-11-08T01:50:46.6601500Z remote: Compressing objects:  72% (129/179)        
+2023-11-08T01:50:46.6603806Z remote: Compressing objects:  73% (131/179)        
+2023-11-08T01:50:46.6610107Z remote: Compressing objects:  74% (133/179)        
+2023-11-08T01:50:46.6613178Z remote: Compressing objects:  75% (135/179)        
+2023-11-08T01:50:46.6618691Z remote: Compressing objects:  76% (137/179)        
+2023-11-08T01:50:46.6623350Z remote: Compressing objects:  77% (138/179)        
+2023-11-08T01:50:46.6624665Z remote: Compressing objects:  78% (140/179)        
+2023-11-08T01:50:46.6625714Z remote: Compressing objects:  79% (142/179)        
+2023-11-08T01:50:46.6626483Z remote: Compressing objects:  80% (144/179)        
+2023-11-08T01:50:46.6627251Z remote: Compressing objects:  81% (145/179)        
+2023-11-08T01:50:46.6628015Z remote: Compressing objects:  82% (147/179)        
+2023-11-08T01:50:46.6628927Z remote: Compressing objects:  83% (149/179)        
+2023-11-08T01:50:46.6629789Z remote: Compressing objects:  84% (151/179)        
+2023-11-08T01:50:46.6630556Z remote: Compressing objects:  85% (153/179)        
+2023-11-08T01:50:46.6631325Z remote: Compressing objects:  86% (154/179)        
+2023-11-08T01:50:46.6632077Z remote: Compressing objects:  87% (156/179)        
+2023-11-08T01:50:46.6632841Z remote: Compressing objects:  88% (158/179)        
+2023-11-08T01:50:46.6633619Z remote: Compressing objects:  89% (160/179)        
+2023-11-08T01:50:46.6634390Z remote: Compressing objects:  90% (162/179)        
+2023-11-08T01:50:46.6635134Z remote: Compressing objects:  91% (163/179)        
+2023-11-08T01:50:46.6635901Z remote: Compressing objects:  92% (165/179)        
+2023-11-08T01:50:46.6636664Z remote: Compressing objects:  93% (167/179)        
+2023-11-08T01:50:46.6637419Z remote: Compressing objects:  94% (169/179)        
+2023-11-08T01:50:46.6638167Z remote: Compressing objects:  95% (171/179)        
+2023-11-08T01:50:46.6638930Z remote: Compressing objects:  96% (172/179)        
+2023-11-08T01:50:46.6639688Z remote: Compressing objects:  97% (174/179)        
+2023-11-08T01:50:46.6640604Z remote: Compressing objects:  98% (176/179)        
+2023-11-08T01:50:46.6641365Z remote: Compressing objects:  99% (178/179)        
+2023-11-08T01:50:46.6642127Z remote: Compressing objects: 100% (179/179)        
+2023-11-08T01:50:46.6642963Z remote: Compressing objects: 100% (179/179), done.        
+2023-11-08T01:50:46.6666311Z Receiving objects:   0% (1/226)
+2023-11-08T01:50:46.6666903Z Receiving objects:   1% (3/226)
+2023-11-08T01:50:46.6667449Z Receiving objects:   2% (5/226)
+2023-11-08T01:50:46.6667999Z Receiving objects:   3% (7/226)
+2023-11-08T01:50:46.6668538Z Receiving objects:   4% (10/226)
+2023-11-08T01:50:46.6669063Z Receiving objects:   5% (12/226)
+2023-11-08T01:50:46.6669625Z Receiving objects:   6% (14/226)
+2023-11-08T01:50:46.6670159Z Receiving objects:   7% (16/226)
+2023-11-08T01:50:46.6670784Z Receiving objects:   8% (19/226)
+2023-11-08T01:50:46.6671318Z Receiving objects:   9% (21/226)
+2023-11-08T01:50:46.6671861Z Receiving objects:  10% (23/226)
+2023-11-08T01:50:46.6672409Z Receiving objects:  11% (25/226)
+2023-11-08T01:50:46.6672934Z Receiving objects:  12% (28/226)
+2023-11-08T01:50:46.6673481Z Receiving objects:  13% (30/226)
+2023-11-08T01:50:46.6674021Z Receiving objects:  14% (32/226)
+2023-11-08T01:50:46.6674545Z Receiving objects:  15% (34/226)
+2023-11-08T01:50:46.6675068Z Receiving objects:  16% (37/226)
+2023-11-08T01:50:46.6675607Z Receiving objects:  17% (39/226)
+2023-11-08T01:50:46.6676138Z Receiving objects:  18% (41/226)
+2023-11-08T01:50:46.6676682Z Receiving objects:  19% (43/226)
+2023-11-08T01:50:46.6677234Z Receiving objects:  20% (46/226)
+2023-11-08T01:50:46.6677754Z Receiving objects:  21% (48/226)
+2023-11-08T01:50:46.6678268Z Receiving objects:  22% (50/226)
+2023-11-08T01:50:46.6678792Z Receiving objects:  23% (52/226)
+2023-11-08T01:50:46.6679326Z Receiving objects:  24% (55/226)
+2023-11-08T01:50:46.6679850Z Receiving objects:  25% (57/226)
+2023-11-08T01:50:46.6680529Z Receiving objects:  26% (59/226)
+2023-11-08T01:50:46.6681074Z Receiving objects:  27% (62/226)
+2023-11-08T01:50:46.6681610Z Receiving objects:  28% (64/226)
+2023-11-08T01:50:46.6682136Z Receiving objects:  29% (66/226)
+2023-11-08T01:50:46.6682773Z Receiving objects:  30% (68/226)
+2023-11-08T01:50:46.6683306Z Receiving objects:  31% (71/226)
+2023-11-08T01:50:46.6683834Z Receiving objects:  32% (73/226)
+2023-11-08T01:50:46.6684368Z Receiving objects:  33% (75/226)
+2023-11-08T01:50:46.6685223Z Receiving objects:  34% (77/226)
+2023-11-08T01:50:46.6685766Z Receiving objects:  35% (80/226)
+2023-11-08T01:50:46.6686559Z Receiving objects:  36% (82/226)
+2023-11-08T01:50:46.6687090Z Receiving objects:  37% (84/226)
+2023-11-08T01:50:46.6687702Z Receiving objects:  38% (86/226)
+2023-11-08T01:50:46.6688336Z Receiving objects:  39% (89/226)
+2023-11-08T01:50:46.6688996Z Receiving objects:  40% (91/226)
+2023-11-08T01:50:46.6689532Z Receiving objects:  41% (93/226)
+2023-11-08T01:50:46.6690076Z Receiving objects:  42% (95/226)
+2023-11-08T01:50:46.6690629Z Receiving objects:  43% (98/226)
+2023-11-08T01:50:46.6691159Z Receiving objects:  44% (100/226)
+2023-11-08T01:50:46.6691881Z Receiving objects:  45% (102/226)
+2023-11-08T01:50:46.6692720Z Receiving objects:  46% (104/226)
+2023-11-08T01:50:46.6693278Z Receiving objects:  47% (107/226)
+2023-11-08T01:50:46.6693819Z Receiving objects:  48% (109/226)
+2023-11-08T01:50:46.6694387Z Receiving objects:  49% (111/226)
+2023-11-08T01:50:46.6694943Z Receiving objects:  50% (113/226)
+2023-11-08T01:50:46.6695495Z Receiving objects:  51% (116/226)
+2023-11-08T01:50:46.6696043Z Receiving objects:  52% (118/226)
+2023-11-08T01:50:46.6698236Z Receiving objects:  53% (120/226)
+2023-11-08T01:50:46.6698819Z Receiving objects:  54% (123/226)
+2023-11-08T01:50:46.6699375Z Receiving objects:  55% (125/226)
+2023-11-08T01:50:46.6700058Z Receiving objects:  56% (127/226)
+2023-11-08T01:50:46.6700599Z Receiving objects:  57% (129/226)
+2023-11-08T01:50:46.6701162Z Receiving objects:  58% (132/226)
+2023-11-08T01:50:46.6701719Z Receiving objects:  59% (134/226)
+2023-11-08T01:50:46.6702350Z Receiving objects:  60% (136/226)
+2023-11-08T01:50:46.6702911Z Receiving objects:  61% (138/226)
+2023-11-08T01:50:46.6703547Z Receiving objects:  62% (141/226)
+2023-11-08T01:50:46.6704105Z Receiving objects:  63% (143/226)
+2023-11-08T01:50:46.6704640Z Receiving objects:  64% (145/226)
+2023-11-08T01:50:46.6705205Z Receiving objects:  65% (147/226)
+2023-11-08T01:50:46.6705965Z Receiving objects:  66% (150/226)
+2023-11-08T01:50:46.6706535Z Receiving objects:  67% (152/226)
+2023-11-08T01:50:46.6707085Z Receiving objects:  68% (154/226)
+2023-11-08T01:50:46.6707654Z Receiving objects:  69% (156/226)
+2023-11-08T01:50:46.6708211Z Receiving objects:  70% (159/226)
+2023-11-08T01:50:46.6708761Z Receiving objects:  71% (161/226)
+2023-11-08T01:50:46.6709295Z Receiving objects:  72% (163/226)
+2023-11-08T01:50:46.6709854Z Receiving objects:  73% (165/226)
+2023-11-08T01:50:46.6710405Z Receiving objects:  74% (168/226)
+2023-11-08T01:50:46.6710941Z Receiving objects:  75% (170/226)
+2023-11-08T01:50:46.6711492Z Receiving objects:  76% (172/226)
+2023-11-08T01:50:46.6712044Z Receiving objects:  77% (175/226)
+2023-11-08T01:50:46.6712597Z Receiving objects:  78% (177/226)
+2023-11-08T01:50:46.6713129Z Receiving objects:  79% (179/226)
+2023-11-08T01:50:46.6713684Z Receiving objects:  80% (181/226)
+2023-11-08T01:50:46.6714235Z Receiving objects:  81% (184/226)
+2023-11-08T01:50:46.6715380Z remote: Total 226 (delta 47), reused 135 (delta 36), pack-reused 0        
+2023-11-08T01:50:46.6716260Z Receiving objects:  82% (186/226)
+2023-11-08T01:50:46.6716828Z Receiving objects:  83% (188/226)
+2023-11-08T01:50:46.6717385Z Receiving objects:  84% (190/226)
+2023-11-08T01:50:46.6717937Z Receiving objects:  85% (193/226)
+2023-11-08T01:50:46.6718472Z Receiving objects:  86% (195/226)
+2023-11-08T01:50:46.6719030Z Receiving objects:  87% (197/226)
+2023-11-08T01:50:46.6719582Z Receiving objects:  88% (199/226)
+2023-11-08T01:50:46.6720116Z Receiving objects:  89% (202/226)
+2023-11-08T01:50:46.6720891Z Receiving objects:  90% (204/226)
+2023-11-08T01:50:46.6721452Z Receiving objects:  91% (206/226)
+2023-11-08T01:50:46.6722012Z Receiving objects:  92% (208/226)
+2023-11-08T01:50:46.6722552Z Receiving objects:  93% (211/226)
+2023-11-08T01:50:46.6723112Z Receiving objects:  94% (213/226)
+2023-11-08T01:50:46.6723668Z Receiving objects:  95% (215/226)
+2023-11-08T01:50:46.6724228Z Receiving objects:  96% (217/226)
+2023-11-08T01:50:46.6724761Z Receiving objects:  97% (220/226)
+2023-11-08T01:50:46.6725316Z Receiving objects:  98% (222/226)
+2023-11-08T01:50:46.6725869Z Receiving objects:  99% (224/226)
+2023-11-08T01:50:46.6726666Z Receiving objects: 100% (226/226)
+2023-11-08T01:50:46.6727410Z Receiving objects: 100% (226/226), 192.55 KiB | 10.13 MiB/s, done.
+2023-11-08T01:50:46.6728371Z Resolving deltas:   0% (0/47)
+2023-11-08T01:50:46.6728908Z Resolving deltas:   2% (1/47)
+2023-11-08T01:50:46.6729423Z Resolving deltas:   4% (2/47)
+2023-11-08T01:50:46.6729953Z Resolving deltas:   6% (3/47)
+2023-11-08T01:50:46.6730475Z Resolving deltas:   8% (4/47)
+2023-11-08T01:50:46.6731000Z Resolving deltas:  10% (5/47)
+2023-11-08T01:50:46.6731508Z Resolving deltas:  12% (6/47)
+2023-11-08T01:50:46.6732029Z Resolving deltas:  14% (7/47)
+2023-11-08T01:50:46.6732650Z Resolving deltas:  17% (8/47)
+2023-11-08T01:50:46.6733176Z Resolving deltas:  19% (9/47)
+2023-11-08T01:50:46.6733687Z Resolving deltas:  21% (10/47)
+2023-11-08T01:50:46.6734232Z Resolving deltas:  23% (11/47)
+2023-11-08T01:50:46.6734767Z Resolving deltas:  25% (12/47)
+2023-11-08T01:50:46.6735294Z Resolving deltas:  27% (13/47)
+2023-11-08T01:50:46.6735809Z Resolving deltas:  29% (14/47)
+2023-11-08T01:50:46.6736341Z Resolving deltas:  31% (15/47)
+2023-11-08T01:50:46.6736871Z Resolving deltas:  34% (16/47)
+2023-11-08T01:50:46.6737384Z Resolving deltas:  36% (17/47)
+2023-11-08T01:50:46.6737981Z Resolving deltas:  38% (18/47)
+2023-11-08T01:50:46.6738506Z Resolving deltas:  40% (19/47)
+2023-11-08T01:50:46.6739037Z Resolving deltas:  42% (20/47)
+2023-11-08T01:50:46.6739549Z Resolving deltas:  44% (21/47)
+2023-11-08T01:50:46.6740081Z Resolving deltas:  46% (22/47)
+2023-11-08T01:50:46.6740614Z Resolving deltas:  48% (23/47)
+2023-11-08T01:50:46.6741140Z Resolving deltas:  51% (24/47)
+2023-11-08T01:50:46.6741655Z Resolving deltas:  53% (25/47)
+2023-11-08T01:50:46.6742180Z Resolving deltas:  55% (26/47)
+2023-11-08T01:50:46.6742713Z Resolving deltas:  57% (27/47)
+2023-11-08T01:50:46.6743374Z Resolving deltas:  59% (28/47)
+2023-11-08T01:50:46.6743897Z Resolving deltas:  61% (29/47)
+2023-11-08T01:50:46.6744431Z Resolving deltas:  63% (30/47)
+2023-11-08T01:50:46.6744966Z Resolving deltas:  65% (31/47)
+2023-11-08T01:50:46.6745489Z Resolving deltas:  68% (32/47)
+2023-11-08T01:50:46.6746027Z Resolving deltas:  70% (33/47)
+2023-11-08T01:50:46.6746674Z Resolving deltas:  72% (34/47)
+2023-11-08T01:50:46.6747210Z Resolving deltas:  74% (35/47)
+2023-11-08T01:50:46.6749834Z Resolving deltas:  76% (36/47)
+2023-11-08T01:50:46.6750436Z Resolving deltas:  78% (37/47)
+2023-11-08T01:50:46.6750967Z Resolving deltas:  80% (38/47)
+2023-11-08T01:50:46.6751493Z Resolving deltas:  82% (39/47)
+2023-11-08T01:50:46.6752003Z Resolving deltas:  85% (40/47)
+2023-11-08T01:50:46.6752532Z Resolving deltas:  87% (41/47)
+2023-11-08T01:50:46.6753058Z Resolving deltas:  89% (42/47)
+2023-11-08T01:50:46.6753567Z Resolving deltas:  91% (43/47)
+2023-11-08T01:50:46.6754094Z Resolving deltas:  93% (44/47)
+2023-11-08T01:50:46.6754632Z Resolving deltas:  95% (45/47)
+2023-11-08T01:50:46.6755156Z Resolving deltas:  97% (46/47)
+2023-11-08T01:50:46.6755662Z Resolving deltas: 100% (47/47)
+2023-11-08T01:50:46.6756207Z Resolving deltas: 100% (47/47), done.
+2023-11-08T01:50:46.6757599Z From https://github.com/msegal347/COMS_4156_Project
+2023-11-08T01:50:46.6758814Z  * [new ref]         41a114d8a147d025efd381acb10ea7319c37d580 -> pull/33/merge
+2023-11-08T01:50:46.6796252Z ##[endgroup]
+2023-11-08T01:50:46.6797032Z ##[group]Determining the checkout info
+2023-11-08T01:50:46.6797918Z ##[endgroup]
+2023-11-08T01:50:46.6798660Z ##[group]Checking out the ref
+2023-11-08T01:50:46.6799708Z [command]/usr/bin/git checkout --progress --force refs/remotes/pull/33/merge
+2023-11-08T01:50:46.6928646Z Note: switching to 'refs/remotes/pull/33/merge'.
+2023-11-08T01:50:46.6929223Z 
+2023-11-08T01:50:46.6929788Z You are in 'detached HEAD' state. You can look around, make experimental
+2023-11-08T01:50:46.6930994Z changes and commit them, and you can discard any commits you make in this
+2023-11-08T01:50:46.6932140Z state without impacting any branches by switching back to a branch.
+2023-11-08T01:50:46.6932811Z 
+2023-11-08T01:50:46.6933557Z If you want to create a new branch to retain commits you create, you may
+2023-11-08T01:50:46.6934726Z do so (now or later) by using -c with the switch command. Example:
+2023-11-08T01:50:46.6935387Z 
+2023-11-08T01:50:46.6935635Z   git switch -c <new-branch-name>
+2023-11-08T01:50:46.6936041Z 
+2023-11-08T01:50:46.6936223Z Or undo this operation with:
+2023-11-08T01:50:46.6936572Z 
+2023-11-08T01:50:46.6936733Z   git switch -
+2023-11-08T01:50:46.6936974Z 
+2023-11-08T01:50:46.6937477Z Turn off this advice by setting config variable advice.detachedHead to false
+2023-11-08T01:50:46.6938247Z 
+2023-11-08T01:50:46.6939075Z HEAD is now at 41a114d Merge a2b6d515c844ac0a33b7c03042ab7a55f1c80df7 into a827519e598b346d90e269423baf58ab7b3776a8
+2023-11-08T01:50:46.6941371Z ##[endgroup]
+2023-11-08T01:50:46.6990920Z [command]/usr/bin/git log -1 --format='%H'
+2023-11-08T01:50:46.7012008Z '41a114d8a147d025efd381acb10ea7319c37d580'
+2023-11-08T01:50:46.7394337Z ##[warning]Unexpected input(s) 'npm-version', valid inputs are ['always-auth', 'node-version', 'node-version-file', 'architecture', 'check-latest', 'registry-url', 'scope', 'token', 'cache', 'cache-dependency-path', 'version']
+2023-11-08T01:50:46.7418341Z ##[group]Run actions/setup-node@v2
+2023-11-08T01:50:46.7418933Z with:
+2023-11-08T01:50:46.7419303Z   node-version: 20.x
+2023-11-08T01:50:46.7419752Z   npm-version: 7.x
+2023-11-08T01:50:46.7420171Z   always-auth: false
+2023-11-08T01:50:46.7420624Z   check-latest: false
+2023-11-08T01:50:46.7421334Z   token: ***
+2023-11-08T01:50:46.7421717Z ##[endgroup]
+2023-11-08T01:50:46.9397695Z Found in cache @ /opt/hostedtoolcache/node/20.9.0/x64
+2023-11-08T01:50:46.9539346Z ##[group]Run npm install
+2023-11-08T01:50:46.9539945Z [36;1mnpm install[0m
+2023-11-08T01:50:46.9602047Z shell: /usr/bin/bash -e {0}
+2023-11-08T01:50:46.9602597Z ##[endgroup]
+2023-11-08T01:50:56.9356894Z npm WARN deprecated w3c-hr-time@1.0.2: Use your platform's native performance.now() and performance.timeOrigin.
+2023-11-08T01:50:57.3106278Z npm WARN deprecated @types/mongoose@5.11.97: Mongoose publishes its own types, so you do not need to install this package.
+2023-11-08T01:51:02.4742707Z 
+2023-11-08T01:51:02.4743656Z added 1163 packages, and audited 1164 packages in 15s
+2023-11-08T01:51:02.4744263Z 
+2023-11-08T01:51:02.4748078Z 79 packages are looking for funding
+2023-11-08T01:51:02.4748696Z   run `npm fund` for details
+2023-11-08T01:51:02.4769654Z 
+2023-11-08T01:51:02.4770288Z 1 critical severity vulnerability
+2023-11-08T01:51:02.4770683Z 
+2023-11-08T01:51:02.4771085Z Some issues need review, and may require choosing
+2023-11-08T01:51:02.4771674Z a different dependency.
+2023-11-08T01:51:02.4772035Z 
+2023-11-08T01:51:02.4772211Z Run `npm audit` for details.
+2023-11-08T01:51:02.5216360Z ##[group]Run npm run lint
+2023-11-08T01:51:02.5216845Z [36;1mnpm run lint[0m
+2023-11-08T01:51:02.5258688Z shell: /usr/bin/bash -e {0}
+2023-11-08T01:51:02.5259126Z ##[endgroup]
+2023-11-08T01:51:02.8201858Z 
+2023-11-08T01:51:02.8202487Z > FoodLink@1.0.0 lint
+2023-11-08T01:51:02.8203692Z > eslint src/**/*.{ts,tsx}
+2023-11-08T01:51:02.8204143Z 
+2023-11-08T01:51:05.4358319Z 
+2023-11-08T01:51:05.4359845Z /home/runner/work/COMS_4156_Project/COMS_4156_Project/src/config/db.ts
+2023-11-08T01:51:05.4418115Z ##[warning]  15:7   warning  Unexpected console statement              no-console
+2023-11-08T01:51:05.4421238Z ##[warning]  22:7   warning  Unexpected console statement              no-console
+2023-11-08T01:51:05.4423963Z ##[warning]  36:5   warning  Unexpected console statement              no-console
+2023-11-08T01:51:05.4426968Z ##[warning]  37:19  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+2023-11-08T01:51:05.4429985Z ##[warning]  38:5   warning  Unexpected console statement              no-console
+2023-11-08T01:51:05.4431680Z 
+2023-11-08T01:51:05.4432470Z /home/runner/work/COMS_4156_Project/COMS_4156_Project/src/controllers/allocationController.ts
+2023-11-08T01:51:05.4434833Z ##[warning]  5:29  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+2023-11-08T01:51:05.4436929Z 
+2023-11-08T01:51:05.4437724Z /home/runner/work/COMS_4156_Project/COMS_4156_Project/src/controllers/entityController.ts
+2023-11-08T01:51:05.4439712Z ##[warning]  13:5   warning  Unexpected console statement              no-console
+2023-11-08T01:51:05.4442759Z ##[warning]  14:45  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+2023-11-08T01:51:05.4444316Z 
+2023-11-08T01:51:05.4444840Z /home/runner/work/COMS_4156_Project/COMS_4156_Project/src/index.ts
+2023-11-08T01:51:05.4446613Z ##[warning]  37:13  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+2023-11-08T01:51:05.4449167Z ##[warning]  41:5   warning  Unexpected console statement              no-console
+2023-11-08T01:51:05.4450516Z 
+2023-11-08T01:51:05.4451205Z /home/runner/work/COMS_4156_Project/COMS_4156_Project/src/services/allocationService.ts
+2023-11-08T01:51:05.4453170Z ##[warning]   5:46  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+2023-11-08T01:51:05.4456005Z ##[warning]  15:62  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+2023-11-08T01:51:05.4458762Z ##[warning]  25:55  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+2023-11-08T01:51:05.4460351Z 
+2023-11-08T01:51:05.4461036Z /home/runner/work/COMS_4156_Project/COMS_4156_Project/src/services/analyticsService.ts
+2023-11-08T01:51:05.4462954Z ##[warning]   4:48  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+2023-11-08T01:51:05.4511939Z ##[warning]   4:62  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+2023-11-08T01:51:05.4514689Z ##[warning]  15:58  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+2023-11-08T01:51:05.4517135Z ##[warning]  28:65  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+2023-11-08T01:51:05.4519557Z ##[warning]  28:79  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+2023-11-08T01:51:05.4521195Z 
+2023-11-08T01:51:05.4521798Z /home/runner/work/COMS_4156_Project/COMS_4156_Project/src/services/logisticsService.ts
+2023-11-08T01:51:05.4523450Z ##[warning]   5:46  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+2023-11-08T01:51:05.4525851Z ##[warning]   5:60  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+2023-11-08T01:51:05.4528228Z ##[warning]  16:57  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+2023-11-08T01:51:05.4530929Z ##[warning]  29:64  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+2023-11-08T01:51:05.4533361Z ##[warning]  29:78  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+2023-11-08T01:51:05.4534775Z 
+2023-11-08T01:51:05.4535382Z /home/runner/work/COMS_4156_Project/COMS_4156_Project/src/services/notificationService.ts
+2023-11-08T01:51:05.4537046Z ##[warning]  2:10  warning  'Types' is defined but never used         @typescript-eslint/no-unused-vars
+2023-11-08T01:51:05.4539390Z ##[warning]  6:34  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+2023-11-08T01:51:05.4540789Z 
+2023-11-08T01:51:05.4541363Z /home/runner/work/COMS_4156_Project/COMS_4156_Project/src/services/resourceService.ts
+2023-11-08T01:51:05.4542984Z ##[warning]  6:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+2023-11-08T01:51:05.4544392Z 
+2023-11-08T01:51:05.4544984Z /home/runner/work/COMS_4156_Project/COMS_4156_Project/src/services/transactionService.ts
+2023-11-08T01:51:05.4546634Z ##[warning]  5:33  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+2023-11-08T01:51:05.4548030Z 
+2023-11-08T01:51:05.4548732Z ✖ 27 problems (0 errors, 27 warnings)
+2023-11-08T01:51:05.4549085Z 
+2023-11-08T01:51:05.4778321Z ##[group]Run npm run test -- --coverage --testPathIgnorePatterns='integrations/'
+2023-11-08T01:51:05.4779382Z [36;1mnpm run test -- --coverage --testPathIgnorePatterns='integrations/'[0m
+2023-11-08T01:51:05.4817867Z shell: /usr/bin/bash -e {0}
+2023-11-08T01:51:05.4818306Z ##[endgroup]
+2023-11-08T01:51:05.8054876Z 
+2023-11-08T01:51:05.8055911Z > FoodLink@1.0.0 test
+2023-11-08T01:51:05.8057174Z > jest --coverage --testPathIgnorePatterns=integrations/
+2023-11-08T01:51:05.8057950Z 
+2023-11-08T01:51:12.3974590Z PASS test/controllers/notificationController.test.ts (5.649 s)
+2023-11-08T01:51:14.4468637Z PASS test/services/allocationService.test.ts
+2023-11-08T01:51:16.2698292Z PASS test/controllers/allocationController.test.ts
+2023-11-08T01:51:18.2091700Z PASS test/controllers/logisticsController.test.ts
+2023-11-08T01:51:20.6599978Z PASS test/controllers/transactionController.test.ts
+2023-11-08T01:51:22.6417847Z PASS test/routes/allocationRoutes.test.ts
+2023-11-08T01:51:24.2154942Z PASS test/controllers/entityController.test.ts
+2023-11-08T01:51:25.6924680Z PASS test/routes/resourceRoutes.test.ts
+2023-11-08T01:51:27.3999411Z PASS test/controllers/analyticsController.test.ts
+2023-11-08T01:51:28.3671517Z PASS test/routes/transactionRoutes.test.ts
+2023-11-08T01:51:31.0941611Z PASS test/routes/logisticsRoutes.test.ts
+2023-11-08T01:51:32.9818799Z ::ffff:127.0.0.1 - - [08/Nov/2023:01:51:31 +0000] "POST /api/logistics HTTP/1.1" 201 39 "-" "-"
+2023-11-08T01:51:32.9820724Z ::ffff:127.0.0.1 - - [08/Nov/2023:01:51:31 +0000] "GET /api/logistics/1 HTTP/1.1" 200 48 "-" "-"
+2023-11-08T01:51:32.9822345Z ::ffff:127.0.0.1 - - [08/Nov/2023:01:51:31 +0000] "PUT /api/logistics/1 HTTP/1.1" 200 48 "-" "-"
+2023-11-08T01:51:32.9824014Z ::ffff:127.0.0.1 - - [08/Nov/2023:01:51:31 +0000] "DELETE /api/logistics/1 HTTP/1.1" 204 - "-" "-"
+2023-11-08T01:51:32.9825643Z ::ffff:127.0.0.1 - - [08/Nov/2023:01:51:31 +0000] "POST /api/logistics/optimize HTTP/1.1" 200 28 "-" "-"
+2023-11-08T01:51:32.9827609Z ::ffff:127.0.0.1 - - [08/Nov/2023:01:51:31 +0000] "GET /api/logistics/coordinates/some-address HTTP/1.1" 200 40 "-" "-"
+2023-11-08T01:51:32.9899236Z PASS test/controllers/resourceController.test.ts
+2023-11-08T01:51:34.5551840Z PASS test/models/notificationModel.test.ts
+2023-11-08T01:51:36.0614156Z PASS test/models/entityModel.test.ts
+2023-11-08T01:51:37.8133984Z PASS test/services/entityService.test.ts
+2023-11-08T01:51:38.0339701Z PASS test/models/allocationModel.test.ts
+2023-11-08T01:51:38.4855732Z PASS test/config/db.test.ts
+2023-11-08T01:51:38.6802275Z PASS test/algorithms/resourceAllocation.test.ts
+2023-11-08T01:51:39.8502076Z PASS test/routes/analyticsRoutes.test.ts
+2023-11-08T01:51:40.2299586Z ::ffff:127.0.0.1 - - [08/Nov/2023:01:51:39 +0000] "POST /api/analytics HTTP/1.1" 201 15 "-" "-"
+2023-11-08T01:51:40.2301667Z ::ffff:127.0.0.1 - - [08/Nov/2023:01:51:39 +0000] "GET /api/analytics/1 HTTP/1.1" 200 24 "-" "-"
+2023-11-08T01:51:40.2303569Z ::ffff:127.0.0.1 - - [08/Nov/2023:01:51:39 +0000] "PUT /api/analytics/1 HTTP/1.1" 200 27 "-" "-"
+2023-11-08T01:51:40.2305447Z ::ffff:127.0.0.1 - - [08/Nov/2023:01:51:39 +0000] "DELETE /api/analytics/1 HTTP/1.1" 204 - "-" "-"
+2023-11-08T01:51:40.2576882Z PASS test/routes/entityRoutes.test.ts
+2023-11-08T01:51:40.5356632Z PASS test/config/env.test.ts
+2023-11-08T01:51:40.7296407Z PASS test/utils/googleMaps.test.ts
+2023-11-08T01:51:42.5038232Z PASS test/models/logisticsModel.test.ts
+2023-11-08T01:51:42.8813568Z PASS test/services/logisticsService.test.ts
+2023-11-08T01:51:45.1387176Z PASS test/services/notificationService.test.ts
+2023-11-08T01:51:46.7455338Z PASS test/models/resourceModel.test.ts
+2023-11-08T01:51:48.2279462Z PASS test/models/transactionModel.test.ts
+2023-11-08T01:51:50.2482296Z PASS test/services/transactionService.test.ts
+2023-11-08T01:51:52.3539588Z PASS test/services/resourceService.test.ts
+2023-11-08T01:51:53.9828285Z PASS test/services/analyticsService.test.ts
+2023-11-08T01:51:55.5624253Z PASS test/models/analyticsModel.test.ts
+2023-11-08T01:51:55.7781082Z PASS test/config/logger.test.ts
+2023-11-08T01:51:56.6809331Z PASS test/gateway/gateway.test.ts
+2023-11-08T01:51:56.8208700Z ----------------------------|---------|----------|---------|---------|---------------------------------
+2023-11-08T01:51:56.8212620Z File                        | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s               
+2023-11-08T01:51:56.8215148Z ----------------------------|---------|----------|---------|---------|---------------------------------
+2023-11-08T01:51:56.8220481Z All files                   |   80.61 |    62.88 |   72.18 |   79.96 |                                 
+2023-11-08T01:51:56.8223432Z  src                        |    82.6 |       50 |       0 |   86.36 |                                 
+2023-11-08T01:51:56.8226996Z   index.ts                  |    82.6 |       50 |       0 |   86.36 | 31,40-41                        
+2023-11-08T01:51:56.8230375Z  src/algorithms             |     100 |      100 |     100 |     100 |                                 
+2023-11-08T01:51:56.8233539Z   resourceAllocation.ts     |     100 |      100 |     100 |     100 |                                 
+2023-11-08T01:51:56.8235956Z  src/config                 |   86.04 |    84.61 |      80 |   85.71 |                                 
+2023-11-08T01:51:56.8238788Z   db.ts                     |      85 |       75 |     100 |   84.21 | 15-17                           
+2023-11-08T01:51:56.8241633Z   env.ts                    |    92.3 |    90.47 |     100 |    92.3 | 11                              
+2023-11-08T01:51:56.8244415Z   logger.ts                 |      80 |      100 |       0 |      80 | 26-37                           
+2023-11-08T01:51:56.8247705Z  src/controllers            |   84.84 |    51.35 |     100 |   82.62 |                                 
+2023-11-08T01:51:56.8250945Z   allocationController.ts   |   89.83 |    92.85 |     100 |   88.23 | 22,41,54-55,64,83               
+2023-11-08T01:51:56.8253705Z   analyticsController.ts    |   88.23 |      100 |     100 |   84.61 | 12,23,35,46                     
+2023-11-08T01:51:56.8256759Z   entityController.ts       |      78 |        0 |     100 |    72.5 | 13-17,28,32,43,47,57,61,71      
+2023-11-08T01:51:56.8259465Z   logisticsController.ts    |   88.23 |      100 |     100 |   84.61 | 12,23,35,46,58,69               
+2023-11-08T01:51:56.8262215Z   notificationController.ts |   88.88 |       60 |     100 |   88.88 | 16,31,52,70                     
+2023-11-08T01:51:56.8264882Z   resourceController.ts     |   76.47 |        0 |     100 |   76.47 | 13,23,33,37,48,52,62,66         
+2023-11-08T01:51:56.8267464Z   transactionController.ts  |   81.81 |        0 |     100 |   81.81 | 21,25,36,47,61,65               
+2023-11-08T01:51:56.8269708Z  src/gateway                |     100 |      100 |     100 |     100 |                                 
+2023-11-08T01:51:56.8272009Z   gateway.ts                |     100 |      100 |     100 |     100 |                                 
+2023-11-08T01:51:56.8274130Z  src/models                 |     100 |      100 |     100 |     100 |                                 
+2023-11-08T01:51:56.8276347Z   allocationModel.ts        |     100 |      100 |     100 |     100 |                                 
+2023-11-08T01:51:56.8278533Z   analyticsModel.ts         |     100 |      100 |     100 |     100 |                                 
+2023-11-08T01:51:56.8280926Z   entityModel.ts            |     100 |      100 |     100 |     100 |                                 
+2023-11-08T01:51:56.8283238Z   logisticsModel.ts         |     100 |      100 |     100 |     100 |                                 
+2023-11-08T01:51:56.8285469Z   notificationModel.ts      |     100 |      100 |     100 |     100 |                                 
+2023-11-08T01:51:56.8300621Z   resourceModel.ts          |     100 |      100 |     100 |     100 |                                 
+2023-11-08T01:51:56.8301734Z   transactionModel.ts       |     100 |      100 |     100 |     100 |                                 
+2023-11-08T01:51:56.8303060Z  src/routes                 |   82.69 |       50 |   54.54 |   85.86 |                                 
+2023-11-08T01:51:56.8304284Z   allocationRoutes.ts       |     100 |      100 |     100 |     100 |                                 
+2023-11-08T01:51:56.8305349Z   analyticsRoutes.ts        |     100 |      100 |     100 |     100 |                                 
+2023-11-08T01:51:56.8306581Z   entityRoutes.ts           |      80 |       50 |     100 |   77.14 | 12,22,33-36,47-50,61-64         
+2023-11-08T01:51:56.8307596Z   logisticsRoutes.ts        |     100 |      100 |     100 |     100 |                                 
+2023-11-08T01:51:56.8308661Z   notificationRoutes.ts     |     100 |      100 |     100 |     100 |                                 
+2023-11-08T01:51:56.8309759Z   resourceRoutes.ts         |   47.36 |      100 |       0 |   64.28 | 8,13,18,23,28                   
+2023-11-08T01:51:56.8310845Z   transactionRoutes.ts      |     100 |      100 |     100 |     100 |                                 
+2023-11-08T01:51:56.8311896Z  src/services               |   54.92 |        0 |   44.89 |      50 |                                 
+2023-11-08T01:51:56.8312917Z   allocationService.ts      |     100 |      100 |     100 |     100 |                                 
+2023-11-08T01:51:56.8314101Z   analyticsService.ts       |      40 |        0 |      25 |   33.33 | 10,16-23,29-36,42-48            
+2023-11-08T01:51:56.8315142Z   entityService.ts          |     100 |      100 |     100 |     100 |                                 
+2023-11-08T01:51:56.8316331Z   logisticsService.ts       |   35.41 |        0 |   16.66 |   28.94 | 6-11,17-24,30-37,43-49,61,68-72 
+2023-11-08T01:51:56.8317548Z   notificationService.ts    |   57.14 |      100 |      25 |   57.14 | 13-26                           
+2023-11-08T01:51:56.8318727Z   resourceService.ts        |      50 |      100 |      20 |      50 | 13-31                           
+2023-11-08T01:51:56.8319921Z   transactionService.ts     |   44.44 |      100 |      20 |   44.44 | 12-31                           
+2023-11-08T01:51:56.8321961Z  src/utils                  |   96.07 |      100 |   88.88 |   95.55 |                                 
+2023-11-08T01:51:56.8322964Z   expressMock.ts            |     100 |      100 |     100 |     100 |                                 
+2023-11-08T01:51:56.8323977Z   googleMaps.ts             |   94.59 |      100 |   86.66 |   94.11 | 27,63                           
+2023-11-08T01:51:56.8325101Z ----------------------------|---------|----------|---------|---------|---------------------------------
+2023-11-08T01:51:56.8398235Z 
+2023-11-08T01:51:56.8410608Z Test Suites: 33 passed, 33 total
+2023-11-08T01:51:56.8411458Z Tests:       156 passed, 156 total
+2023-11-08T01:51:56.8412163Z Snapshots:   0 total
+2023-11-08T01:51:56.8412758Z Time:        50.128 s
+2023-11-08T01:51:56.8495570Z Ran all test suites.
+2023-11-08T01:51:57.0049230Z ##[group]Run actions/upload-artifact@v2
+2023-11-08T01:51:57.0049751Z with:
+2023-11-08T01:51:57.0050048Z   name: coverage
+2023-11-08T01:51:57.0050443Z   path: ./coverage/lcov.info
+2023-11-08T01:51:57.0050870Z   if-no-files-found: warn
+2023-11-08T01:51:57.0051247Z ##[endgroup]
+2023-11-08T01:51:57.0737524Z With the provided path, there will be 1 file uploaded
+2023-11-08T01:51:57.0741748Z Starting artifact upload
+2023-11-08T01:51:57.0744268Z For more detailed logs during the artifact upload process, enable step-debugging: https://docs.github.com/actions/monitoring-and-troubleshooting-workflows/enabling-debug-logging#enabling-step-debug-logging
+2023-11-08T01:51:57.0746348Z Artifact name is valid!
+2023-11-08T01:51:57.1478995Z Container for artifact "coverage" successfully created. Starting upload of file(s)
+2023-11-08T01:51:57.2466091Z Total size of all the files uploaded is 3089 bytes
+2023-11-08T01:51:57.2467187Z File upload process has finished. Finalizing the artifact upload
+2023-11-08T01:51:57.2951186Z Artifact has been finalized. All files have been successfully uploaded!
+2023-11-08T01:51:57.2951889Z 
+2023-11-08T01:51:57.2952836Z The raw size of all the files that were specified for upload is 15780 bytes
+2023-11-08T01:51:57.2954772Z The size of all the files that were uploaded is 3089 bytes. This takes into account any gzip compression used to reduce the upload size, time and storage
+2023-11-08T01:51:57.2956030Z 
+2023-11-08T01:51:57.2957962Z Note: The size of downloaded zips can differ significantly from the reported size. For more information see: https://github.com/actions/upload-artifact#zipped-artifact-downloads 
+2023-11-08T01:51:57.2959434Z 
+2023-11-08T01:51:57.2962186Z Artifact coverage has been successfully uploaded!
+2023-11-08T01:51:57.3195271Z ##[warning]Unexpected input(s) 'coveralls-repo-token', valid inputs are ['github-token', 'path-to-lcov', 'file', 'files', 'format', 'flag-name', 'parallel', 'parallel-finished', 'carryforward', 'coveralls-endpoint', 'allow-empty', 'base-path', 'git-branch', 'git-commit', 'compare-ref', 'compare-sha', 'debug', 'measure', 'fail-on-error']
+2023-11-08T01:51:57.3207994Z ##[group]Run coverallsapp/github-action@v2
+2023-11-08T01:51:57.3208513Z with:
+2023-11-08T01:51:57.3209308Z   github-token: ***
+2023-11-08T01:51:57.3209856Z   coveralls-repo-token: ***
+2023-11-08T01:51:57.3210359Z   coveralls-endpoint: https://coveralls.io
+2023-11-08T01:51:57.3210877Z   allow-empty: false
+2023-11-08T01:51:57.3211220Z   debug: false
+2023-11-08T01:51:57.3211539Z   measure: false
+2023-11-08T01:51:57.3211883Z   fail-on-error: true
+2023-11-08T01:51:57.3212238Z ##[endgroup]
+2023-11-08T01:51:57.3467347Z ##[group]Run mkdir -p ~/bin/
+2023-11-08T01:51:57.3467808Z [36;1mmkdir -p ~/bin/[0m
+2023-11-08T01:51:57.3468254Z [36;1mcd ~/bin/[0m
+2023-11-08T01:51:57.3469203Z [36;1mcurl -sLO https://github.com/coverallsapp/coverage-reporter/releases/latest/download/coveralls-linux.tar.gz[0m
+2023-11-08T01:51:57.3470798Z [36;1mcurl -sLO https://github.com/coverallsapp/coverage-reporter/releases/latest/download/coveralls-checksums.txt[0m
+2023-11-08T01:51:57.3472176Z [36;1mcat coveralls-checksums.txt | grep coveralls-linux.tar.gz | sha256sum --check[0m
+2023-11-08T01:51:57.3473034Z [36;1mtar -xzf coveralls-linux.tar.gz[0m
+2023-11-08T01:51:57.3473574Z [36;1mrm coveralls-checksums.txt[0m
+2023-11-08T01:51:57.3474073Z [36;1mecho ~/bin >> $GITHUB_PATH[0m
+2023-11-08T01:51:57.3513346Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2023-11-08T01:51:57.3513952Z ##[endgroup]
+2023-11-08T01:51:57.9871481Z coveralls-linux.tar.gz: OK
+2023-11-08T01:51:58.0723061Z ##[group]Run coveralls report        
+2023-11-08T01:51:58.0723598Z [36;1mcoveralls report        [0m
+2023-11-08T01:51:58.0760694Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2023-11-08T01:51:58.0761316Z env:
+2023-11-08T01:51:58.0761633Z   COVERALLS_DEBUG: false
+2023-11-08T01:51:58.0762098Z   COVERALLS_CARRYFORWARD_FLAGS: 
+2023-11-08T01:51:58.0762550Z   COVERALLS_FLAG_NAME: 
+2023-11-08T01:51:58.0762925Z   COVERALLS_PARALLEL: 
+2023-11-08T01:51:58.0763376Z   COVERALLS_ENDPOINT: https://coveralls.io
+2023-11-08T01:51:58.0763891Z   COVERALLS_GIT_BRANCH: 
+2023-11-08T01:51:58.0764311Z   COVERALLS_GIT_COMMIT: 
+2023-11-08T01:51:58.0764959Z   COVERALLS_REPO_TOKEN: ***
+2023-11-08T01:51:58.0765382Z   COVERALLS_COMPARE_REF: 
+2023-11-08T01:51:58.0765785Z   COVERALLS_COMPARE_SHA: 
+2023-11-08T01:51:58.0766213Z   COVERALLS_SOURCE_HEADER: github-action
+2023-11-08T01:51:58.0766675Z ##[endgroup]
+2023-11-08T01:51:58.0877536Z  
+2023-11-08T01:51:58.0878477Z ⠀⠀⠀⠀⠀⠀⣿
+2023-11-08T01:51:58.0879393Z ⠀⠀⠀⠀⠀⣼⣿⣧⠀⠀⠀⠀⠀⠀⠀ ⣠⣶⣾⣿⡇⢀⣴⣾⣿⣷⣆ ⣿⣿⠀⣰⣿⡟⢸⣿⣿⣿⡇ ⣿⣿⣿⣷⣦⠀⠀⢠⣿⣿⣿⠀⠀⣿⣿⠁⠀⣼⣿⡇⠀⢀⣴⣾⣿⡷
+2023-11-08T01:51:58.0880819Z ⠶⣶⣶⣶⣾⣿⣿⣿⣷⣶⣶⣶⠶  ⣸⣿⡟ ⠀⢠⣿⣿⠃⠈⣿⣿⠀⣿⣿⢠⣿⡿⠀⣿⣿⣧⣤⠀⢸⣿⡇⣠⣿⡿⠀⢠⣿⡟⣿⣿⠀⢸⣿⡿⠀⠀⣿⣿⠃⠀⢸⣿⣧⣄
+2023-11-08T01:51:58.0881937Z ⠀⠀⠙⢻⣿⣿⣿⣿⣿⡟⠋⠁⠀⠀ ⣿⣿⡇⠀ ⢸⣿⣿⠀⣸⣿⡟⠀⣿⣿⣾⡿⠁ ⣿⣿⠛⠛⠀⣿⣿⢿⣿⣏⠀⢀⣿⣿⣁⣿⣿⠀⣾⣿⡇⠀⢸⣿⡿⠀⠀⡀⠙⣿⣿⡆
+2023-11-08T01:51:58.0882991Z ⠀⠀⢠⣿⣿⣿⠿⣿⣿⣿⡄⠀⠀⠀ ⠙⢿⣿⣿⠇⠈⠿⣿⣿⡿⠋⠀⠀⢿⣿⡿⠁⠀⢸⣿⣿⣿⡇⢸⣿⣿⠀⣿⣿⣄⣾⣿⠛⠛⣿⣿⢠⣿⣿⣿ ⣼⣿⣿⣿ ⣿⣿⡿⠋⠀
+2023-11-08T01:51:58.0883875Z ⠀⢀⣾⠟⠋⠀⠀⠀⠙⠻⣷⡀⠀⠀
+2023-11-08T01:51:58.0884279Z  
+2023-11-08T01:51:58.0884676Z   v0.6.6
+2023-11-08T01:51:58.0884955Z 
+2023-11-08T01:51:59.3333023Z 🔍 Detected coverage file: coverage/lcov.info
+2023-11-08T01:51:59.3334755Z 🔍 Detected coverage file: coverage/clover.xml
+2023-11-08T01:51:59.3455051Z 🚀 Posting coverage data to https://coveralls.io/api/v1/jobs
+2023-11-08T01:52:00.8242257Z ---
+2023-11-08T01:52:00.8243529Z ✅ API Response: {"message":"Job #6792703212.1","url":"https://coveralls.io/jobs/131401296"}
+2023-11-08T01:52:00.8244517Z - 💛, Coveralls
+2023-11-08T01:52:00.8410057Z ##[warning]Unexpected input(s) 'npm-version', valid inputs are ['always-auth', 'node-version', 'node-version-file', 'architecture', 'check-latest', 'registry-url', 'scope', 'token', 'cache', 'cache-dependency-path', 'version']
+2023-11-08T01:52:00.8419192Z Post job cleanup.
+2023-11-08T01:52:00.9881567Z Post job cleanup.
+2023-11-08T01:52:01.0944171Z [command]/usr/bin/git version
+2023-11-08T01:52:01.0995748Z git version 2.42.0
+2023-11-08T01:52:01.1040804Z Temporarily overriding HOME='/home/runner/work/_temp/77fa0885-4be0-474e-818a-84ad7e7a93e7' before making global git config changes
+2023-11-08T01:52:01.1042532Z Adding repository directory to the temporary git global config as a safe directory
+2023-11-08T01:52:01.1047627Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/COMS_4156_Project/COMS_4156_Project
+2023-11-08T01:52:01.1100007Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2023-11-08T01:52:01.1136073Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2023-11-08T01:52:01.1398856Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2023-11-08T01:52:01.1436784Z http.https://github.com/.extraheader
+2023-11-08T01:52:01.1448100Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2023-11-08T01:52:01.1488557Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2023-11-08T01:52:01.2014178Z Cleaning up orphan processes
