@@ -1,9 +1,11 @@
 import mongoose, { Document, Schema } from 'mongoose';
 
-interface IRequestMaterial {
-  materialId: mongoose.Schema.Types.ObjectId;
-  quantity: number;
-}
+export interface IRequestMaterial extends mongoose.Document {
+    materialId: mongoose.Schema.Types.ObjectId;
+    quantity: number;
+    fulfilled?: boolean; 
+    remainingQuantity?: number;
+  }
 
 export interface IRequest extends Document {
   materials: IRequestMaterial[];
