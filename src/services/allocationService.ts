@@ -16,7 +16,7 @@ async function fetchSourcesAndSinks() {
   let sinks: Sink[] = [];
   requests.forEach(request => {
     request.materials.forEach(async (material) => {
-      const resource = await ResourceModel.findById(material.materialId); // Resolve resourceType from materialId
+      const resource = await ResourceModel.findById(material.materialId);
       if (resource) {
         sinks.push({
           id: request._id.toString(),
@@ -44,6 +44,11 @@ export const triggerAllocationProcess = async () => {
       const materialToUpdate = request.materials.find(material => material.materialId.toString() === sourceId);
       if (materialToUpdate) {
         materialToUpdate.fulfilled = true;
+
+        if (materialToUpdate.remainingQuantity === undefined) {
+          materialToUpdate.remainingQuantity = materialToUpdate.quantity;
+        }
+
         materialToUpdate.remainingQuantity -= allocatedQuantity;
         await request.save();
       }
