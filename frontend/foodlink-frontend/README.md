@@ -76,3 +76,67 @@ or
 ```
 $ npm start:backend
 ```
+
+## End-to-End Testing Checklist
+
+### Automated Tests
+
+1. **Dashboard Page Test**
+
+   - [ ] Verify that the dashboard page loads without errors.
+   - [ ] Check if recent transactions and pending requests are displayed correctly.
+   - [ ] Select a transaction and verify if the map renders with the correct markers and route.
+
+2. **Login Page Test**
+
+   - [ ] Verify that the login page loads without errors.
+   - [ ] Enter valid credentials and check if login redirects to the appropriate role-specific page.
+   - [ ] Enter invalid credentials and ensure that the appropriate error message is displayed.
+
+3. **Registration Page Test**
+
+   - [ ] Verify that the registration page loads without errors.
+   - [ ] Enter valid registration details and check if registration is successful.
+   - [ ] Enter invalid or incomplete details and verify the error messages.
+
+4. **Navigation Test**
+
+   - [ ] Check if navigation links are correctly displayed.
+   - [ ] Verify that clicking on a navigation link leads to the correct page.
+   - [ ] Test the active state of navigation links.
+
+5. **Profile Page Test**
+
+   - [ ] Verify that the profile page loads without errors.
+   - [ ] Check if user profile details are displayed.
+   - [ ] Edit profile details, submit changes, and verify if changes are saved.
+
+6. **Sink Page Test**
+   - [ ] Verify that the sink page loads without errors.
+   - [ ] Change the quantity of a material and submit a request.
+   - [ ] Ensure that the request is successfully submitted.
+
+### Manual Tests
+
+1. **Cross-Browser Testing**
+
+   - [ ] Manually test your application on different browsers (Chrome, Firefox, Safari, etc.) to ensure cross-browser compatibility.
+
+2. **Responsive Design Testing**
+
+   - [ ] Manually test your application on various devices (desktop, tablet, mobile) to ensure a responsive design.
+
+3. **Accessibility Testing**
+   - [ ] Conduct accessibility testing using tools like Lighthouse or axe, ensuring that your application adheres to accessibility standards.
+
+### Running Tests Locally
+
+- Instructions on how to run the automated tests and any prerequisites.
+
+  ```bash
+  # Install dependencies
+  npm install
+
+  # Run all automated tests
+  npm test:e2e
+  ```
