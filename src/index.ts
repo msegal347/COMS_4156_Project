@@ -4,8 +4,6 @@ import dotenv from 'dotenv';
 import connectDB from './config/db';
 import { consoleLogger, esLogger } from './config/logger';
 import { initializeGateway } from './gateway/gateway';
-import registrationRoutes from './routes/userRoutes';
-import roleRoutes from './routes/roleRoutes';
 import { Server as WebSocketServer } from 'ws';
 import http from 'http';
 
@@ -20,10 +18,10 @@ export const app = express();
 const server = http.createServer(app);
 const wss = new WebSocketServer({ server });
 
-wss.on('connection', (ws) => {
+wss.on('connection', ws => {
   console.log('WebSocket connection established.');
 
-  ws.on('message', (message) => {
+  ws.on('message', message => {
     console.log('Received:', message);
     ws.send(`Echoing: ${message}`);
   });

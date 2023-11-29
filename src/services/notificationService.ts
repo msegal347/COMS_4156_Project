@@ -1,5 +1,5 @@
 import Notification, { INotification } from '../models/notificationModel';
-import { Types, ObjectId } from 'mongoose';
+import { ObjectId } from 'mongoose';
 
 export const notificationService = {
   // Create a new notification

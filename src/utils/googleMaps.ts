@@ -1,5 +1,3 @@
-import { get } from 'https';
-import { URL } from 'url';
 import axios from 'axios';
 
 // Get the coordinates of an address
@@ -9,7 +7,9 @@ export const getCoordinates = async (
   try {
     const apiKey = process.env.GOOGLE_MAPS_API_KEY;
     const response = await axios.get(
-      `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${apiKey}`
+      `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
+        address
+      )}&key=${apiKey}`
     );
 
     if (response.data.status === 'OK') {
@@ -36,13 +36,17 @@ export const getOptimalRoute = async (
     const apiKey = process.env.GOOGLE_MAPS_API_KEY;
     const originStr = `origin=${encodeURIComponent(origin)}`;
     const destinationStr = `destination=${encodeURIComponent(destinations.pop() || '')}`;
-    const waypointsStr = `waypoints=optimize:true|${destinations.map(encodeURIComponent).join('|')}`;
+    const waypointsStr = `waypoints=optimize:true|${destinations
+      .map(encodeURIComponent)
+      .join('|')}`;
     const response = await axios.get(
       `https://maps.googleapis.com/maps/api/directions/json?${originStr}&${destinationStr}&${waypointsStr}&key=${apiKey}`
     );
 
     if (response.data.status === 'OK') {
-      const route = response.data.routes[0].waypoint_order.map((index: number) => destinations[index]);
+      const route = response.data.routes[0].waypoint_order.map(
+        (index: number) => destinations[index]
+      );
       return route;
     } else {
       throw new Error(response.data.error_message || 'Failed to get the optimal route');
