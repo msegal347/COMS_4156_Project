@@ -1,12 +1,17 @@
-// src/models/allocationModel.ts
 import mongoose from 'mongoose';
 
-// Define the allocation schema with the required fields
+interface IAllocation extends mongoose.Document {
+  sourceId: mongoose.Schema.Types.ObjectId;
+  sinkId: mongoose.Schema.Types.ObjectId;
+  allocatedQuantity: number;
+}
+
 const allocationSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  resource: { type: String, required: true },
-  amount: { type: Number, required: true },
+  sourceId: { type: mongoose.Schema.Types.ObjectId, ref: 'Resource', required: true },
+  sinkId: { type: mongoose.Schema.Types.ObjectId, ref: 'Request', required: true },
+  allocatedQuantity: { type: Number, required: true },
+}, {
+  timestamps: true
 });
 
-// Create the Allocation model from the schema and export it
-export const Allocation = mongoose.model('Allocation', allocationSchema);
+export const Allocation = mongoose.model<IAllocation>('Allocation', allocationSchema);

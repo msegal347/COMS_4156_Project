@@ -5,7 +5,7 @@ import {
   getPendingRequests,
   getUsers,
   getAuditLogs,
-  getAnalytics
+  getAnalytics,
 } from '../services/api';
 
 const CollapsibleComponent = ({ title, children }) => {
@@ -30,12 +30,31 @@ const CollapsibleComponent = ({ title, children }) => {
   );
 };
 
-
 const auditLogsData = [
-  { id: 1, timestamp: new Date().toISOString(), event: 'User JohnD logged in', category: 'User Actions' },
-  { id: 2, timestamp: new Date().toISOString(), event: 'Backup completed successfully', category: 'System Events' },
-  { id: 3, timestamp: new Date().toISOString(), event: 'Failed login attempt for user JaneD', category: 'Security Events' },
-  { id: 4, timestamp: new Date().toISOString(), event: 'Updated system settings by admin', category: 'Administrative Actions' },
+  {
+    id: 1,
+    timestamp: new Date().toISOString(),
+    event: 'User JohnD logged in',
+    category: 'User Actions',
+  },
+  {
+    id: 2,
+    timestamp: new Date().toISOString(),
+    event: 'Backup completed successfully',
+    category: 'System Events',
+  },
+  {
+    id: 3,
+    timestamp: new Date().toISOString(),
+    event: 'Failed login attempt for user JaneD',
+    category: 'Security Events',
+  },
+  {
+    id: 4,
+    timestamp: new Date().toISOString(),
+    event: 'Updated system settings by admin',
+    category: 'Administrative Actions',
+  },
   // ... More log entries
 ];
 
@@ -56,7 +75,7 @@ const placeholderTransactions = [
     orderDate: new Date('2023-11-25T09:00:00Z'),
     expectedDelivery: new Date('2023-11-26T09:00:00Z'),
     start: { lat: 40.7812, lng: -73.9665 },
-    end: { lat: 40.7580, lng: -73.9855 },
+    end: { lat: 40.758, lng: -73.9855 },
   },
   {
     id: 't2',
@@ -179,7 +198,7 @@ const AdminPage = () => {
             </tr>
           </thead>
           <tbody>
-            {users.map((user) => (
+            {users.map(user => (
               <tr key={user.id}>
                 <td>{user.id}</td>
                 <td>{user.name}</td>
@@ -206,7 +225,7 @@ const AdminPage = () => {
             </tr>
           </thead>
           <tbody>
-            {resources.map((resource) => (
+            {resources.map(resource => (
               <tr key={resource.id}>
                 <td>{resource.id}</td>
                 <td>{resource.name}</td>
@@ -228,19 +247,21 @@ const AdminPage = () => {
               <th>Origin</th>
               <th>Destination</th>
               <th>Order Date</th>
-              <th>Expected Delivery</th>    
+              <th>Expected Delivery</th>
             </tr>
           </thead>
           <tbody>
-            {transactions.map((transaction) => (
+            {transactions.map(transaction => (
               <tr key={transaction.id}>
                 <td>{transaction.id}</td>
                 <td>{transaction.materials[0].foodType}</td>
                 <td>{transaction.materials[0].quantity}</td>
-                <td>{`${transaction.start.lat.toFixed(4)}, ${transaction.start.lng.toFixed(4)}`}</td>
+                <td>{`${transaction.start.lat.toFixed(4)}, ${transaction.start.lng.toFixed(
+                  4
+                )}`}</td>
                 <td>{`${transaction.end.lat.toFixed(4)}, ${transaction.end.lng.toFixed(4)}`}</td>
                 <td>{transaction.orderDate.toLocaleString()}</td>
-                <td>{transaction.expectedDelivery.toLocaleString()}</td>      
+                <td>{transaction.expectedDelivery.toLocaleString()}</td>
               </tr>
             ))}
           </tbody>
@@ -254,7 +275,7 @@ const AdminPage = () => {
           <p>Logins Today: {analyticsData.userActivity.loginsToday}</p>
           <p>Signups Today: {analyticsData.userActivity.signupsToday}</p>
           <p>Active Users: {analyticsData.userActivity.activeUsers}</p>
-          
+
           <h3>Transaction Volumes</h3>
           <p>Today: {analyticsData.transactionVolumes.today}</p>
           <p>This Week: {analyticsData.transactionVolumes.thisWeek}</p>
@@ -275,7 +296,9 @@ const AdminPage = () => {
           <p>Average Resolution Time: {analyticsData.issueTracking.averageResolutionTime}</p>
 
           <h3>User Engagement</h3>
-          <p>Average Transactions Per User: {analyticsData.userEngagement.averageTransactionsPerUser}</p>
+          <p>
+            Average Transactions Per User: {analyticsData.userEngagement.averageTransactionsPerUser}
+          </p>
           <p>Average Session Time: {analyticsData.userEngagement.averageSessionTime}</p>
         </div>
       </CollapsibleComponent>
