@@ -13,10 +13,12 @@ export interface IRequest extends Document {
   updatedAt: Date;
 }
 
-const requestMaterialSchema: Schema = new Schema({
-  materialId: { type: Schema.Types.ObjectId, ref: 'Resource', required: true },
-  quantity: { type: Number, required: true }
-});
+const requestMaterialSchema = new mongoose.Schema({
+    materialId: { type: mongoose.Schema.Types.ObjectId, ref: 'Resource', required: true },
+    quantity: { type: Number, required: true },
+    fulfilled: { type: Boolean, default: false },
+    remainingQuantity: { type: Number }
+  });
 
 const requestSchema: Schema = new Schema({
   materials: [requestMaterialSchema],
