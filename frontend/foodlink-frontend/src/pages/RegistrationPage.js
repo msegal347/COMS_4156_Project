@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getRoles } from '../services/roleService';
-import axios from 'axios';
+import { registerUser } from '../services/api';
 import styles from './RegistrationPage.module.css';
 
 const RegistrationPage = () => {
-  const [roles, setRoles] = useState([]);
+  const roles = ['source', 'sink', 'auditor', 'admin'];
+  
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -16,22 +16,6 @@ const RegistrationPage = () => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const fetchRoles = async () => {
-      try {
-        const rolesData = await getRoles();
-        setRoles(rolesData);
-      } catch (error) {
-        const errorMessage = error.response?.data?.message || error.message || 'Failed to fetch roles';
-        setError(errorMessage);
-        console.error(errorMessage);
-      }
-    };
-  
-    fetchRoles();
-  }, []);
-  
 
   const validateForm = () => {
     if (!formData.email || !formData.password || !formData.role) {
@@ -49,16 +33,23 @@ const RegistrationPage = () => {
     e.preventDefault();
     setError('');
     setSuccess('');
-
-    if (!validateForm()) return;
-
+  
+    if (!validateForm()) {
+      console.warn("Form validation failed", formData); // Warning log for form validation failure
+      return;
+    }
+  
     setLoading(true);
+    console.log('Sending registration data:', formData); // Log the data being sent
+  
     try {
-      const response = await axios.post('http://localhost:3001/api/registration', formData);
+      const response = await registerUser(formData);
+      console.log('Registration response:', response); // Log the response received
       setSuccess('Registration successful!');
       setLoading(false);
       navigate('/login');
     } catch (error) {
+      console.error('Registration error:', error); // Detailed error logging
       setError(error.response?.data?.message || 'Registration failed');
       setLoading(false);
     }
@@ -91,7 +82,12 @@ const RegistrationPage = () => {
           />
         </div>
         <div className={styles.inputField}>
-          <select name="role" value={formData.role} onChange={handleChange} required>
+          <select
+            name="role"
+            value={formData.role}
+            onChange={handleChange}
+            required
+          >
             <option value="">Select Role</option>
             {roles.map((role, index) => (
               <option key={index} value={role}>

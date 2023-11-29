@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import styles from './AdminPage.module.css';
-import axios from 'axios';
+import {
+  getRecentTransactions,
+  getPendingRequests,
+  getUsers,
+  getAuditLogs,
+  getAnalytics
+} from '../services/api';
 
 const CollapsibleComponent = ({ title, children }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -126,61 +132,37 @@ const analyticsData = {
 };
 
 const AdminPage = () => {
-  // Placeholder users for the user management component
-  const placeholderUsers = [
-    { id: 'u1', name: 'Alice', role: 'source' },
-    { id: 'u2', name: 'Bob', role: 'sink' },
-    { id: 'u3', name: 'Charlie', role: 'auditor' },
-  ];
-
-  // States for various sections
-  const [users, setUsers] = useState(placeholderUsers);
-  const [resources, setResources] = useState(placeholderResources);
-  const [transactions, setTransactions] = useState(placeholderTransactions);
-  const [analytics, setAnalytics] = useState({});
-  const [settings, setSettings] = useState({ sampleSetting: '' });
+  const [users, setUsers] = useState([]);
+  const [transactions, setTransactions] = useState([]);
   const [auditLogs, setAuditLogs] = useState([]);
-  const [issues, setIssues] = useState([]);
+  const [analytics, setAnalytics] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  // Fetch functions
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Simultaneous requests if possible
-        const [resourcesRes, transactionsRes, auditLogsRes, issuesRes, analyticsRes] = await Promise.all([
-          axios.get('/api/resources'),
-          axios.get('/api/transactions'),
-          axios.get('/api/audit-logs'),
-          axios.get('/api/support-issues'),
-          axios.get('/api/analytics'),
+        setLoading(true);
+        const [usersData, transactionsData, auditLogsData, analyticsData] = await Promise.all([
+          getUsers(),
+          getRecentTransactions(),
+          getAuditLogs(),
+          getAnalytics(),
         ]);
-
-        // Update state with fetched data
-        setResources(resourcesRes.data);
-        setTransactions(transactionsRes.data);
-        setAuditLogs(auditLogsRes.data);
-        setIssues(issuesRes.data);
-        setAnalytics(analyticsRes.data);
-      } catch (error) {
-        // Handle error appropriately
-        console.error('Error fetching data', error);
+        setUsers(usersData.data);
+        setTransactions(transactionsData.data);
+        setAuditLogs(auditLogsData.data);
+        setAnalytics(analyticsData.data);
+      } catch (err) {
+        setError(err.message || 'An error occurred while fetching data.');
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchData();
   }, []);
 
-  // Handle changes in settings
-  const handleSettingsChange = (event) => {
-    const { name, value } = event.target;
-    setSettings((prevSettings) => ({
-      ...prevSettings,
-      [name]: value,
-    }));
-    // TODO: Implement logic to persist changes to backend
-  };
-
-  // JSX for the admin dashboard sections
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Admin Dashboard</h1>
@@ -203,7 +185,6 @@ const AdminPage = () => {
                 <td>{user.name}</td>
                 <td>{user.role}</td>
                 <td>
-                  {/* Buttons for editing and removing users could be added here */}
                   <button onClick={() => alert('Edit user')}>Edit</button>
                   <button onClick={() => alert('Remove user')}>Remove</button>
                 </td>

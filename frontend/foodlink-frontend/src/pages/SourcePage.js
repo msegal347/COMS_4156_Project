@@ -1,6 +1,6 @@
-// src/pages/SourcePage.js
 import React, { useState } from 'react';
 import styles from './SourcePage.module.css';
+import { postMaterial } from '../services/api';
 
 const SourcePage = () => {
   const [materialData, setMaterialData] = useState({
@@ -39,7 +39,8 @@ const SourcePage = () => {
   const handleSubmit = async e => {
     e.preventDefault();
     try {
-      console.log(materialData);
+      await postMaterial(materialData);
+      console.log('Material data submitted:', materialData);
       setMaterialData({
         category: '',
         quantity: '',
@@ -49,7 +50,6 @@ const SourcePage = () => {
       console.error('Error submitting material data', error);
     }
   };
-
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Material Submission</h1>

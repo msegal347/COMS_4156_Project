@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -12,18 +11,16 @@ import {
 import { Bar } from 'react-chartjs-2';
 import GoogleMapReact from 'google-map-react';
 import styles from './AuditorPage.module.css';
+import { getResources, getTransfers, getTransactions } from '../services/api';
 
-// Register the chart components
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-// Define the AuditorPage component
 const AuditorPage = () => {
   const [analyticsData, setAnalyticsData] = useState({ materials: [], transfers: [] });
   const [locations, setLocations] = useState([]);
   const [selectedTransaction, setSelectedTransaction] = useState(null);
   const AnyReactComponent = ({ text }) => <div style={{ color: 'blue' }}>{text}</div>;
 
-  // Define placeholder transaction data
   const placeholderTransactions = [
     {
       id: 't1',
@@ -123,8 +120,8 @@ const AuditorPage = () => {
   useEffect(() => {
     const fetchAnalyticsData = async () => {
       try {
-        const materialsResponse = await axios.get('http://localhost:3001/api/analytics/materials');
-        const transfersResponse = await axios.get('http://localhost:3001/api/analytics/transfers');
+        const materialsResponse = await getMaterials();
+        const transfersResponse = await getTransfers();
         setAnalyticsData({
           materials: materialsResponse.data,
           transfers: transfersResponse.data,
@@ -134,56 +131,52 @@ const AuditorPage = () => {
       }
     };
 
-    fetchAnalyticsData();
-  }, []);
-
-  const renderMarkers = (map, maps) => {
-    placeholderTransactions.forEach(transaction => {
-      new maps.Marker({
-        position: transaction.start,
-        map,
-        title: transaction.source,
+    const renderMarkers = (map, maps) => {
+      placeholderTransactions.forEach(transaction => {
+        new maps.Marker({
+          position: transaction.start,
+          map,
+          title: transaction.source,
+        });
+        new maps.Marker({
+          position: transaction.end,
+          map,
+          title: transaction.destination,
+        });
       });
-      new maps.Marker({
-        position: transaction.end,
-        map,
-        title: transaction.destination,
+    };
+
+    const renderRoute = (map, maps, transaction) => {
+      if (window.currentRoute) {
+        window.currentRoute.setMap(null);
+      }
+
+      const routePath = new maps.Polyline({
+        path: [transaction.start, transaction.end],
+        geodesic: true,
+        strokeColor: '#FF0000',
+        strokeOpacity: 1.0,
+        strokeWeight: 2,
       });
-    });
-  };
 
-  const renderRoute = (map, maps, transaction) => {
-    if (window.currentRoute) {
-      window.currentRoute.setMap(null);
-    }
+      routePath.setMap(map);
+      window.currentRoute = routePath;
+    };
 
-    const routePath = new maps.Polyline({
-      path: [transaction.start, transaction.end],
-      geodesic: true,
-      strokeColor: '#FF0000',
-      strokeOpacity: 1.0,
-      strokeWeight: 2,
-    });
+    const handleTransactionClick = transaction => {
+      setSelectedTransaction(transaction);
+    };
 
-    routePath.setMap(map);
-    window.currentRoute = routePath;
-  };
-
-  const handleTransactionClick = transaction => {
-    setSelectedTransaction(transaction);
-  };
-
-  useEffect(() => {
-    // Fetch transactions with start and end points
     const fetchTransactions = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/api/transactions');
+        const response = await getTransactions();
         setLocations(response.data);
       } catch (error) {
         console.error('Error fetching transactions', error);
       }
     };
 
+    fetchAnalyticsData();
     fetchTransactions();
   }, []);
 
