@@ -1,5 +1,4 @@
-// File: adminPage.test.js
-const puppeteer = require('puppeteer');
+import puppeteer from 'puppeteer';
 
 const APP_URL = 'http://localhost:3000'; // Update with your app's URL
 
