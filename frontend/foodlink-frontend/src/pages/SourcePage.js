@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import styles from './SourcePage.module.css';
-import { postMaterial } from '../services/api';
+import { createResource } from '../services/api';
 
 const SourcePage = () => {
   const [materialData, setMaterialData] = useState({
     category: '',
     quantity: '',
-    expirationDate: '',
   });
 
   const foodCategories = [
@@ -39,17 +38,17 @@ const SourcePage = () => {
   const handleSubmit = async e => {
     e.preventDefault();
     try {
-      await postMaterial(materialData);
+      await createResource(materialData);
       console.log('Material data submitted:', materialData);
       setMaterialData({
         category: '',
         quantity: '',
-        expirationDate: '',
       });
     } catch (error) {
       console.error('Error submitting material data', error);
     }
   };
+
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Material Submission</h1>
@@ -78,17 +77,6 @@ const SourcePage = () => {
             type="number"
             name="quantity"
             value={materialData.quantity}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className={styles.inputField}>
-          <label htmlFor="expirationDate">Expiration Date</label>
-          <input
-            id="expirationDate"
-            type="date"
-            name="expirationDate"
-            value={materialData.expirationDate}
             onChange={handleChange}
             required
           />

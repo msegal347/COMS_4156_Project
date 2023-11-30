@@ -4,6 +4,7 @@ import { createAnalyticsRoutes } from '../routes/analyticsRoutes';
 import entityRoutes from '../routes/entityRoutes';
 import notificationRoutes from '../routes/notificationRoutes';
 import resourceRoutes from '../routes/resourceRoutes';
+import requestRoutes from '../routes/requestRoutes';
 import transactionRoutes from '../routes/transactionRoutes';
 import allocationRoutes from '../routes/allocationRoutes';
 import {
@@ -21,12 +22,9 @@ import {
   deleteRecordById,
 } from '../controllers/analyticsController';
 import userRoutes from '../routes/userRoutes';
-import logger from '../config/logger';
+import { consoleLogger, esLogger } from '../config/logger';
 
 export const initializeGateway = (app: Express) => {
-
-  // Initialize logger
-  app.use(logger);
 
   app.get('/api/test', (req, res) => {
     res.send('API is working');
@@ -55,6 +53,7 @@ export const initializeGateway = (app: Express) => {
   app.use('/api/resources', resourceRoutes);
   app.use('/api/transactions', transactionRoutes);
   app.use('/api/allocations', allocationRoutes);
+  app.use('/api/requests', requestRoutes);
   app.use('/api', userRoutes);
 
   // Additional middleware to log unhandled requests
