@@ -3,6 +3,8 @@ Project Repo for Columbia's Advanced Software Engineering course
 
 [![Coverage Status](https://coveralls.io/repos/github/msegal347/COMS_4156_Project/badge.svg)](https://coveralls.io/github/msegal347/COMS_4156_Project)
 
+Click the badge for actual percentage of code coverage.
+
 # FoodLink API
 
 FoodLink is a food redistribution service designed to minimize food waste and address food insecurity. This repository contains the API for the FoodLink service.
