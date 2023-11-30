@@ -41,6 +41,7 @@ module.exports = {
     '<rootDir>/test/routes/logisticsRoutes.test.ts',
     '<rootDir>/test/controllers/logisticsController.test.ts',
     '<rootDir>/test/services/logisticsService.test.ts',
+    '<rootDir>/test/utils/googleMaps.test.ts',
 
   ],
 };
