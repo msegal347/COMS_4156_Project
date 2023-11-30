@@ -1,24 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { getMaterials, submitRequest } from '../services/api';
+import { getResources, submitRequest } from '../services/api';
 import styles from './SinkPage.module.css';
 
 const SinkPage = () => {
-
-  const placeholderMaterials = [
-    { id: 1, name: 'Apples', availableQuantity: 200 },
-    { id: 2, name: 'Oranges', availableQuantity: 150 },
-    { id: 3, name: 'Bananas', availableQuantity: 180 },
-    { id: 4, name: 'Grapes', availableQuantity: 210 },
-    { id: 5, name: 'Peaches', availableQuantity: 170 },
-  ];
-
-  const [materials, setMaterials] = useState(placeholderMaterials);
+  const [materials, setMaterials] = useState([]);
   const [requests, setRequests] = useState({});
 
   useEffect(() => {
     const fetchMaterials = async () => {
       try {
-        const response = await getMaterials();
+        const response = await getResources();
         setMaterials(response.data);
       } catch (error) {
         console.error('Error fetching materials', error);
@@ -37,20 +28,11 @@ const SinkPage = () => {
     try {
       await submitRequest(requests);
       console.log('Submitted requests:', requests);
-      setRequests({}); 
+      setRequests({});
     } catch (error) {
       console.error('Error submitting requests', error);
     }
   };
-
-  //const handleSubmit = async e => {
-   // e.preventDefault();
-   // try {
-    //  await axios.post('http://localhost:3001/api/requests', { requests });
-   // } catch (error) {
-   //   console.error('Error submitting requests', error);
-   // }
- // };
 
   return (
     <div className={styles.container}>
@@ -67,16 +49,16 @@ const SinkPage = () => {
           <tbody>
             {materials.length > 0 ? (
               materials.map(material => (
-                <tr key={material.id}>
-                  <td>{material.name}</td>
-                  <td>{material.availableQuantity}</td>
+                <tr key={material._id}>
+                  <td>{material.category}</td>
+                  <td>{material.quantity}</td>
                   <td>
                     <input
                       type="number"
                       min="0"
-                      max={material.availableQuantity}
-                      value={requests[material.id] || ''}
-                      onChange={e => handleQuantityChange(material.id, e.target.value)}
+                      max={material.quantity}
+                      value={requests[material._id] || ''}
+                      onChange={e => handleQuantityChange(material._id, e.target.value)}
                       className={styles.quantityInput}
                     />
                   </td>

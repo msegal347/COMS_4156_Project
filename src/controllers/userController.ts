@@ -12,9 +12,12 @@ class UserController {
       const user = await UserService.register(email, password, role, address);
       const { password: _, ...userWithoutPassword } = user.toObject();
       res.status(201).json(userWithoutPassword);
-    } catch (error) {
-      if (error.message === 'User already exists') {
-        return res.status(409).json({ message: error.message });
+    } catch (error: any) {
+      if (typeof error === 'object' && error !== null && 'message' in error) {
+        const errorMessage = (error as { message: string }).message;
+        if (errorMessage === 'User already exists') {
+          return res.status(409).json({ message: errorMessage });
+        }
       }
       res.status(500).json({ message: 'Internal server error' });
     }
@@ -31,7 +34,10 @@ class UserController {
         return res.status(401).json({ message: 'Invalid credentials' });
       }
 
-      // Create a token
+      if (!process.env.JWT_SECRET) {
+        throw new Error('JWT secret is not defined');
+      }
+
       const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, {
         expiresIn: '1h',
       });
@@ -47,6 +53,10 @@ class UserController {
         },
       });
     } catch (error) {
+      if (typeof error === 'object' && error !== null && 'message' in error) {
+        const errorMessage = (error as { message: string }).message;
+        return res.status(500).json({ message: errorMessage });
+      }
       res.status(500).json({ message: 'Internal server error' });
     }
   }

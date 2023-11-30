@@ -1,31 +1,38 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://34.48.4.68:5000/api';
+const API_BASE_URL = 'http://34.145.209.212:5000/api';
 //const API_BASE_URL = 'http://localhost:5000/api';
 
-const createEndpoint = (path) => `${API_BASE_URL}${path}`;
+const createEndpoint = path => `${API_BASE_URL}${path}`;
 
 // Auth functions
-export const loginUser = (credentials) => axios.post(createEndpoint('/login'), credentials);
-export const registerUser = (userData) => axios.post(createEndpoint('/registration'), userData);
+export const loginUser = credentials => axios.post(createEndpoint('/login'), credentials);
+export const registerUser = userData => axios.post(createEndpoint('/registration'), userData);
 
 // Resource management
 export const getResources = () => axios.get(createEndpoint('/resources'));
-export const createResource = (resourceData) => axios.post(createEndpoint('/resources'), resourceData);
-export const updateResource = (resourceId, resourceData) => axios.put(createEndpoint(`/resources/${resourceId}`), resourceData);
-export const deleteResource = (resourceId) => axios.delete(createEndpoint(`/resources/${resourceId}`));
+export const createResource = resourceData =>
+  axios.post(createEndpoint('/resources'), resourceData);
+export const updateResource = (resourceId, resourceData) =>
+  axios.put(createEndpoint(`/resources/${resourceId}`), resourceData);
+export const deleteResource = resourceId =>
+  axios.delete(createEndpoint(`/resources/${resourceId}`));
 
 // Allocation management
 export const getAllocations = () => axios.get(createEndpoint('/allocations'));
-export const createAllocation = (allocationData) => axios.post(createEndpoint('/allocations'), allocationData);
-export const getAllocationById = (allocationId) => axios.get(createEndpoint(`/allocations/${allocationId}`));
-export const updateAllocation = (allocationId, allocationData) => axios.put(createEndpoint(`/allocations/${allocationId}`), allocationData);
-export const deleteAllocation = (allocationId) => axios.delete(createEndpoint(`/allocations/${allocationId}`));
+export const createAllocation = allocationData =>
+  axios.post(createEndpoint('/allocations'), allocationData);
+export const getAllocationById = allocationId =>
+  axios.get(createEndpoint(`/allocations/${allocationId}`));
+export const updateAllocation = (allocationId, allocationData) =>
+  axios.put(createEndpoint(`/allocations/${allocationId}`), allocationData);
+export const deleteAllocation = allocationId =>
+  axios.delete(createEndpoint(`/allocations/${allocationId}`));
 
 // Transaction management
 export const getTransactions = () => axios.get(createEndpoint('/transactions'));
 export const getRecentTransactions = () => axios.get(createEndpoint('/transactions/recent'));
-export const submitRequest = (request) => axios.post(createEndpoint('/requests'), request);
+export const submitRequest = request => axios.post(createEndpoint('/requests'), request);
 
 // User management
 export const getUsers = () => axios.get(createEndpoint('/users'));

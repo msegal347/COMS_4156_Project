@@ -180,7 +180,6 @@ const AuditorPage = () => {
     fetchTransactions();
   }, []);
 
-  // Function to handle selection of a transaction
   const handleTransactionSelect = transaction => {
     if (selectedTransaction && selectedTransaction.id === transaction.id) {
       setSelectedTransaction(null);
@@ -220,7 +219,6 @@ const AuditorPage = () => {
     />
   );
 
-  // Render a table of transactions with checkboxes for selection
   const renderTransactionsTable = () => (
     <table className={styles.transactionTable}>
       <thead>
