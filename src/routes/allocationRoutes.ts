@@ -5,7 +5,7 @@ import {
   getAllocationById,
   updateAllocationById,
   deleteAllocationById,
-  triggerAllocation
+  triggerAllocation,
 } from '../controllers/allocationController';
 
 const router = Router();

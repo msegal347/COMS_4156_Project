@@ -6,7 +6,6 @@ const requestService = {
     await newRequest.save();
     return newRequest;
   },
-
 };
 
 export default requestService;

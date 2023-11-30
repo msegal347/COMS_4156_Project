@@ -20,10 +20,10 @@ export const app = express();
 const server = http.createServer(app);
 const wss = new WebSocketServer({ server });
 
-wss.on('connection', (ws) => {
+wss.on('connection', ws => {
   console.log('WebSocket connection established.');
 
-  ws.on('message', (message) => {
+  ws.on('message', message => {
     console.log('Received:', message);
     ws.send(`Echoing: ${message}`);
   });

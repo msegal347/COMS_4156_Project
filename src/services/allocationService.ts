@@ -1,6 +1,6 @@
 import { allocateResources, Source, Sink } from '../algorithms/resourceAllocation';
 import { Allocation } from '../models/allocationModel';
-import ResourceModel from '../models/resourceModel'; 
+import ResourceModel from '../models/resourceModel';
 import RequestModel, { IRequest } from '../models/requestModel';
 
 async function fetchSourcesAndSinks() {
@@ -10,18 +10,18 @@ async function fetchSourcesAndSinks() {
   const sources: Source[] = resources.map(resource => ({
     id: resource._id.toString(),
     resourceType: resource.category,
-    quantity: resource.quantity
+    quantity: resource.quantity,
   }));
 
-  let sinks: Sink[] = [];
+  const sinks: Sink[] = [];
   requests.forEach(request => {
-    request.materials.forEach(async (material) => {
+    request.materials.forEach(async material => {
       const resource = await ResourceModel.findById(material.materialId);
       if (resource) {
         sinks.push({
           id: request._id.toString(),
           resourceType: resource.category,
-          requiredQuantity: material.quantity
+          requiredQuantity: material.quantity,
         });
       }
     });
@@ -39,9 +39,11 @@ export const triggerAllocationProcess = async () => {
 
     await ResourceModel.findByIdAndUpdate(sourceId, { $inc: { quantity: -allocatedQuantity } });
 
-    const request = await RequestModel.findById(sinkId) as IRequest;
+    const request = (await RequestModel.findById(sinkId)) as IRequest;
     if (request && request.materials) {
-      const materialToUpdate = request.materials.find(material => material.materialId.toString() === sourceId);
+      const materialToUpdate = request.materials.find(
+        material => material.materialId.toString() === sourceId
+      );
       if (materialToUpdate) {
         materialToUpdate.fulfilled = true;
 
