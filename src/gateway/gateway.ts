@@ -22,12 +22,9 @@ import {
   deleteRecordById,
 } from '../controllers/analyticsController';
 import userRoutes from '../routes/userRoutes';
-import logger from '../config/logger';
+import { consoleLogger, esLogger } from '../config/logger';
 
 export const initializeGateway = (app: Express) => {
-
-  // Initialize logger
-  app.use(logger);
 
   app.get('/api/test', (req, res) => {
     res.send('API is working');
