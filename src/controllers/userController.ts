@@ -12,7 +12,7 @@ class UserController {
       const user = await UserService.register(email, password, role, address);
       const { password: _, ...userWithoutPassword } = user.toObject();
       res.status(201).json(userWithoutPassword);
-    } catch (error) {
+    } catch (error: any) {
       if (typeof error === 'object' && error !== null && 'message' in error) {
         const errorMessage = (error as { message: string }).message;
         if (errorMessage === 'User already exists') {

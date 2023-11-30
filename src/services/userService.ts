@@ -1,4 +1,4 @@
-import User from '../models/userModel';
+import User, { IUser } from '../models/userModel';
 import bcrypt from 'bcrypt';
 import { getCoordinates } from '../utils/googleMaps';
 
