@@ -24,7 +24,6 @@ import userRoutes from '../routes/userRoutes';
 import logger from '../config/logger';
 
 export const initializeGateway = (app: Express) => {
-
   // Initialize logger
   app.use(logger);
 
