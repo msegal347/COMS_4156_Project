@@ -92,3 +92,12 @@ export const triggerAllocation = async (req: Request, res: Response) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
+
+export const getAllAllocations = async (req: Request, res: Response) => {
+  try {
+    const allocations = await AllocationService.getAllAllocations();
+    res.status(200).json(allocations);
+  } catch (error) {
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};

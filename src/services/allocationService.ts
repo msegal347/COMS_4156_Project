@@ -93,3 +93,7 @@ export const findOptimalAllocation = async (criteria: any) => {
     matches,
   };
 };
+
+export const getAllAllocations = async () => {
+  return await Allocation.find({});
+};

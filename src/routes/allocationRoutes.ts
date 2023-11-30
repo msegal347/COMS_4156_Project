@@ -6,6 +6,7 @@ import {
   updateAllocationById,
   deleteAllocationById,
   triggerAllocation,
+  getAllAllocations,
 } from '../controllers/allocationController';
 
 const router = Router();
@@ -24,5 +25,7 @@ router.delete('/:id', deleteAllocationById);
 
 // Route for triggering the allocation process
 router.post('/trigger-allocation', triggerAllocation);
+
+router.get('/', getAllAllocations);
 
 export default router;

@@ -11,7 +11,7 @@ import {
 import { Bar } from 'react-chartjs-2';
 import GoogleMapReact from 'google-map-react';
 import styles from './AuditorPage.module.css';
-import { getResources, getTransfers, getTransactions } from '../services/api';
+import { getResources, getTransfers, getAllocations } from '../services/api';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -120,17 +120,17 @@ const AuditorPage = () => {
   useEffect(() => {
     const fetchAnalyticsData = async () => {
       try {
-        const materialsResponse = await getMaterials();
-        const transfersResponse = await getTransfers();
+        // Assuming getMaterials and getTransactions are correctly defined in your API service
+        const materialsResponse = await getResources(); // Updated to getResources if it fetches material data
+        const allocationsResponse = await getAllocations();
         setAnalyticsData({
           materials: materialsResponse.data,
-          transfers: transfersResponse.data,
+          transfers: allocationsResponse.data, // Updated to use allocations data
         });
       } catch (error) {
         console.error('Error fetching analytics data', error);
       }
     };
-
     const renderMarkers = (map, maps) => {
       placeholderTransactions.forEach(transaction => {
         new maps.Marker({
@@ -167,17 +167,7 @@ const AuditorPage = () => {
       setSelectedTransaction(transaction);
     };
 
-    const fetchTransactions = async () => {
-      try {
-        const response = await getTransactions();
-        setLocations(response.data);
-      } catch (error) {
-        console.error('Error fetching transactions', error);
-      }
-    };
-
     fetchAnalyticsData();
-    fetchTransactions();
   }, []);
 
   const handleTransactionSelect = transaction => {
