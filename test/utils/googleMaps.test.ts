@@ -1,5 +1,8 @@
 import { getCoordinates} from '../../src/utils/googleMaps';
 
+// Define the API key here for testing
+const apiKey = 'sample_api_key';
+
 describe('Google Maps Integration Tests', () => {
   it('should get correct coordinates for a known address', async () => {
     try {
