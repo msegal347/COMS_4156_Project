@@ -32,7 +32,6 @@ export const getCoordinates = async (
   }
 };
 
-
 export const getOptimalRoute = async (
   origin: string,
   destinations: string[],
