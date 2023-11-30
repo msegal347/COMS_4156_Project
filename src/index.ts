@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import connectDB from './config/db';
-import logger from './config/logger';
+import { consoleLogger, esLogger } from './config/logger';
 import { initializeGateway } from './gateway/gateway';
 import registrationRoutes from './routes/userRoutes';
 import roleRoutes from './routes/roleRoutes';
@@ -38,8 +38,9 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Initialize logger
-app.use(logger);
+// Initialize loggers
+app.use(consoleLogger);
+if (esLogger) app.use(esLogger);
 
 // Initialize API Gateway
 initializeGateway(app);

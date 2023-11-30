@@ -76,7 +76,9 @@ FoodLink is a food redistribution service designed to minimize food waste and ad
     docker-compose up
     ```
 
-At this point, the API and MongoDB services should be running inside Docker containers. You can access the API at `http://localhost:3000`.
+If the Elasticsearch containers fail to start with a "virtual memory" error, follow [these instructions](https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html#_set_vm_max_map_count_to_at_least_262144) to update `vm.max_map_count` your host machine.
+
+At this point, the API, MongoDB, Elasticsearch, and Kibana services should be running inside Docker containers. You can access the API at `http://localhost:3000`. You can also access Kibana at `http://localhost:5601` with username `elastic` and password specified in `.env`.
 
 ### VS Code Dev Container
 

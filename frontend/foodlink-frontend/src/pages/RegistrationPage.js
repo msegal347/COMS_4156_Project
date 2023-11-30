@@ -5,7 +5,7 @@ import styles from './RegistrationPage.module.css';
 
 const RegistrationPage = () => {
   const roles = ['source', 'sink', 'auditor', 'admin'];
-  
+
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -33,15 +33,15 @@ const RegistrationPage = () => {
     e.preventDefault();
     setError('');
     setSuccess('');
-  
+
     if (!validateForm()) {
-      console.warn("Form validation failed", formData); // Warning log for form validation failure
+      console.warn('Form validation failed', formData); // Warning log for form validation failure
       return;
     }
-  
+
     setLoading(true);
     console.log('Sending registration data:', formData); // Log the data being sent
-  
+
     try {
       const response = await registerUser(formData);
       console.log('Registration response:', response); // Log the response received
@@ -82,12 +82,7 @@ const RegistrationPage = () => {
           />
         </div>
         <div className={styles.inputField}>
-          <select
-            name="role"
-            value={formData.role}
-            onChange={handleChange}
-            required
-          >
+          <select name="role" value={formData.role} onChange={handleChange} required>
             <option value="">Select Role</option>
             {roles.map((role, index) => (
               <option key={index} value={role}>
