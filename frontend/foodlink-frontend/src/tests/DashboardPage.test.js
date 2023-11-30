@@ -2,7 +2,7 @@ import '@testing-library/jest-dom/extend-expect';
 import React from 'react';
 import { render, screen, fireEvent, act } from '@testing-library/react';
 import axios from 'axios'; // Import axios
-import DashboardPage from './DashboardPage';
+import DashboardPage from '../pages/DashboardPage';
 
 jest.mock('axios'); // Mock the entire axios module
 

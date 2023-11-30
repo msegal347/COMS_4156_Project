@@ -4,7 +4,7 @@ import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import '@testing-library/jest-dom/extend-expect';
 
-import Navigation from './Navigation';
+import Navigation from '../pages/Navigation';
 
 describe('Navigation', () => {
   test('renders navigation links', () => {

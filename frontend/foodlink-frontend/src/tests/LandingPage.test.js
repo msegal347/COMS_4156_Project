@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect'; // Import this to use jest-dom matchers
 import { BrowserRouter as Router } from 'react-router-dom';
-import LandingPage from './LandingPage';
+import LandingPage from '../pages/LandingPage';
 
 test('renders LandingPage component', () => {
   render(

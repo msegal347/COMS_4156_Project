@@ -6,7 +6,7 @@ import '@testing-library/jest-dom/extend-expect';
 import axios from 'axios';
 import { act } from 'react-dom/test-utils';
 import { BrowserRouter as Router } from 'react-router-dom';
-import RegistrationPage from './RegistrationPage';
+import RegistrationPage from '../pages/RegistrationPage';
 
 jest.mock('axios');
 

@@ -3,7 +3,7 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import axios from 'axios';
 import { act } from 'react-dom/test-utils';
-import SinkPage from './SinkPage';
+import SinkPage from '../pages/SinkPage';
 
 jest.mock('axios');
 

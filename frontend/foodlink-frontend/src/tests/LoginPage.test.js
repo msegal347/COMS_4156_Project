@@ -2,7 +2,7 @@ import React from 'react';
 import { render, fireEvent, waitFor, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import axios from 'axios';
-import LoginPage from './LoginPage';
+import LoginPage from '../pages/LoginPage';
 
 // Mocking axios.post to avoid actual API calls during testing
 jest.mock('axios');

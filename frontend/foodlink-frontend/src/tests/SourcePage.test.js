@@ -3,7 +3,7 @@ import React from 'react';
 import { render, fireEvent, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect'; // for additional matchers
 
-import SourcePage from './SourcePage';
+import SourcePage from '../pages/SourcePage';
 
 describe('SourcePage', () => {
   test('renders without errors', () => {
