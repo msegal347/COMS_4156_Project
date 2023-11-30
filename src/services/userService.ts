@@ -3,7 +3,6 @@ import bcrypt from 'bcrypt';
 import { getCoordinates } from '../utils/googleMaps';
 import dotenv from 'dotenv';
 
-
 dotenv.config();
 
 class UserService {
