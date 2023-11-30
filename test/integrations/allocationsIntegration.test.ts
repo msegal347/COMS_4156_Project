@@ -30,11 +30,14 @@ describe('POST /api/allocations/', () => {
                 name: 'Test Allocation',
                 resource: 'Test Resource',
                 amount: 10,
+                allocatedQuantity: 20,
+                sinkId: '507f1f77bcf86cd799439011',
+                sourceId: '507f1f77bcf86cd799439012'
             });
         expect(res.statusCode).toEqual(201);
-        expect(res.body).toHaveProperty('name');
-        expect(res.body).toHaveProperty('resource');
-        expect(res.body).toHaveProperty('amount');
+        expect(res.body).toHaveProperty('allocatedQuantity');
+        expect(res.body).toHaveProperty('sinkId');
+        expect(res.body).toHaveProperty('sourceId');
         createdAllocationId = res.body._id;
     });
 });
@@ -45,7 +48,7 @@ describe('GET /api/allocations/:id', () => {
         const res = await request(app)
             .get(`/api/allocations/${createdAllocationId}`);
         expect(res.statusCode).toEqual(200);
-        expect(res.body).toHaveProperty('name');
+        expect(res.body).toHaveProperty('allocatedQuantity');
     });
 });
 
@@ -58,7 +61,7 @@ describe('PUT /api/allocations/:id', () => {
                 amount: 20,
             });
         expect(res.statusCode).toEqual(200);
-        expect(res.body.amount).toEqual(20);
+        expect(res.body.allocatedQuantity).toEqual(20);
     });
 });
 
