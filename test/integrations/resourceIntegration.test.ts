@@ -27,11 +27,11 @@ describe('POST /api/resources/', () => {
         const res = await request(app)
             .post('/api/resources/')
             .send({
-                name: 'Test Resource',
-                type: 'Test Type',
+                quantity: 1,
+                category: 'Test Type',
             });
         expect(res.statusCode).toEqual(201);
-        expect(res.body).toHaveProperty('name');
+        expect(res.body).toHaveProperty('quantity');
         createdResourceId = res.body._id;
     });
 });
@@ -52,7 +52,7 @@ describe('GET /api/resources/:id', () => {
         const res = await request(app)
             .get(`/api/resources/${createdResourceId}`);
         expect(res.statusCode).toEqual(200);
-        expect(res.body).toHaveProperty('name');
+        expect(res.body).toHaveProperty('quantity');
     });
 });
 
@@ -62,10 +62,10 @@ describe('PUT /api/resources/:id', () => {
         const res = await request(app)
             .put(`/api/resources/${createdResourceId}`)
             .send({
-                name: 'Updated Resource Name',
+                category: 'Updated Resource Type',
             });
         expect(res.statusCode).toEqual(200);
-        expect(res.body.name).toEqual('Updated Resource Name');
+        expect(res.body.category).toEqual('Updated Resource Type');
     });
 });
 
