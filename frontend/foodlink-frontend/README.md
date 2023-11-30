@@ -1,70 +1,142 @@
-# Getting Started with Create React App
+## 💡 Project Description
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Welcome to FoodLink, an application that allows organizations to post their available surplus food, and for others to request it. FoodLink's algorithms enable efficient distribution of food, visualization of the delivery route with Google Maps, and a user-friendly interface for both donors and recipients. There is also functionality for third-party auditors to track the transactions and ensure that the food is being distributed correctly.
 
-## Available Scripts
+## 📺 Preview
 
-In the project directory, you can run:
+<img src="https://github.com/msegal347/COMS_4156_Project/blob/ss-fe-readme/frontend/foodlink-frontend/public/readme-assets/1.png" alt="FoodLink" height="500" width="1000">
 
-### `npm start`
+## 📌 Prerequisites
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### 💻 System requirement :
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+1. Any system with basic configuration.
+2. Operating System : Any (Windows / Linux / Mac).
 
-### `npm test`
+### 💿 Software requirement :
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. Updated browser
+2. Node.js installed (If not download it [here](https://nodejs.org/en/download/)).
+3. Any text editor of your choice.
 
-### `npm run build`
+## Installation 🔧
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Client
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```
+$ cd frontend/foodlink-frontend
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Install NodeJS dependencies
 
-### `npm run eject`
+```
+$ yarn install
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+or
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```
+$ npm install
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Start the NodeJS server
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```
+$ npm start:frontend
+```
 
-## Learn More
+or
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```
+$ yarn start:frontend
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Server
 
-### Code Splitting
+Install dependencies
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+```
+$ yarn install
+```
 
-### Analyzing the Bundle Size
+or
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+```
+$ npm install
+```
 
-### Making a Progressive Web App
+Start the server
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+```
+$ yarn start:backend
+```
 
-### Advanced Configuration
+or
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+```
+$ npm start:backend
+```
 
-### Deployment
+## End-to-End Testing Checklist
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+### Automated Tests
 
-### `npm run build` fails to minify
+1. **Dashboard Page Test**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+   - [ ] Verify that the dashboard page loads without errors.
+   - [ ] Check if recent transactions and pending requests are displayed correctly.
+   - [ ] Select a transaction and verify if the map renders with the correct markers and route.
+
+2. **Login Page Test**
+
+   - [ ] Verify that the login page loads without errors.
+   - [ ] Enter valid credentials and check if login redirects to the appropriate role-specific page.
+   - [ ] Enter invalid credentials and ensure that the appropriate error message is displayed.
+
+3. **Registration Page Test**
+
+   - [ ] Verify that the registration page loads without errors.
+   - [ ] Enter valid registration details and check if registration is successful.
+   - [ ] Enter invalid or incomplete details and verify the error messages.
+
+4. **Navigation Test**
+
+   - [ ] Check if navigation links are correctly displayed.
+   - [ ] Verify that clicking on a navigation link leads to the correct page.
+   - [ ] Test the active state of navigation links.
+
+5. **Profile Page Test**
+
+   - [ ] Verify that the profile page loads without errors.
+   - [ ] Check if user profile details are displayed.
+   - [ ] Edit profile details, submit changes, and verify if changes are saved.
+
+6. **Sink Page Test**
+   - [ ] Verify that the sink page loads without errors.
+   - [ ] Change the quantity of a material and submit a request.
+   - [ ] Ensure that the request is successfully submitted.
+
+### Manual Tests
+
+1. **Cross-Browser Testing**
+
+   - [ ] Manually test your application on different browsers (Chrome, Firefox, Safari, etc.) to ensure cross-browser compatibility.
+
+2. **Responsive Design Testing**
+
+   - [ ] Manually test your application on various devices (desktop, tablet, mobile) to ensure a responsive design.
+
+3. **Accessibility Testing**
+   - [ ] Conduct accessibility testing using tools like Lighthouse or axe, ensuring that your application adheres to accessibility standards.
+
+### Running Tests Locally
+
+- Instructions on how to run the automated tests and any prerequisites.
+
+  ```bash
+  # Install dependencies
+  npm install
+
+  # Run all automated tests
+  npm test:e2e
+  ```

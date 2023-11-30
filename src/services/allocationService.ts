@@ -13,7 +13,7 @@ async function fetchSourcesAndSinks() {
     quantity: resource.quantity,
   }));
 
-  let sinks: Sink[] = [];
+  const sinks: Sink[] = [];
   requests.forEach(request => {
     request.materials.forEach(async material => {
       const resource = await ResourceModel.findById(material.materialId);
