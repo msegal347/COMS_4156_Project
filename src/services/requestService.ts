@@ -1,7 +1,7 @@
 import Request, { IRequest } from '../models/requestModel';
 
-const requestService = {
-  async createRequest(requestData: IRequest): Promise<IRequest> {
+export const requestService = {
+  async createRequest(requestData: any): Promise<IRequest> {
     const newRequest = new Request(requestData);
     await newRequest.save();
     return newRequest;

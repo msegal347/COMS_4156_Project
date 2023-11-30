@@ -20,5 +20,4 @@ describe('Google Maps Integration Tests', () => {
       throw error;
     }
   });
-
 });
