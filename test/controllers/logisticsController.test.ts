@@ -100,6 +100,7 @@ describe('LogisticsController', () => {
     req.body = req.body || {};
     req.body.origin = 'Some Origin';
     req.body.destinations = ['Some', 'Destinations'];
+    req.body.key = "rwuy6434tgdgjhtiojiosi838tjue3" //Fake api_key for testing
     
     await getOptimalRoute(req, res, next);
 
@@ -120,6 +121,8 @@ describe('LogisticsController', () => {
   it('should get coordinates for an address', async () => {
     const coordinates = { latitude: 123.456, longitude: 789.012 };
     (LogisticsService.getCoordinates as jest.Mock).mockResolvedValue(coordinates);
+    req.body = req.body || {};
+    req.body.key = "rwuy6434tgdgjhtiojiosi838tjue3" //Fake api_key for testing
 
     await getCoordinates(req, res, next);
 

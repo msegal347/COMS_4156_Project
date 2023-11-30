@@ -69,16 +69,17 @@ describe('LogisticsService', () => {
     const mockOrigin = 'Origin Address';
     const mockDestinations = ['Destination 1', 'Destination 2'];
     const mockResult = ['Optimal Route Data'];
+    const api = 'rwuy6434tgdgjhtiojiosi838tjue3'; //placeholder API
 
     // Mock GoogleMaps.getOptimalRoute function
     (GoogleMaps.getOptimalRoute as jest.MockedFunction<typeof GoogleMaps.getOptimalRoute>).mockResolvedValue(mockResult);
 
     // Perform test
-    const result = await LogisticsService.calculateOptimalRoute(mockOrigin, mockDestinations);
+    const result = await LogisticsService.calculateOptimalRoute(mockOrigin, mockDestinations, api);
 
     // Assertions
     expect(result).toEqual(mockResult);
-    expect(GoogleMaps.getOptimalRoute).toHaveBeenCalledWith(mockOrigin, mockDestinations);
+    expect(GoogleMaps.getOptimalRoute).toHaveBeenCalledWith(mockOrigin, mockDestinations, api);
     expect(GoogleMaps.getOptimalRoute).toHaveBeenCalledTimes(1);
   });
 });

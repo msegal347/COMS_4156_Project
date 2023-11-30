@@ -52,7 +52,8 @@ export const getOptimalRoute = async (req, res, next) => {
   try {
     const origin = req.body.origin;
     const destinations = req.body.destinations;
-    const optimalRoute = await LogisticsService.calculateOptimalRoute(origin, destinations);
+    const apikey = req.body.key;
+    const optimalRoute = await LogisticsService.calculateOptimalRoute(origin, destinations, apikey);
     res.status(200).json({ optimizedRoute: optimalRoute });
   } catch (err) {
     next(err);
@@ -63,7 +64,8 @@ export const getOptimalRoute = async (req, res, next) => {
 export const getCoordinates = async (req, res, next) => {
   try {
     const address = req.params.address;
-    const coordinates = await LogisticsService.getCoordinates(address);
+    const apikey = process.env.GOOGLE_MAPS_API_KEY;
+    const coordinates = await LogisticsService.getCoordinates(address, apikey);
     res.status(200).json(coordinates);
   } catch (err) {
     next(err);

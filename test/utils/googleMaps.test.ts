@@ -7,8 +7,16 @@ jest.mock('https', () => ({
 }));
 
 describe('Google Maps Utilities', () => {
+
+  const originalEnv = process.env;
+
   beforeEach(() => {
     jest.clearAllMocks();
+    process.env = originalEnv;
+  });
+
+  afterEach(() => {
+    process.env = originalEnv;
   });
 
   it('should convert address to coordinates', async () => {
@@ -27,7 +35,9 @@ describe('Google Maps Utilities', () => {
       return {} as any;
     });
 
-    const coordinates = await getCoordinates('New York, NY');
+    const apiKey = process.env.GOOGLE_MAPS_API_KEY;
+    
+    const coordinates = await getCoordinates('New York, NY', apiKey);
     expect(coordinates).toEqual({ latitude: 40.7128, longitude: -74.0060 });
   });
 
@@ -47,7 +57,9 @@ describe('Google Maps Utilities', () => {
       return {} as any;
     });
 
-    const route = await getOptimalRoute('Point A', ['Point B', 'Point C', 'Point D']);
+    const apiKey = process.env.GOOGLE_MAPS_API_KEY;
+
+    const route = await getOptimalRoute('Point A', ['Point B', 'Point C', 'Point D'], apiKey);
     expect(route).toEqual(['Point C', 'Point B', 'Point D']);
   });
 });

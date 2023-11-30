@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 import { getCoordinates } from '../utils/googleMaps';
 
 class UserService {
-  async register(email: string, password: string, role: string, address?: string) {
+  async register(email: string, password: string, role: string, apikey: string, address?: string) {
     if (!email || !password || !role) {
       throw new Error('Missing required fields');
     }
@@ -16,7 +16,7 @@ class UserService {
 
     let coordinates: { latitude: number; longitude: number } | undefined;
     if ((role === 'source' || role === 'sink') && address) {
-      coordinates = await getCoordinates(address);
+      coordinates = await getCoordinates(address, apikey);
     }
 
     const user = new User({ email, password: hashedPassword, role, address, coordinates });

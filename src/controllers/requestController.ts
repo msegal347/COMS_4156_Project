@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import requestService from '../services/requestService';
 import { IRequest } from '../models/requestModel';
 
-const requestController = {
+export const requestController = {
   async createRequest(req: Request, res: Response) {
     try {
       const requestData: IRequest = req.body;
