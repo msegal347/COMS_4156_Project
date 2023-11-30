@@ -28,7 +28,7 @@ COPY --chown=vscode:vscode . .
 # RUN npm run build
 
 # Expose API port
-EXPOSE 3000
+EXPOSE 5000
 
 # Set up the command to run your app for testing
 CMD ["npm", "start"]

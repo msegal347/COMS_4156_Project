@@ -11,7 +11,7 @@ import {
 import { Bar } from 'react-chartjs-2';
 import GoogleMapReact from 'google-map-react';
 import styles from './AuditorPage.module.css';
-import { getResources, getTransfers, getTransactions } from '../services/api';
+import { getResources, getTransfers, getAllocations } from '../services/api';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -30,7 +30,7 @@ const AuditorPage = () => {
       orderDate: new Date('2023-11-25T09:00:00Z'),
       expectedDelivery: new Date('2023-11-26T09:00:00Z'),
       start: { lat: 40.7812, lng: -73.9665 },
-      end: { lat: 40.7580, lng: -73.9855 },
+      end: { lat: 40.758, lng: -73.9855 },
     },
     {
       id: 't2',
@@ -102,7 +102,7 @@ const AuditorPage = () => {
         backgroundColor: 'rgba(255, 99, 132, 0.5)',
       },
     ],
-  };  
+  };
 
   const chartOptions = {
     responsive: true,
@@ -120,78 +120,68 @@ const AuditorPage = () => {
   useEffect(() => {
     const fetchAnalyticsData = async () => {
       try {
-        const materialsResponse = await getMaterials();
-        const transfersResponse = await getTransfers();
+        // Assuming getMaterials and getTransactions are correctly defined in your API service
+        const materialsResponse = await getResources(); // Updated to getResources if it fetches material data
+        const allocationsResponse = await getAllocations();
         setAnalyticsData({
           materials: materialsResponse.data,
-          transfers: transfersResponse.data,
+          transfers: allocationsResponse.data, // Updated to use allocations data
         });
       } catch (error) {
         console.error('Error fetching analytics data', error);
       }
     };
-
-  const renderMarkers = (map, maps) => {
-    placeholderTransactions.forEach(transaction => {
-      new maps.Marker({
-        position: transaction.start,
-        map,
-        title: transaction.source,
+    const renderMarkers = (map, maps) => {
+      placeholderTransactions.forEach(transaction => {
+        new maps.Marker({
+          position: transaction.start,
+          map,
+          title: transaction.source,
+        });
+        new maps.Marker({
+          position: transaction.end,
+          map,
+          title: transaction.destination,
+        });
       });
-      new maps.Marker({
-        position: transaction.end,
-        map,
-        title: transaction.destination,
+    };
+
+    const renderRoute = (map, maps, transaction) => {
+      if (window.currentRoute) {
+        window.currentRoute.setMap(null);
+      }
+
+      const routePath = new maps.Polyline({
+        path: [transaction.start, transaction.end],
+        geodesic: true,
+        strokeColor: '#FF0000',
+        strokeOpacity: 1.0,
+        strokeWeight: 2,
       });
-    });
-  };
 
-  const renderRoute = (map, maps, transaction) => {
-    if (window.currentRoute) {
-      window.currentRoute.setMap(null);
-    }
+      routePath.setMap(map);
+      window.currentRoute = routePath;
+    };
 
-    const routePath = new maps.Polyline({
-      path: [transaction.start, transaction.end],
-      geodesic: true,
-      strokeColor: '#FF0000',
-      strokeOpacity: 1.0,
-      strokeWeight: 2,
-    });
+    const handleTransactionClick = transaction => {
+      setSelectedTransaction(transaction);
+    };
 
-    routePath.setMap(map);
-    window.currentRoute = routePath;
-  };
+    fetchAnalyticsData();
+  }, []);
 
-  const handleTransactionClick = transaction => {
-    setSelectedTransaction(transaction);
-  };
-
-  const fetchTransactions = async () => {
-    try {
-      const response = await getTransactions();
-      setLocations(response.data);
-    } catch (error) {
-      console.error('Error fetching transactions', error);
-    }
-  };
-
-  fetchAnalyticsData();
-  fetchTransactions();
-}, []);
-
-  const handleTransactionSelect = (transaction) => {
+  const handleTransactionSelect = transaction => {
     if (selectedTransaction && selectedTransaction.id === transaction.id) {
       setSelectedTransaction(null);
     } else {
-      setSelectedTransaction(transaction); 
+      setSelectedTransaction(transaction);
     }
   };
 
   const MapWithMarkers = () => (
     <GoogleMapReact
       bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAPS_API_KEY }}
-      defaultCenter={{ lat: 40.7128, lng: -74.0060 }}
+      defaultCenter={{ lat: 40.7128, lng: -74.006 }}
       defaultZoom={11}
       yesIWantToUseGoogleMapApiInternals
       onGoogleApiLoaded={({ map, maps }) => {
@@ -206,7 +196,7 @@ const AuditorPage = () => {
           const routePath = new maps.Polyline({
             path: [
               { lat: selectedTransaction.start.lat, lng: selectedTransaction.start.lng },
-              { lat: selectedTransaction.end.lat, lng: selectedTransaction.end.lng }
+              { lat: selectedTransaction.end.lat, lng: selectedTransaction.end.lng },
             ],
             geodesic: true,
             strokeColor: '#FF0000',
@@ -218,7 +208,6 @@ const AuditorPage = () => {
       }}
     />
   );
-
 
   const renderTransactionsTable = () => (
     <table className={styles.transactionTable}>
@@ -235,7 +224,7 @@ const AuditorPage = () => {
         </tr>
       </thead>
       <tbody>
-        {placeholderTransactions.map((transaction) => (
+        {placeholderTransactions.map(transaction => (
           <tr key={transaction.id}>
             <td>{transaction.id}</td>
             <td>{transaction.materials[0].foodType}</td>
@@ -252,7 +241,6 @@ const AuditorPage = () => {
       </tbody>
     </table>
   );
-  
 
   return (
     <div className={styles.container}>
@@ -261,9 +249,7 @@ const AuditorPage = () => {
         <Bar data={materialsChartData} options={chartOptions} />
         <Bar data={transfersChartData} options={chartOptions} />
       </div>
-      <div className={styles.transactionTableContainer}>
-        {renderTransactionsTable()}
-      </div>
+      <div className={styles.transactionTableContainer}>{renderTransactionsTable()}</div>
       <div style={{ height: '400px', width: '100%' }}>
         <MapWithMarkers />
       </div>

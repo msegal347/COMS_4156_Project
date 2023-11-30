@@ -12,9 +12,9 @@ const DashboardPage = () => {
     pendingRequests: [],
   });
   const [selectedTransaction, setSelectedTransaction] = useState(null);
+  const [showDetails, setShowDetails] = useState(false);
   const mapRef = useRef(null);
   const mapsRef = useRef(null);
-  
 
   const placeholderTransactions = [
     {
@@ -25,7 +25,7 @@ const DashboardPage = () => {
       orderDate: new Date('2023-11-25T09:00:00Z'),
       expectedDelivery: new Date('2023-11-26T09:00:00Z'),
       start: { lat: 40.7812, lng: -73.9665 },
-      end: { lat: 40.7580, lng: -73.9855 },
+      end: { lat: 40.758, lng: -73.9855 },
     },
     {
       id: 't2',
@@ -73,20 +73,19 @@ const DashboardPage = () => {
     const fetchDashboardData = async () => {
       try {
         const recentTransactionsData = await getRecentTransactions();
-        const pendingRequestsData = await getPendingRequests();
         setDashboardData({
           recentTransactions: recentTransactionsData.data,
-          pendingRequests: pendingRequestsData.data,
+          pendingRequests: [], // Since pending requests are automatically resolved, this can be an empty array or removed entirely
         });
       } catch (error) {
         console.error('Error fetching dashboard data', error);
       }
     };
-
+  
     fetchDashboardData();
   }, []);
 
-  const toggleDetails = (id) => {
+  const toggleDetails = id => {
     setShowDetails(showDetails === id ? null : id);
   };
 
@@ -94,18 +93,16 @@ const DashboardPage = () => {
     setSelectedTransaction(transaction);
   };
 
-  const handleDetailsToggle = (transactionId) => {
+  const handleDetailsToggle = transactionId => {
     if (showDetails && selectedTransaction && transactionId === selectedTransaction.id) {
       setShowDetails(false);
     } else {
       setShowDetails(true);
-      handleTransactionSelect(
-        dashboardData.recentTransactions.find((t) => t.id === transactionId)
-      );
+      handleTransactionSelect(dashboardData.recentTransactions.find(t => t.id === transactionId));
     }
   };
 
-  const renderMarkers = (transaction) => {
+  const renderMarkers = transaction => {
     if (mapRef.current && mapsRef.current && transaction) {
       if (window.markers) {
         window.markers.forEach(marker => marker.setMap(null));
@@ -126,7 +123,7 @@ const DashboardPage = () => {
     }
   };
 
-  const renderRoute = (transaction) => {
+  const renderRoute = transaction => {
     if (mapRef.current && mapsRef.current && transaction) {
       if (window.currentRoute) {
         window.currentRoute.setMap(null);
@@ -162,7 +159,7 @@ const DashboardPage = () => {
         </tr>
       </thead>
       <tbody>
-        {placeholderTransactions.map((transaction) => (
+        {placeholderTransactions.map(transaction => (
           <tr key={transaction.id}>
             <td>{transaction.id}</td>
             <td>{transaction.materials[0].foodType}</td>
@@ -179,7 +176,6 @@ const DashboardPage = () => {
       </tbody>
     </table>
   );
-  
 
   const Map = ({ transaction }) => {
     useEffect(() => {
@@ -192,7 +188,7 @@ const DashboardPage = () => {
     return (
       <GoogleMapReact
         bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAPS_API_KEY }}
-        defaultCenter={{ lat: 40.7128, lng: -74.0060 }}
+        defaultCenter={{ lat: 40.7128, lng: -74.006 }}
         defaultZoom={11}
         yesIWantToUseGoogleMapApiInternals
         onGoogleApiLoaded={({ map, maps }) => {
@@ -226,9 +222,7 @@ const DashboardPage = () => {
     <div className={styles.dashboardContainer}>
       <h1 className={styles.title}>Dashboard</h1>
 
-      <div className={styles.transactionTableContainer}>
-        {renderTransactionsTable()}
-      </div>
+      <div className={styles.transactionTableContainer}>{renderTransactionsTable()}</div>
 
       <section className={styles.mapSection}>
         <div style={{ height: '400px', width: '100%' }}>

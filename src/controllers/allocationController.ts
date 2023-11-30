@@ -83,3 +83,21 @@ export const deleteAllocationById = async (req: Request, res: Response) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
+
+export const triggerAllocation = async (req: Request, res: Response) => {
+  try {
+    const allocationResults = await AllocationService.triggerAllocationProcess();
+    res.status(200).json({ message: 'Allocation process completed', allocationResults });
+  } catch (error) {
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+export const getAllAllocations = async (req: Request, res: Response) => {
+  try {
+    const allocations = await AllocationService.getAllAllocations();
+    res.status(200).json(allocations);
+  } catch (error) {
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
