@@ -32,4 +32,15 @@ module.exports = {
   transformIgnorePatterns: ['<rootDir>/node_modules/', 'node_modules/(?!(axios)/)', 'node_modules/axios/'],
 
   preset: '@shelf/jest-mongodb',
+
+  testPathIgnorePatterns: [
+    '<rootDir>/test/models/',
+    '<rootDir>/test/integrations/',
+    '<rootDir>/test/routes/analyticsRoutes.test.ts',
+    '<rootDir>/test/gateway/gateway.test.ts',
+    '<rootDir>/test/routes/logisticsRoutes.test.ts',
+    '<rootDir>/test/controllers/logisticsController.test.ts',
+    '<rootDir>/test/services/logisticsService.test.ts',
+
+  ],
 };

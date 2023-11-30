@@ -12,6 +12,7 @@ const DashboardPage = () => {
     pendingRequests: [],
   });
   const [selectedTransaction, setSelectedTransaction] = useState(null);
+  const [showDetails, setShowDetails] = useState(false);
   const mapRef = useRef(null);
   const mapsRef = useRef(null);
 
@@ -72,16 +73,15 @@ const DashboardPage = () => {
     const fetchDashboardData = async () => {
       try {
         const recentTransactionsData = await getRecentTransactions();
-        const pendingRequestsData = await getPendingRequests();
         setDashboardData({
           recentTransactions: recentTransactionsData.data,
-          pendingRequests: pendingRequestsData.data,
+          pendingRequests: [], // Since pending requests are automatically resolved, this can be an empty array or removed entirely
         });
       } catch (error) {
         console.error('Error fetching dashboard data', error);
       }
     };
-
+  
     fetchDashboardData();
   }, []);
 

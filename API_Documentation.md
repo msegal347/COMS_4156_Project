@@ -220,9 +220,8 @@
 - **Status Codes**: `200 OK`, `400 Bad Request`
 
 #### Get Coordinates
-
 - **Method**: GET
-- **Endpoint**: `/logistics/coordinates/:address`
+- **Endpoint**: `/api/logistics/coordinates/:address`
 - **Headers**: `Authorization: Bearer <token>`
 - **Status Codes**: `200 OK`, `404 Not Found`
 
@@ -402,5 +401,20 @@
 - **Status Codes**: 
   - `204 No Content`: Successfully deleted the transaction.
   - `404 Not Found`: Transaction with the given ID does not exist.
+
+---
+
+
+### User API
+
+#### User Registration
+- **Method**: POST
+- **Endpoint**: `/api/users/register`
+- **Description**: Register a new user.
+
+#### User Login
+- **Method**: POST
+- **Endpoint**: `/api/users/login`
+- **Description**: Authenticate a user and get a token.
 
 ---

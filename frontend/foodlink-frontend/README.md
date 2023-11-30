@@ -140,3 +140,16 @@ $ npm start:backend
   # Run all automated tests
   npm test:e2e
   ```
+### General Information
+
+No third party code was used, but we did use the Google Maps API. The documentation can be found here:
+
+This is the documentation for the Geocoding service: 
+
+https://developers.google.com/maps/documentation/javascript/geocoding
+
+This is the documentation for the Routes service:
+
+https://developers.google.com/maps/documentation/routes
+
+The Google Maps API is used on the Dashboard and Audit pages of the application.
