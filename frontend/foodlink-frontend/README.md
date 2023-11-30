@@ -1,6 +1,6 @@
 ## 💡 Project Description
 
-Our preliminary idea is to develop a food redistribution service called FoodLink, with the intent of reducing food waste and addressing food insecurity. FoodLink will act as a redistribution service that interacts with inventory management and analytics services, and will orchestrate the equitable redistribution of resources from sources to sinks using optimization algorithms. Additionally, FoodLink will provide API endpoints for monitoring and analytics.
+Welcome to FoodLink, an application that allows organizations to post their available surplus food, and for others to request it. FoodLink's algorithms enable efficient distribution of food, visualization of the delivery route with Google Maps, and a user-friendly interface for both donors and recipients. There is also functionality for third-party auditors to track the transactions and ensure that the food is being distributed correctly.
 
 ## 📺 Preview
 
