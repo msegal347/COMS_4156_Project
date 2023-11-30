@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export const getCoordinates = async (
   address: string,
-  apiKey: string
+  apiKey: string | undefined
 ): Promise<{ latitude: number; longitude: number }> => {
   try {
     console.log(`Fetching coordinates for address: ${address}`);
@@ -35,7 +35,8 @@ export const getCoordinates = async (
 export const getOptimalRoute = async (
   origin: string,
   destinations: string[],
-  apiKey: string
+
+  apiKey: string | undefined
 ): Promise<string[]> => {
   try {
     console.log(`Fetching optimal route from ${origin} to`, destinations);

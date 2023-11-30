@@ -14,20 +14,17 @@ export const resourceService = {
   },
 
   // Retrieve a single resource by ID
-  async getResourceById(id: mongoose.Types.ObjectId): Promise<IResource | null> {
+  async getResourceById(id: string): Promise<IResource | null> {
     return await Resource.findById(id);
   },
 
   // Update a resource
-  async updateResource(
-    id: mongoose.Types.ObjectId,
-    updates: Partial<IResource>
-  ): Promise<IResource | null> {
+  async updateResource(id: string, updates: any): Promise<IResource | null> {
     return await Resource.findByIdAndUpdate(id, updates, { new: true });
   },
 
   // Delete a resource
-  async deleteResource(id: mongoose.Types.ObjectId): Promise<IResource | null> {
+  async deleteResource(id: string): Promise<IResource | null> {
     return await Resource.findByIdAndDelete(id);
   },
 };

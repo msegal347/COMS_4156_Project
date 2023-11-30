@@ -6,7 +6,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 class UserService {
-  async register(email: string, password: string, role: string, address?: string) {
+  async register(email: string, password: string, role: string, apikey: string, address?: string) {
     if (!email || !password || !role) {
       throw new Error('Missing required fields');
     }
