@@ -9,11 +9,11 @@ export interface IResource extends Document {
 
 const resourceSchema: Schema = new Schema(
   {
-    category: { type: String, required: true }, 
-    quantity: { type: Number, required: true }, 
+    category: { type: String, required: true },
+    quantity: { type: Number, required: true },
   },
   {
-    timestamps: true, 
+    timestamps: true,
   }
 );
 

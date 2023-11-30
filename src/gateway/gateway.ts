@@ -25,7 +25,6 @@ import userRoutes from '../routes/userRoutes';
 import { consoleLogger, esLogger } from '../config/logger';
 
 export const initializeGateway = (app: Express) => {
-
   app.get('/api/test', (req, res) => {
     res.send('API is working');
   });
