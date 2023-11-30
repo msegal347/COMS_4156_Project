@@ -28,7 +28,7 @@ jobs:
       run: npm run lint
 
     - name: Run Unit Tests with Coverage
-      run: npm run test -- --coverage --testPathIgnorePatterns='<rootDir>/test/models/','<rootDir>/test/integrations/','<rootDir>/test/routes/analyticsRoutes.test.ts','<rootDir>/test/gateway/gateway.test.ts','<rootDir>/test/routes/logisticsRoutes.test.ts','<rootDir>/test/controllers/logisticsController.test.ts','<rootDir>/test/services/logisticsService.test.ts','<rootDir>/test/utils/googleMaps.test.ts'
+      run: npm run test -- --coverage
 
     - name: Upload Coverage as Artifact
       uses: actions/upload-artifact@v2
