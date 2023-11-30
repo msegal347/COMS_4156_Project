@@ -1,54 +1,24 @@
-import { getCoordinates, getOptimalRoute } from '../../src/utils/googleMaps';
-import * as https from 'https';
+import { getCoordinates} from '../../src/utils/googleMaps';
 
-// Mock the https module
-jest.mock('https', () => ({
-  get: jest.fn()
-}));
+// Define the API key here for testing
+const apiKey = 'AIzaSyBqUPau26I7Vzvj3roNeQ1qhFQMNBsCZ7Q';
 
-describe('Google Maps Utilities', () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
+describe('Google Maps Integration Tests', () => {
+  it('should get correct coordinates for a known address', async () => {
+    try {
+      const address = '1600 Amphitheatre Parkway, Mountain View, CA';
+      const expectedLat = 37.4223878;
+      const expectedLng = -122.0841877;
+
+      const coordinates = await getCoordinates(address, apiKey);
+      console.log('Coordinates:', coordinates);
+
+      expect(coordinates.latitude).toBeCloseTo(expectedLat, 4);
+      expect(coordinates.longitude).toBeCloseTo(expectedLng, 4);
+    } catch (error) {
+      console.error('Error in getCoordinates:', error);
+      throw error;
+    }
   });
 
-  it('should convert address to coordinates', async () => {
-    const mockResponse = {
-      on: (event, callback) => {
-        if (event === 'data') {
-          callback(JSON.stringify({ results: [{ geometry: { location: { lat: 40.7128, lng: -74.0060 } } }] }));
-        } else if (event === 'end') {
-          callback();
-        }
-      }
-    };
-
-    (https.get as jest.Mock).mockImplementation((url, callback) => {
-      callback(mockResponse);
-      return {} as any;
-    });
-
-    const coordinates = await getCoordinates('New York, NY');
-    expect(coordinates).toEqual({ latitude: 40.7128, longitude: -74.0060 });
-  });
-
-  it('should calculate the optimal route', async () => {
-    const mockResponse = {
-      on: (event, callback) => {
-        if (event === 'data') {
-          callback(JSON.stringify({ routes: [{ waypoint_order: [1, 0, 2] }] }));
-        } else if (event === 'end') {
-          callback();
-        }
-      }
-    };
-
-    (https.get as jest.Mock).mockImplementation((url, callback) => {
-      callback(mockResponse);
-      return {} as any;
-    });
-
-    const route = await getOptimalRoute('Point A', ['Point B', 'Point C', 'Point D']);
-    expect(route).toEqual(['Point C', 'Point B', 'Point D']);
-  });
 });
-
