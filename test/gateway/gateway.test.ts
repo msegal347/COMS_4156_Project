@@ -12,6 +12,7 @@ const mockGetCoordinates = jest.fn();
 
 // Mock Express app
 const mockApp = {
+  get: jest.fn(),
   use: jest.fn()
 } as unknown as express.Express;
 
