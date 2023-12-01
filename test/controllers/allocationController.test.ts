@@ -90,4 +90,20 @@ describe('Allocation Controller', () => {
     expect(response.status).toHaveBeenCalledWith(400);
     expect(response.json).toHaveBeenCalledWith({ error: 'Bad Request: Missing ID parameter' });
   });
+
+  // Tests for getAllAllocations
+  it('should get all allocation', async () => {
+    mockRequest.params = { id: 'someId' };
+    await allocationController.getAllAllocations(mockRequest as Request, response);
+    expect(response.status).toHaveBeenCalledWith(200);
+  });
+
+  // Tests for triggerAllocations
+  
+    it('should call triggerAllocation', async () => {
+    mockRequest.params = { id: 'someId' };
+    const allocationResults = await allocationController.triggerAllocation(mockRequest as Request, response);
+    expect(response.status).toHaveBeenCalledWith(200);
+    expect(response.json).toHaveBeenCalledWith({ message: 'Allocation process completed',  allocationResults});
+  });
 });
