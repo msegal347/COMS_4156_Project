@@ -1,7 +1,7 @@
 # COMS_4156_Project
 Project Repo for Columbia's Advanced Software Engineering course
 
-[![Coverage Status](https://coveralls.io/repos/github/msegal347/COMS_4156_Project/badge.svg)](https://coveralls.io/github/msegal347/COMS_4156_Project)
+[![Coverage Status](https://coveralls.io/repos/github/msegal347/COMS_4156_Project/badge.svg?branch=main)](https://coveralls.io/github/msegal347/COMS_4156_Project?branch=main)
 
 Click the badge for actual percentage of code coverage.
 
