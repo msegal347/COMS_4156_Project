@@ -1,6 +1,6 @@
-import puppeteer from 'puppeteer';
+const puppeteer = require('puppeteer');
 
-const APP_URL = 'http://localhost:3000'; // Update with your app's URL
+const APP_URL = 'http://localhost:3000';
 
 let browser;
 let page;
@@ -14,42 +14,26 @@ afterAll(async () => {
   await browser.close();
 });
 
-describe('AdminPage E2E Tests', () => {
-  test('renders and interacts with the AdminPage', async () => {
+describe('AdminPage E2E Test', () => {
+  it('should render AdminPage and perform basic interactions', async () => {
     await page.goto(APP_URL);
 
-    // Ensure that the AdminPage title is rendered
-    const title = await page.$eval('.title', el => el.innerText);
+    await page.waitForSelector('.title');
+
+    const title = await page.$eval('.title', el => el.textContent);
     expect(title).toBe('Admin Dashboard');
 
-    // Expand the "User Management" section
-    await page.click('.collapsibleTitle:nth-of-type(1)');
+    const userManagementSection = await page.$('.collapsibleComponent:nth-child(1)');
+    expect(userManagementSection).toBeTruthy();
 
-    // Ensure that the "Create New User" button is rendered
-    await page.waitForSelector('.collapsibleContent:nth-of-type(1) button');
-    await page.click('.collapsibleContent:nth-of-type(1) button');
-    // Add more interactions as needed for your application
+    await userManagementSection.click();
 
-    // Expand the "Resource Oversight" section
-    await page.click('.collapsibleTitle:nth-of-type(2)');
+    const createNewUserButton = await page.$('button:has-text("Create New User")');
+    expect(createNewUserButton).toBeTruthy();
 
-    // Add interactions for the "Resource Oversight" section
-
-    // Expand the "Transaction Oversight" section
-    await page.click('.collapsibleTitle:nth-of-type(3)');
-
-    // Add interactions for the "Transaction Oversight" section
-
-    // Expand the "Analytics and Reporting" section
-    await page.click('.collapsibleTitle:nth-of-type(4)');
-
-    // Add interactions for the "Analytics and Reporting" section
-
-    // Expand the "Audit Logs" section
-    await page.click('.collapsibleTitle:nth-of-type(5)');
-
-    // Add interactions for the "Audit Logs" section
-
-    // You can add more test cases or interactions as needed
-  }, 16000); // Adjust the timeout as needed
+    const alertSpy = jest.spyOn(global, 'alert');
+    await createNewUserButton.click();
+    expect(alertSpy).toHaveBeenCalledWith('Create new user');
+    alertSpy.mockRestore();
+  });
 });

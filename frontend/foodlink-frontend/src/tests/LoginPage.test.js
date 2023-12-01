@@ -4,7 +4,6 @@ import '@testing-library/jest-dom';
 import axios from 'axios';
 import LoginPage from '../pages/LoginPage';
 
-// Mocking axios.post to avoid actual API calls during testing
 jest.mock('axios');
 
 describe('LoginPage Component', () => {
