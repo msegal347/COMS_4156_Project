@@ -16,4 +16,5 @@ module.exports = {
     '\\.css$': require.resolve('./style-mock.js'),
   },
   transformIgnorePatterns: ['<rootDir>/node_modules/', 'node_modules/(?!(axios)/)'],
+  no-unused-vars: 'off',
 };
