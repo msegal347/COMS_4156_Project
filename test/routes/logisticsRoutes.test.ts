@@ -1,15 +1,29 @@
 import request from 'supertest';
-import { app, server } from '../../src/index';
+import { app, startServer } from '../../src/index';
+import mongoose from 'mongoose';
 import * as LogisticsService from '../../src/services/logisticsService';
 
-// Mocking LogisticsService
 jest.mock('../../src/services/logisticsService');
-
-jest.mock('../../src/config/db', () => {
-  return jest.fn();  // mock connectDB as a function that does nothing
+jest.mock('../../src/config/db', () => jest.fn());
+jest.mock('mongoose', () => {
+  const originalModule = jest.requireActual('mongoose');
+  return {
+    ...originalModule,
+    connection: {
+      ...originalModule.connection,
+      close: jest.fn(),
+    },
+  };
 });
 
 describe('Logistics Routes', () => {
+  let server;
+
+  beforeAll((done) => {
+    jest.setTimeout(30000);
+    server = startServer();
+    server.on('listening', done);
+  });
   
   it('should create a new route', async () => {
     const mockRoute = { origin: 'A', destinations: ['B', 'C'] };
@@ -79,14 +93,10 @@ describe('Logistics Routes', () => {
     expect(res.body).toEqual(coordinates);
   });
 
-  afterAll((done) => {
-    if (server) {
-      server.close(done);
-    } else {
-      done();
-    }
+  afterAll(async () => {
+    await mongoose.connection.close();
+    server.close();
   });
-  
 });
 
 
