@@ -225,7 +225,7 @@ const AdminPage = () => {
             </tr>
           </thead>
           <tbody>
-            {resources.map(resource => (
+            {placeholderResources.map(resource => (
               <tr key={resource.id}>
                 <td>{resource.id}</td>
                 <td>{resource.name}</td>
