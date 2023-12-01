@@ -1,29 +1,25 @@
 import UserService from '../../src/services/userService';
 import User from '../../src/models/userModel';
 import bcrypt from 'bcrypt';
-import mongoose from 'mongoose';
 
-jest.mock('bcrypt', () => ({
-  hash: jest.fn(),
-  compare: jest.fn(),
-}));
+jest.mock('bcrypt');
 
 describe('UserService', () => {
   it('should register a new user', async () => {
     const userData = {
       email: 'test@example.com',
       password: 'password123',
-      role: 'member', // Assuming 'member' is a valid role
+      role: 'member',
       apikey: 'apikey123',
     };
     const hashedPassword = 'hashedPassword123';
 
-    bcrypt.hash.mockResolvedValue(hashedPassword);
+    jest.spyOn(bcrypt, 'hash').mockResolvedValue(hashedPassword);
 
     // Simulate a Mongoose document
     const mockUser = new User({ ...userData, password: hashedPassword });
     jest.spyOn(User, 'findOne').mockResolvedValueOnce(null);
-    jest.spyOn(User, 'create').mockResolvedValueOnce([mockUser]); 
+    jest.spyOn(User, 'create').mockResolvedValueOnce([mockUser] as any); 
 
     const result = await UserService.register(userData.email, userData.password, userData.role, userData.apikey);
 
