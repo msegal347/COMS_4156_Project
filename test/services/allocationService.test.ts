@@ -1,6 +1,21 @@
 import * as AllocationService from '../../src/services/allocationService';
 import { Allocation } from '../../src/models/allocationModel';
+import ResourceModel from '../../src/models/resourceModel';
+import RequestModel from '../../src/models/requestModel';
 import * as ResourceAllocation from '../../src/algorithms/resourceAllocation';
+
+// Mock the Allocation model's static methods
+Allocation.create = jest.fn().mockImplementation(async (data) => data);
+Allocation.findById = jest.fn().mockImplementation(async (id) => ({ id, location: 'Location A', items: ['item1', 'item2'] }));
+Allocation.findByIdAndUpdate = jest.fn().mockImplementation(async (id, updateData) => updateData);
+Allocation.findByIdAndDelete = jest.fn().mockImplementation(async (id) => true);
+Allocation.find = jest.fn().mockImplementation(async () => []);
+
+// Mock ResourceModel and RequestModel similarly
+ResourceModel.find = jest.fn().mockImplementation(() => ({ exec: async () => [] }));
+ResourceModel.findByIdAndUpdate = jest.fn().mockImplementation(async (id, updateData) => updateData);
+RequestModel.find = jest.fn().mockImplementation(() => ({ populate: () => ({ exec: async () => [] }) }));
+
 
 // Mocking the Allocation model methods
 jest.mock('../../src/models/allocationModel', () => ({
@@ -9,7 +24,19 @@ jest.mock('../../src/models/allocationModel', () => ({
     findById: jest.fn(),
     findByIdAndUpdate: jest.fn(),
     findByIdAndDelete: jest.fn(),
+    find: jest.fn(),
   },
+}));
+
+jest.mock('../../src/models/resourceModel', () => ({
+  find: jest.fn(),
+  findById: jest.fn(),
+  findByIdAndUpdate: jest.fn(),
+}));
+
+jest.mock('../../src/models/requestModel', () => ({
+  find: jest.fn().mockResolvedValue([]),
+  findById: jest.fn(),
 }));
 
 // Mocking the ResourceAllocation methods
@@ -18,6 +45,11 @@ jest.mock('../../src/algorithms/resourceAllocation', () => ({
 }));
 
 describe('Allocation Service Test', () => {
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   // Should create an allocation
   it('should create an allocation', async () => {
     const mockData = { location: 'Location A', items: ['item1', 'item2'] };
@@ -137,4 +169,57 @@ describe('Allocation Service Test', () => {
     const result = await AllocationService.findOptimalAllocation({ sources: invalidSources, sinks: invalidSinks });
     expect(result).toEqual({ matches: null });
   });
+
+  it('should handle empty sources and sinks in triggerAllocationProcess', async () => {
+    const result = await AllocationService.triggerAllocationProcess();
+    
+    expect(result).toEqual([]);
+    expect(ResourceModel.find().exec).toHaveBeenCalled();
+    expect(RequestModel.find().populate).toHaveBeenCalledWith('materials.materialId');
+    expect(ResourceAllocation.allocateResources).toHaveBeenCalledWith([], []);
+  });
+
+  // Test the triggerAllocationProcess with database operation failure
+  it('should handle database operation failures in triggerAllocationProcess', async () => {
+    const mockSources = [{ id: 'source1', resourceType: 'Food', quantity: 100 }];
+    const mockSinks = [{ id: 'sink1', resourceType: 'Food', requiredQuantity: 50 }];
+    const mockMatches = [{ sourceId: 'source1', sinkId: 'sink1', allocatedQuantity: 50 }];
+
+    jest.spyOn(ResourceModel, 'find').mockResolvedValue(mockSources);
+    jest.spyOn(RequestModel, 'find').mockResolvedValue(mockSinks);
+    jest.spyOn(ResourceAllocation, 'allocateResources').mockReturnValue(mockMatches);
+    jest.spyOn(ResourceModel, 'findByIdAndUpdate').mockRejectedValue(new Error('Database update failed'));
+
+    await expect(AllocationService.triggerAllocationProcess()).rejects.toThrow('Database update failed');
+  });
+
+  it('should handle database errors in triggerAllocationProcess', async () => {
+    jest.spyOn(ResourceModel, 'find').mockRejectedValue(new Error('Database error'));
+    await expect(AllocationService.triggerAllocationProcess()).rejects.toThrow('Database error');
+  });
+
+  it('should handle no matches in triggerAllocationProcess', async () => {
+    jest.spyOn(ResourceModel, 'find').mockResolvedValue([]); // No sources
+    jest.spyOn(RequestModel, 'find').mockResolvedValue([]); // No sinks
+    jest.spyOn(ResourceAllocation, 'allocateResources').mockReturnValue([]);
+    const result = await AllocationService.triggerAllocationProcess();
+    expect(result).toEqual([]);
+  });
+
+  it('should handle failed updates in triggerAllocationProcess', async () => {
+    // Mock data for sources, sinks and matches
+    const mockMatches = [/* Mock matches data */];
+    jest.spyOn(ResourceModel, 'find').mockResolvedValue([/* Mock sources data */]);
+    jest.spyOn(RequestModel, 'find').mockResolvedValue([/* Mock sinks data */]);
+    jest.spyOn(ResourceAllocation, 'allocateResources').mockReturnValue(mockMatches);
+    jest.spyOn(ResourceModel, 'findByIdAndUpdate').mockRejectedValue(new Error('Failed to update resource'));
+
+    await expect(AllocationService.triggerAllocationProcess()).rejects.toThrow('Failed to update resource');
+  });
+
+  it('should handle invalid sources and sinks in findOptimalAllocation', async () => {
+    const result = await AllocationService.findOptimalAllocation({ sources: null, sinks: null });
+    expect(result).toEqual({ matches: [] });
+  });
 });
+
