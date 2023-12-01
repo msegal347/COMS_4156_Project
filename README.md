@@ -3,10 +3,7 @@ Project Repo for Columbia's Advanced Software Engineering course
 
 [![Coverage Status](https://coveralls.io/repos/github/msegal347/COMS_4156_Project/badge.svg?branch=main)](https://coveralls.io/github/msegal347/COMS_4156_Project?branch=main)
 
-85% coverage not achieved in time for submission due to branch complexity in interacting with the Google Maps API. Will continue to work on the tests to resolve this issue.
-
-As of the sumbission date of the second iteration, we reached 80% on our coverage. The other 20% is mostly getter/setter 
-methods and some error management within our code.
+As of the sumbission date of the second iteration, we reached 81% on our coverage. The other 19% is mostly getter/setter methods and some error management within our code. 
 
 # FoodLink API
 
