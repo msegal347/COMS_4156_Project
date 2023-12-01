@@ -1,45 +1,81 @@
-// src/pages/__tests__/SourcePage.test.js
-import React from 'react';
-import { render, fireEvent, screen } from '@testing-library/react';
-import '@testing-library/jest-dom/extend-expect'; // for additional matchers
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import userEvent from '@testing-library/user-event';
+import { act } from 'react-dom/test-utils';
+import SourcePage from './SourcePage';
+import { createResource } from '../services/api';
 
-import SourcePage from '../pages/SourcePage';
+jest.mock('../services/api');
+
+const mockCreateResource = jest.fn();
+
+beforeEach(() => {
+  createResource.mockResolvedValue();
+});
+
+afterEach(() => {
+  jest.clearAllMocks();
+});
 
 describe('SourcePage', () => {
-  test('renders without errors', () => {
-    render(<SourcePage />);
-    // Check if the component renders without errors
+  it('renders SourcePage component', async () => {
+    await act(async () => {
+      render(<SourcePage />);
+    });
+
     expect(screen.getByText('Material Submission')).toBeInTheDocument();
+    expect(screen.getByText('Food Category')).toBeInTheDocument();
+    expect(screen.getByText('Quantity')).toBeInTheDocument();
+    expect(screen.getByRole('button')).toHaveTextContent('Submit');
   });
 
-  test('updates state on input change', () => {
-    render(<SourcePage />);
-    const categoryInput = screen.getByLabelText('Food Category');
+  it('updates input values on change', async () => {
+    await act(async () => {
+      render(<SourcePage />);
+    });
 
-    fireEvent.change(categoryInput, { target: { value: 'Fruits' } });
+    const inputCategory = screen.getByLabelText('Food Category');
+    const inputQuantity = screen.getByLabelText('Quantity');
 
-    // Check if the state is updated
-    expect(categoryInput.value).toBe('Fruits');
+    userEvent.selectOptions(inputCategory, 'Fruits');
+    userEvent.type(inputQuantity, '50');
+
+    expect(inputCategory).toHaveValue('Fruits');
+    expect(inputQuantity).toHaveValue('50');
   });
 
-  test('submits form with valid data', async () => {
-    render(<SourcePage />);
-    const categoryInput = screen.getByLabelText('Food Category');
-    const quantityInput = screen.getByLabelText('Quantity');
-    const expirationDateInput = screen.getByLabelText('Expiration Date');
-    const submitButton = screen.getByText('Submit');
+  it('submits material data on form submission', async () => {
+    await act(async () => {
+      render(<SourcePage />);
+    });
 
-    // Fill out the form
-    fireEvent.change(categoryInput, { target: { value: 'Fruits' } });
-    fireEvent.change(quantityInput, { target: { value: '10' } });
-    fireEvent.change(expirationDateInput, { target: { value: '2023-12-31' } });
+    const inputCategory = screen.getByLabelText('Food Category');
+    const inputQuantity = screen.getByLabelText('Quantity');
 
-    // Submit the form
-    fireEvent.click(submitButton);
+    userEvent.selectOptions(inputCategory, 'Fruits');
+    userEvent.type(inputQuantity, '50');
 
-    // Check if the form is submitted
-    expect(screen.getByText('Material Submission')).toBeInTheDocument();
+    fireEvent.submit(screen.getByRole('button'));
 
-    // You might want to add more assertions depending on your use case
+    await waitFor(() => {
+      expect(mockCreateResource).toHaveBeenCalledWith({
+        category: 'Fruits',
+        quantity: '50',
+      });
+    });
+  });
+
+  it('handles error during material data submission', async () => {
+    createResource.mockRejectedValueOnce(new Error('Submission failed'));
+
+    await act(async () => {
+      render(<SourcePage />);
+    });
+
+    fireEvent.submit(screen.getByRole('button'));
+
+    await waitFor(() => {
+      expect(screen.getByText('Error submitting material data')).toBeInTheDocument();
+    });
   });
 });

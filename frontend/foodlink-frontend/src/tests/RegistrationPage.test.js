@@ -1,79 +1,79 @@
-// RegistrationPage.test.js
-
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import '@testing-library/jest-dom/extend-expect';
-import axios from 'axios';
-import { act } from 'react-dom/test-utils';
-import { BrowserRouter as Router } from 'react-router-dom';
-import RegistrationPage from '../pages/RegistrationPage';
+import userEvent from '@testing-library/user-event';
+import { rest } from 'msw';
+import { setupServer } from 'msw/node';
+import { MemoryRouter } from 'react-router-dom';
+import RegistrationPage from './RegistrationPage';
 
-jest.mock('axios');
-
-describe('RegistrationPage', () => {
-  it('renders the component correctly', () => {
-    render(
-      <Router>
-        <RegistrationPage />
-      </Router>
+const server = setupServer(
+  rest.post('/api/user/register', (req, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json({
+        message: 'Registration successful!',
+      })
     );
+  })
+);
 
-    // Ensure the form elements are present
-    expect(screen.getByText('Register')).toBeInTheDocument();
-    expect(screen.getByPlaceholderText('Email')).toBeInTheDocument();
-    expect(screen.getByPlaceholderText('Password')).toBeInTheDocument();
-    expect(screen.getByText('Select Role')).toBeInTheDocument();
+beforeAll(() => server.listen());
+afterEach(() => server.resetHandlers());
+afterAll(() => server.close());
+
+test('renders registration form', () => {
+  render(
+    <MemoryRouter>
+      <RegistrationPage />
+    </MemoryRouter>
+  );
+
+  expect(screen.getByText('Register')).toBeInTheDocument();
+  expect(screen.getByPlaceholderText('Email')).toBeInTheDocument();
+  expect(screen.getByPlaceholderText('Password')).toBeInTheDocument();
+  expect(screen.getByText('Select Role')).toBeInTheDocument();
+});
+
+test('submits registration form successfully', async () => {
+  render(
+    <MemoryRouter>
+      <RegistrationPage />
+    </MemoryRouter>
+  );
+
+  userEvent.type(screen.getByPlaceholderText('Email'), 'test@example.com');
+  userEvent.type(screen.getByPlaceholderText('Password'), 'password');
+  userEvent.selectOptions(screen.getByRole('combobox'), 'source');
+  userEvent.type(screen.getByPlaceholderText('Address'), '123 Main St');
+
+  fireEvent.click(screen.getByText('Register'));
+
+  await waitFor(() => {
+    expect(screen.getByText('Registration successful!')).toBeInTheDocument();
   });
+});
 
-  it('submits the form successfully', async () => {
-    // Mock axios.post to return a successful response
-    axios.post.mockResolvedValueOnce({ data: { message: 'Registration successful!' } });
+test('handles registration form submission error', async () => {
+  server.use(
+    rest.post('/api/user/register', (req, res, ctx) => {
+      return res(ctx.status(500), ctx.json({ message: 'Internal Server Error' }));
+    })
+  );
 
-    render(
-      <Router>
-        <RegistrationPage />
-      </Router>
-    );
+  render(
+    <MemoryRouter>
+      <RegistrationPage />
+    </MemoryRouter>
+  );
 
-    // Fill in the form
-    fireEvent.change(screen.getByPlaceholderText('Email'), {
-      target: { value: 'test@example.com' },
-    });
-    fireEvent.change(screen.getByPlaceholderText('Password'), { target: { value: 'password123' } });
-    fireEvent.change(screen.getByText('Select Role').nextSibling, { target: { value: 'User' } });
+  userEvent.type(screen.getByPlaceholderText('Email'), 'test@example.com');
+  userEvent.type(screen.getByPlaceholderText('Password'), 'password');
+  userEvent.selectOptions(screen.getByRole('combobox'), 'source');
+  userEvent.type(screen.getByPlaceholderText('Address'), '123 Main St');
 
-    // Submit the form
-    fireEvent.click(screen.getByText('Register'));
+  fireEvent.click(screen.getByText('Register'));
 
-    // Wait for the success message
-    await waitFor(() => {
-      expect(screen.getByText('Registration successful!')).toBeInTheDocument();
-    });
-  });
-
-  it('handles form submission failure', async () => {
-    // Mock axios.post to return an error response
-    axios.post.mockRejectedValueOnce({ response: { data: { message: 'Registration failed' } } });
-
-    render(
-      <Router>
-        <RegistrationPage />
-      </Router>
-    );
-
-    // Fill in the form
-    fireEvent.change(screen.getByPlaceholderText('Email'), {
-      target: { value: 'test@example.com' },
-    });
-    fireEvent.change(screen.getByPlaceholderText('Password'), { target: { value: 'password123' } });
-    fireEvent.change(screen.getByText('Select Role').nextSibling, { target: { value: 'User' } });
-
-    // Submit the form
-    fireEvent.click(screen.getByText('Register'));
-
-    // Wait for the error message
-    await waitFor(() => {
-      expect(screen.getByText('Registration failed')).toBeInTheDocument();
-    });
+  await waitFor(() => {
+    expect(screen.getByText('Internal Server Error')).toBeInTheDocument();
   });
 });

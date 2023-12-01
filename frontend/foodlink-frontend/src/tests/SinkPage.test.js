@@ -1,85 +1,95 @@
-import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import '@testing-library/jest-dom/extend-expect';
-import axios from 'axios';
+import '@testing-library/jest-dom';
+import userEvent from '@testing-library/user-event';
 import { act } from 'react-dom/test-utils';
-import SinkPage from '../pages/SinkPage';
+import SinkPage from './SinkPage';
+import { getResources, submitRequest } from '../services/api';
 
-jest.mock('axios');
+jest.mock('../services/api');
+
+const mockResources = [
+  { _id: '1', category: 'Material1', quantity: 100 },
+  { _id: '2', category: 'Material2', quantity: 150 },
+];
+
+const mockSubmitRequest = jest.fn();
+
+beforeEach(() => {
+  getResources.mockResolvedValue({ data: mockResources });
+  submitRequest.mockResolvedValue();
+});
+
+afterEach(() => {
+  jest.clearAllMocks();
+});
 
 describe('SinkPage', () => {
-  it('renders the component correctly', () => {
-    render(<SinkPage />);
+  it('renders SinkPage component', async () => {
+    await act(async () => {
+      render(<SinkPage />);
+    });
 
-    // Ensure the component renders the title and form elements
     expect(screen.getByText('Material Requests')).toBeInTheDocument();
-    expect(screen.getByText('Submit Request')).toBeInTheDocument();
-    expect(screen.getByText('Material')).toBeInTheDocument();
-    expect(screen.getByText('Available Quantity')).toBeInTheDocument();
-    expect(screen.getByText('Request Quantity')).toBeInTheDocument();
+    expect(screen.getAllByRole('button')[0]).toHaveTextContent('Submit Request');
   });
 
-  it('fetches materials and displays them', async () => {
-    const mockMaterials = [
-      { id: 1, name: 'Apples', availableQuantity: 200 },
-      { id: 2, name: 'Oranges', availableQuantity: 150 },
-    ];
+  it('displays materials table with available quantities', async () => {
+    await act(async () => {
+      render(<SinkPage />);
+    });
 
-    axios.get.mockResolvedValueOnce({ data: mockMaterials });
-
-    render(<SinkPage />);
-
-    // Wait for the materials to be fetched and displayed
     await waitFor(() => {
-      expect(screen.getByText('Apples')).toBeInTheDocument();
-      expect(screen.getByText('Oranges')).toBeInTheDocument();
+      expect(screen.getByText('Material1')).toBeInTheDocument();
+      expect(screen.getByText('Material2')).toBeInTheDocument();
+      expect(screen.getByText('100')).toBeInTheDocument();
+      expect(screen.getByText('150')).toBeInTheDocument();
     });
   });
 
-  it('submits the form successfully', async () => {
-    const mockMaterials = [
-      { id: 1, name: 'Apples', availableQuantity: 200 },
-      { id: 2, name: 'Oranges', availableQuantity: 150 },
-    ];
-
-    axios.get.mockResolvedValueOnce({ data: mockMaterials });
-    axios.post.mockResolvedValueOnce({ data: { message: 'Request submitted successfully!' } });
-
-    render(<SinkPage />);
-
-    // Fill in the request quantities
-    fireEvent.change(screen.getByLabelText('Request Quantity').nextSibling, {
-      target: { value: '10' },
+  it('updates request quantities on input change', async () => {
+    await act(async () => {
+      render(<SinkPage />);
     });
 
-    // Submit the form
-    fireEvent.click(screen.getByText('Submit Request'));
+    const inputMaterial1 = screen.getByDisplayValue('');
+    const inputMaterial2 = screen.getByDisplayValue('');
 
-    // Wait for the success message
+    userEvent.type(inputMaterial1, '50');
+    userEvent.type(inputMaterial2, '75');
+
+    expect(inputMaterial1).toHaveValue('50');
+    expect(inputMaterial2).toHaveValue('75');
+  });
+
+  it('submits requests on form submission', async () => {
+    await act(async () => {
+      render(<SinkPage />);
+    });
+
+    const inputMaterial1 = screen.getByDisplayValue('');
+    const inputMaterial2 = screen.getByDisplayValue('');
+
+    userEvent.type(inputMaterial1, '50');
+    userEvent.type(inputMaterial2, '75');
+
+    fireEvent.submit(screen.getByRole('button'));
+
     await waitFor(() => {
-      expect(screen.getByText('Request submitted successfully!')).toBeInTheDocument();
+      expect(mockSubmitRequest).toHaveBeenCalledWith({ 1: '50', 2: '75' });
     });
   });
 
-  it('handles form submission failure', async () => {
-    const mockMaterials = [
-      { id: 1, name: 'Apples', availableQuantity: 200 },
-      { id: 2, name: 'Oranges', availableQuantity: 150 },
-    ];
+  it('handles error during request submission', async () => {
+    submitRequest.mockRejectedValueOnce(new Error('Submission failed'));
 
-    axios.get.mockResolvedValueOnce({ data: mockMaterials });
-    axios.post.mockRejectedValueOnce({
-      response: { data: { message: 'Failed to submit request' } },
+    await act(async () => {
+      render(<SinkPage />);
     });
 
-    render(<SinkPage />);
+    fireEvent.submit(screen.getByRole('button'));
 
-    // Submit the form
-    fireEvent.click(screen.getByText('Submit Request'));
-
-    // Wait for the error message
     await waitFor(() => {
-      expect(screen.getByText('Failed to submit request')).toBeInTheDocument();
+      expect(screen.getByText('Error submitting requests')).toBeInTheDocument();
     });
   });
 });

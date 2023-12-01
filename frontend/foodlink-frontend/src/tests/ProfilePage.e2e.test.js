@@ -1,6 +1,6 @@
 import puppeteer from 'puppeteer';
 
-const APP_URL = 'http://localhost:3000'; // Update with your app's URL
+const APP_URL = 'http://localhost:3000';
 
 let browser;
 let page;
@@ -16,27 +16,20 @@ afterAll(async () => {
 
 describe('Profile Page E2E Tests', () => {
   test('updates user profile', async () => {
-    // Assuming your app is running on the specified URL
     await page.goto(APP_URL);
 
-    // Navigate to the Profile page
     await page.click('nav a[href="/profile"]');
 
-    // Wait for the profile form to be rendered
     await page.waitForSelector('.profileForm');
 
-    // Update the form
     await page.type('#name', 'New Name');
     await page.type('#email', 'new.email@example.com');
     await page.type('#address', 'New Address');
 
-    // Submit the form
     await page.click('.saveButton');
 
-    // Wait for the profile to be updated
-    await page.waitForSelector('.success-message'); // Add a success message class in your actual implementation
+    await page.waitForSelector('.success-message');
 
-    // Verify the changes
     const updatedProfile = await page.evaluate(() => {
       return {
         name: document.getElementById('name').value,
@@ -50,5 +43,5 @@ describe('Profile Page E2E Tests', () => {
       email: 'new.email@example.com',
       address: 'New Address',
     });
-  }, 16000); // Adjust the timeout as needed
+  }, 16000);
 });
