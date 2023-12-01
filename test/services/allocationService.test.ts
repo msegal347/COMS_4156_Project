@@ -81,6 +81,19 @@ describe('Allocation Service Test', () => {
     expect(result).toEqual({ matches: mockMatches });
   });
 
+  it('should get all allocations', async () => {
+    const mockData = { id: '1', location: 'Location A', items: ['item1', 'item2'] };
+    const mockData2 = { id: '2', location: 'Location B', items: ['item3', 'item4'] };
+    const mockResult = [mockData, mockData2];
+    (Allocation.create as jest.Mock).mockResolvedValue(mockData);
+    (Allocation.create as jest.Mock).mockResolvedValue(mockData2);
+    Allocation.find = jest.fn().mockResolvedValue(mockResult);
+
+    const result = await AllocationService.getAllAllocations();
+
+    expect(result).toEqual(mockResult);
+  });
+
   // Should not create an allocation with missing fields
   it('should not create an allocation with missing fields', async () => {
     const mockData = { location: 'Location A' }; // Missing 'items'

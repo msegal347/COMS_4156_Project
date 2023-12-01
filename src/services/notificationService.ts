@@ -9,20 +9,17 @@ export const notificationService = {
   },
 
   // Retrieve all notifications for a user
-  async getNotifications(userId: ObjectId): Promise<INotification[]> {
+  async getNotifications(userId: string): Promise<INotification[]> {
     return await Notification.find({ userId });
   },
 
   // Update a notification by its ID
-  async updateNotification(
-    id: ObjectId,
-    updates: Partial<INotification>
-  ): Promise<INotification | null> {
+  async updateNotification(id: string, updates: any): Promise<INotification | null> {
     return await Notification.findByIdAndUpdate(id, updates, { new: true });
   },
 
   // Delete a notification by its ID
-  async deleteNotification(id: ObjectId): Promise<INotification | null> {
+  async deleteNotification(id: string): Promise<INotification | null> {
     return await Notification.findByIdAndDelete(id);
   },
 };
