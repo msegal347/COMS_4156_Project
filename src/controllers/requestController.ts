@@ -1,12 +1,16 @@
 import { Request, Response } from 'express';
 import requestService from '../services/requestService';
 import { IRequest } from '../models/requestModel';
+import * as AllocationService from '../services/allocationService'; 
 
 export const requestController = {
   async createRequest(req: Request, res: Response) {
     try {
       const requestData: IRequest = req.body;
       const newRequest = await requestService.createRequest(requestData);
+
+      await AllocationService.triggerAllocationProcess();
+
       res.status(201).json(newRequest);
     } catch (error: unknown) {
       if (error instanceof Error) {

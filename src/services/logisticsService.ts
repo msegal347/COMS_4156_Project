@@ -5,6 +5,7 @@ import LogisticsModel from '../models/logisticsModel';
 export const createRoute = async (routeData: any): Promise<any> => {
   const newRoute = new LogisticsModel(routeData);
   await newRoute.save();
+  await saveOptimalRoute(newRoute);
   return newRoute;
 };
 
@@ -20,12 +21,9 @@ export const getRouteById = async (id: string): Promise<any> => {
 
 // Update a logistics route by ID
 export const updateRouteById = async (id: string, updatedData: any): Promise<any> => {
-  try {
-    const updatedRoute = await LogisticsModel.findByIdAndUpdate(id, updatedData, { new: true });
-    return updatedRoute;
-  } catch (err) {
-    throw new Error(`Error in updating route by ID: ${err}`);
-  }
+  const updatedRoute = await LogisticsModel.findByIdAndUpdate(id, updatedData, { new: true });
+  await saveOptimalRoute(updatedRoute);
+  return updatedRoute;
 };
 
 // Delete a logistics route by ID
@@ -52,4 +50,11 @@ export const getCoordinates = async (
   apikey: string | undefined
 ): Promise<{ latitude: number; longitude: number }> => {
   return await GoogleMaps.getCoordinates(address, apikey);
+};
+
+// Calculate an optimal route and save it in the logistics model
+const saveOptimalRoute = async (route) => {
+  const optimalRoute = await calculateOptimalRoute(route.origin, route.destinations, process.env.GOOGLE_MAPS_API_KEY);
+  route.optimalRoute = optimalRoute;
+  await route.save();
 };
