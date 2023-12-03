@@ -2,10 +2,16 @@ import Resource, { IResource } from '../models/resourceModel';
 import mongoose from 'mongoose';
 
 export const resourceService = {
-  // Create a new resource
-  async createResource(data: any): Promise<IResource> {
-    const resource = new Resource(data);
-    return await resource.save();
+  // In resourceService.js or equivalent file
+  async createResource(data) {
+    const existingResource = await Resource.findOne({ category: data.category });
+    if (existingResource) {
+      existingResource.quantity += data.quantity;
+      return await existingResource.save();
+    } else {
+      const newResource = new Resource(data);
+      return await newResource.save();
+    }
   },
 
   // Retrieve all resources
