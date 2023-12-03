@@ -1,36 +1,39 @@
-import Resource, { IResource } from '../models/resourceModel';
-import mongoose from 'mongoose';
+import ResourceCategory, { IResourceCategory } from '../models/resourceModel';
 
 export const resourceService = {
-  // In resourceService.js or equivalent file
   async createResource(data) {
-    const existingResource = await Resource.findOne({ category: data.category });
-    if (existingResource) {
-      existingResource.quantity += data.quantity;
-      return await existingResource.save();
+    const existingCategory = await ResourceCategory.findOne({ category: data.category });
+    if (existingCategory) {
+      // Update existing category's items
+      data.items.forEach(item => {
+        const existingItem = existingCategory.items.find(i => i.name === item.name);
+        if (existingItem) {
+          existingItem.quantity += item.quantity;
+        } else {
+          existingCategory.items.push(item);
+        }
+      });
+      return await existingCategory.save();
     } else {
-      const newResource = new Resource(data);
-      return await newResource.save();
+      // Create a new category with items
+      const newCategory = new ResourceCategory(data);
+      return await newCategory.save();
     }
   },
 
-  // Retrieve all resources
-  async getResources(): Promise<IResource[]> {
-    return await Resource.find({});
+  async getResources(): Promise<IResourceCategory[]> {
+    return await ResourceCategory.find({});
   },
 
-  // Retrieve a single resource by ID
-  async getResourceById(id: string): Promise<IResource | null> {
-    return await Resource.findById(id);
+  async getResourceById(id: string): Promise<IResourceCategory | null> {
+    return await ResourceCategory.findById(id);
   },
 
-  // Update a resource
-  async updateResource(id: string, updates: any): Promise<IResource | null> {
-    return await Resource.findByIdAndUpdate(id, updates, { new: true });
+  async updateResource(id: string, updates: any): Promise<IResourceCategory | null> {
+    return await ResourceCategory.findByIdAndUpdate(id, updates, { new: true });
   },
 
-  // Delete a resource
-  async deleteResource(id: string): Promise<IResource | null> {
-    return await Resource.findByIdAndDelete(id);
+  async deleteResource(id: string): Promise<IResourceCategory | null> {
+    return await ResourceCategory.findByIdAndDelete(id);
   },
 };

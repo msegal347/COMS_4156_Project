@@ -1,34 +1,43 @@
 import { Request, Response } from 'express';
-import Resource, { IResource } from '../models/resourceModel';
+import ResourceCategory, { IResourceCategory } from '../models/resourceModel';
 
 export const resourceController = {
-  // Create a new resource
   async createResource(req: Request, res: Response) {
     try {
-      const data: IResource = req.body;
-      const resource = new Resource(data);
-      const savedResource = await resource.save();
-      res.status(201).json(savedResource);
+      const { category, items } = req.body;
+      let resourceCategory = await ResourceCategory.findOne({ category });
+      if (!resourceCategory) {
+        resourceCategory = new ResourceCategory({ category, items });
+      } else {
+        items.forEach(item => {
+          const existingItem = resourceCategory!.items.find(i => i.name === item.name);
+          if (existingItem) {
+            existingItem.quantity += item.quantity;
+          } else {
+            resourceCategory!.items.push(item);
+          }
+        });
+      }
+      await resourceCategory!.save();
+      res.status(201).json(resourceCategory);
     } catch (err) {
       res.status(400).json({ error: (err as Error).message });
     }
   },
 
-  // Retrieve all resources
   async getResources(req: Request, res: Response) {
     try {
-      const resources = await Resource.find({});
+      const resources = await ResourceCategory.find({});
       res.status(200).json(resources);
     } catch (err) {
       res.status(400).json({ error: (err as Error).message });
     }
   },
 
-  // Retrieve a single resource by ID
   async getResourceById(req: Request, res: Response) {
     try {
       const resourceId = req.params.id;
-      const resource = await Resource.findById(resourceId);
+      const resource = await ResourceCategory.findById(resourceId);
       if (!resource) {
         return res.status(404).json({ error: 'Resource not found' });
       }
@@ -38,12 +47,11 @@ export const resourceController = {
     }
   },
 
-  // Update a resource by ID
   async updateResource(req: Request, res: Response) {
     try {
       const resourceId = req.params.id;
       const updates = req.body;
-      const resource = await Resource.findByIdAndUpdate(resourceId, updates, { new: true });
+      const resource = await ResourceCategory.findByIdAndUpdate(resourceId, updates, { new: true });
       if (!resource) {
         return res.status(404).json({ error: 'Resource not found' });
       }
@@ -53,11 +61,10 @@ export const resourceController = {
     }
   },
 
-  // Delete a resource
   async deleteResource(req: Request, res: Response) {
     try {
       const resourceId = req.params.id;
-      const resource = await Resource.findByIdAndDelete(resourceId);
+      const resource = await ResourceCategory.findByIdAndDelete(resourceId);
       if (!resource) {
         return res.status(404).json({ error: 'Resource not found' });
       }
@@ -67,3 +74,5 @@ export const resourceController = {
     }
   },
 };
+
+export default resourceController;
