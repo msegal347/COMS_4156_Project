@@ -1,26 +1,26 @@
 import { allocateResources, Source, Sink } from '../algorithms/resourceAllocation';
 import { Allocation } from '../models/allocationModel';
-import ResourceModel from '../models/resourceModel';
+import ResourceCategoryModel from '../models/resourceModel';
 import RequestModel, { IRequest } from '../models/requestModel';
 
 async function fetchSourcesAndSinks() {
-  const resources = await ResourceModel.find({});
+  const resourceCategories = await ResourceCategoryModel.find({});
   const requests = await RequestModel.find({}).populate('materials.materialId');
 
-  const sources: Source[] = resources.map(resource => ({
-    id: resource._id.toString(),
-    resourceType: resource.category,
-    quantity: resource.quantity,
+  const sources: Source[] = resourceCategories.map(category => ({
+    id: category._id.toString(),
+    resourceType: category.category,
+    quantity: category.items.reduce((sum, item) => sum + item.quantity, 0), // Sum quantities of all items
   }));
 
   const sinks: Sink[] = [];
   requests.forEach(request => {
     request.materials.forEach(async material => {
-      const resource = await ResourceModel.findById(material.materialId);
-      if (resource) {
+      const resourceCategory = await ResourceCategoryModel.findById(material.materialId);
+      if (resourceCategory) {
         sinks.push({
           id: request._id.toString(),
-          resourceType: resource.category,
+          resourceType: resourceCategory.category,
           requiredQuantity: material.quantity,
         });
       }
@@ -37,7 +37,7 @@ export const triggerAllocationProcess = async () => {
   for (const match of matches) {
     const { sourceId, sinkId, allocatedQuantity } = match;
 
-    await ResourceModel.findByIdAndUpdate(sourceId, { $inc: { quantity: -allocatedQuantity } });
+    await ResourceCategoryModel.findByIdAndUpdate(sourceId, { $inc: { quantity: -allocatedQuantity } });
 
     const request = (await RequestModel.findById(sinkId)) as IRequest;
     if (request && request.materials) {
