@@ -1,21 +1,12 @@
 import ResourceCategory, { IResourceCategory } from '../models/resourceModel';
 
 export const resourceService = {
-  async createResource(data) {
+  async createResource(data: { category: string, quantity: number }): Promise<IResourceCategory> {
     const existingCategory = await ResourceCategory.findOne({ category: data.category });
     if (existingCategory) {
-      // Update existing category's items
-      data.items.forEach(item => {
-        const existingItem = existingCategory.items.find(i => i.name === item.name);
-        if (existingItem) {
-          existingItem.quantity += item.quantity;
-        } else {
-          existingCategory.items.push(item);
-        }
-      });
+      existingCategory.quantity += data.quantity;
       return await existingCategory.save();
     } else {
-      // Create a new category with items
       const newCategory = new ResourceCategory(data);
       return await newCategory.save();
     }

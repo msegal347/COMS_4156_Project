@@ -1,23 +1,13 @@
 import mongoose, { Document, Schema } from 'mongoose';
 
-interface IResourceItem extends Document {
-  name: string;
-  quantity: number;
-}
-
-const resourceItemSchema = new Schema({
-  name: { type: String, required: true },
-  quantity: { type: Number, required: true },
-});
-
 export interface IResourceCategory extends Document {
   category: string;
-  items: IResourceItem[];
+  quantity: number;
 }
 
 const resourceCategorySchema = new Schema({
   category: { type: String, required: true, unique: true },
-  items: [resourceItemSchema],
+  quantity: { type: Number, required: true, default: 0 },
 });
 
 const ResourceCategory = mongoose.model<IResourceCategory>('ResourceCategory', resourceCategorySchema);

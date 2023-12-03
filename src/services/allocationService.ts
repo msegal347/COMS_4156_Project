@@ -10,7 +10,7 @@ async function fetchSourcesAndSinks() {
   const sources: Source[] = resourceCategories.map(category => ({
     id: category._id.toString(),
     resourceType: category.category,
-    quantity: category.items.reduce((sum, item) => sum + item.quantity, 0), // Sum quantities of all items
+    quantity: category.quantity,
   }));
 
   const sinks: Sink[] = [];
@@ -37,6 +37,7 @@ export const triggerAllocationProcess = async () => {
   for (const match of matches) {
     const { sourceId, sinkId, allocatedQuantity } = match;
 
+    // Update the quantity of the resource category
     await ResourceCategoryModel.findByIdAndUpdate(sourceId, { $inc: { quantity: -allocatedQuantity } });
 
     const request = (await RequestModel.findById(sinkId)) as IRequest;
@@ -47,6 +48,7 @@ export const triggerAllocationProcess = async () => {
       if (materialToUpdate) {
         materialToUpdate.fulfilled = true;
 
+        // Initialize remainingQuantity if undefined
         if (materialToUpdate.remainingQuantity === undefined) {
           materialToUpdate.remainingQuantity = materialToUpdate.quantity;
         }

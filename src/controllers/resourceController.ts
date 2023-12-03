@@ -1,24 +1,15 @@
 import { Request, Response } from 'express';
-import ResourceCategory, { IResourceCategory } from '../models/resourceModel';
+import ResourceCategory from '../models/resourceModel';
 
 export const resourceController = {
   async createResource(req: Request, res: Response) {
     try {
-      const { category, items } = req.body;
-      let resourceCategory = await ResourceCategory.findOne({ category });
-      if (!resourceCategory) {
-        resourceCategory = new ResourceCategory({ category, items });
-      } else {
-        items.forEach(item => {
-          const existingItem = resourceCategory!.items.find(i => i.name === item.name);
-          if (existingItem) {
-            existingItem.quantity += item.quantity;
-          } else {
-            resourceCategory!.items.push(item);
-          }
-        });
-      }
-      await resourceCategory!.save();
+      const { category, quantity } = req.body;
+      const resourceCategory = await ResourceCategory.findOneAndUpdate(
+        { category },
+        { $inc: { quantity } },
+        { new: true, upsert: true }
+      );
       res.status(201).json(resourceCategory);
     } catch (err) {
       res.status(400).json({ error: (err as Error).message });
