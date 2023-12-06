@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import UserService from '../services/userService';
-import jwt from 'jsonwebtoken';
+import jwt, { JwtPayload } from 'jsonwebtoken';
+import User from '../models/userModel';
 
 class UserController {
   async register(req: Request, res: Response) {
@@ -57,6 +58,27 @@ class UserController {
         const errorMessage = (error as { message: string }).message;
         return res.status(500).json({ message: errorMessage });
       }
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  }
+
+  async getCurrentUser(req: Request, res: Response) {
+    try {
+      const token = req.headers.authorization?.split(' ')[1];
+      if (!token || !process.env.JWT_SECRET) {
+        return res.status(401).json({ message: 'Unauthorized' });
+      }
+
+      const decoded = jwt.verify(token, process.env.JWT_SECRET) as JwtPayload;
+      const userId = decoded.id;
+
+      const user = await User.findById(userId).select('-password');
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+
+      res.json(user);
+    } catch (error) {
       res.status(500).json({ message: 'Internal server error' });
     }
   }

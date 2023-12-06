@@ -20,14 +20,14 @@ export const deleteResource = resourceId =>
 
 // Allocation management
 export const getAllocations = () => axios.get(createEndpoint('/allocations'));
-export const createAllocation = allocationData =>
-  axios.post(createEndpoint('/allocations'), allocationData);
 export const getAllocationById = allocationId =>
   axios.get(createEndpoint(`/allocations/${allocationId}`));
 export const updateAllocation = (allocationId, allocationData) =>
   axios.put(createEndpoint(`/allocations/${allocationId}`), allocationData);
 export const deleteAllocation = allocationId =>
   axios.delete(createEndpoint(`/allocations/${allocationId}`));
+export const triggerAllocationProcess = () =>
+  axios.post(createEndpoint('/allocations/trigger-allocation'));
 
 // Transaction management
 export const getTransactions = () => axios.get(createEndpoint('/transactions'));
@@ -36,9 +36,16 @@ export const submitRequest = materials => {
   return axios.post(createEndpoint('/requests'), { materials });
 };
 
-
 // User management
 export const getUsers = () => axios.get(createEndpoint('/users'));
+export const getCurrentUser = () => {
+  const token = localStorage.getItem('token');
+  return axios.get(createEndpoint('/users/current'), {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+};
 
 // Audit and analytics
 export const getAuditLogs = () => axios.get(createEndpoint('/audit-logs'));
@@ -52,10 +59,10 @@ const api = {
   updateResource,
   deleteResource,
   getAllocations,
-  createAllocation,
   getAllocationById,
   updateAllocation,
   deleteAllocation,
+  triggerAllocationProcess,
   getTransactions,
   getRecentTransactions,
   submitRequest,

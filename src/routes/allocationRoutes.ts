@@ -1,31 +1,22 @@
 // src/routes/allocationRoutes.ts
 import { Router } from 'express';
-import {
-  createAllocation,
-  getAllocationById,
-  updateAllocationById,
-  deleteAllocationById,
-  triggerAllocation,
-  getAllAllocations,
-} from '../controllers/allocationController';
+import AllocationController from '../controllers/allocationController';
 
 const router = Router();
 
-// Create a new allocation
-router.post('/', createAllocation);
-
 // Get an allocation by ID
-router.get('/:id', getAllocationById);
+router.get('/:id', AllocationController.getAllocationById);
 
 // Update an allocation by ID
-router.put('/:id', updateAllocationById);
+router.put('/:id', AllocationController.updateAllocationById);
 
 // Delete an allocation by ID
-router.delete('/:id', deleteAllocationById);
+router.delete('/:id', AllocationController.deleteAllocationById);
 
 // Route for triggering the allocation process
-router.post('/trigger-allocation', triggerAllocation);
+router.post('/trigger-allocation', AllocationController.triggerAllocation);
 
-router.get('/', getAllAllocations);
+// Get all allocations
+router.get('/', AllocationController.getAllAllocations);
 
 export default router;

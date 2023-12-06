@@ -86,7 +86,7 @@ export const createAllocation = async (data: any) => {
 
 // Gets the allocation with the given ID
 export const getAllocationById = async (id: string) => {
-  return await Allocation.findById(id);
+  return await Allocation.findById(id).populate(['sourceId', 'sinkId']);
 };
 
 // Updates the allocation with the given ID
@@ -112,5 +112,5 @@ export const findOptimalAllocation = async (criteria: any) => {
 };
 
 export const getAllAllocations = async () => {
-  return await Allocation.find({});
+  return await Allocation.find({}).populate(['sourceId', 'sinkId']);
 };

@@ -8,14 +8,26 @@ export const UserProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      setIsLoading(true);
-      setCurrentUser({ token }); 
-      setIsLoading(false);
-    } else {
-      setIsLoading(false);
-    }
+    const checkCurrentUser = async () => {
+      const token = localStorage.getItem('token');
+      if (token) {
+        try {
+          setIsLoading(true);
+          // Assume an API call to fetch current user details using the token
+          const response = await api.getCurrentUser(); // Add this API call to fetch user details
+          setCurrentUser(response.data);
+          setIsLoading(false);
+        } catch (error) {
+          console.error("Error fetching current user's details:", error);
+          localStorage.removeItem('token'); // Remove invalid token
+          setIsLoading(false);
+        }
+      } else {
+        setIsLoading(false);
+      }
+    };
+
+    checkCurrentUser();
   }, []);
 
   const loginUser = async (credentials) => {
@@ -23,15 +35,6 @@ export const UserProvider = ({ children }) => {
       const response = await api.loginUser(credentials);
       localStorage.setItem('token', response.data.token);
       setCurrentUser({ ...response.data.user, token: response.data.token });
-    } catch (error) {
-      throw error;
-    }
-  };
-
-  const registerUser = async (userData) => {
-    try {
-      const response = await api.registerUser(userData);
-      return response;
     } catch (error) {
       throw error;
     }
@@ -45,7 +48,6 @@ export const UserProvider = ({ children }) => {
   const contextValue = {
     currentUser,
     loginUser,
-    registerUser,
     logoutUser,
     isLoading
   };

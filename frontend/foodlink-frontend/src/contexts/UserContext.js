@@ -1,43 +1,75 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useEffect, useContext } from 'react';
+import api from '../services/api';
 
-const UserContext = createContext({
-  currentUser: null,
-  loginUser: async () => {},
-  registerUser: async () => {},
-  logoutUser: () => {},
-  isLoading: true
-});
+const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  useEffect(() => {
+    const checkCurrentUser = async () => {
+      const token = localStorage.getItem('token');
+      if (token) {
+        try {
+          setIsLoading(true);
+          const response = await api.getCurrentUser(); 
+          setCurrentUser(response.data);
+        } catch (error) {
+          console.error("Error fetching current user's details:", error);
+          localStorage.removeItem('token');
+        } finally {
+          setIsLoading(false);
+        }
+      } else {
+        setIsLoading(false);
+      }
+    };
+
+    checkCurrentUser();
+  }, []);
+
   const loginUser = async (credentials) => {
-    // Logic to login the user
-    setIsLoading(true);
-    // Assume an API call to login the user
-    // On successful login:
-    setCurrentUser({ /* user data */ });
-    setIsLoading(false);
+    try {
+      setIsLoading(true);
+      const response = await api.loginUser(credentials);
+      localStorage.setItem('token', response.data.token);
+      setCurrentUser({ ...response.data.user, token: response.data.token });
+    } catch (error) {
+      throw error;
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const registerUser = async (userData) => {
-    // Logic to register the user
-    setIsLoading(true);
-    // Assume an API call to register the user
-    // On successful registration:
-    setCurrentUser({ /* user data */ });
-    setIsLoading(false);
+    try {
+      setIsLoading(true);
+      const response = await api.registerUser(userData);
+      setCurrentUser({ ...response.data.user, token: response.data.token }); // Assuming the API returns user data and token on registration
+    } catch (error) {
+      throw error;
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const logoutUser = () => {
-    // Logic to logout the user
+    localStorage.removeItem('token');
     setCurrentUser(null);
   };
 
+  const contextValue = {
+    currentUser,
+    loginUser,
+    registerUser,
+    logoutUser,
+    isLoading
+  };
+
   return (
-    <UserContext.Provider value={{ currentUser, loginUser, registerUser, logoutUser, isLoading }}>
-      {children}
+    <UserContext.Provider value={contextValue}>
+      {!isLoading && children}
     </UserContext.Provider>
   );
 };

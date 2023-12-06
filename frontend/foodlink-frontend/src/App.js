@@ -15,7 +15,7 @@ import LoginPage from './pages/LoginPage';
 
 const App = () => {
   return (
-    <UserProvider> {/* Wrap your application with UserProvider */}
+    <UserProvider>
       <Router>
         <Navigation />
         <Routes>
