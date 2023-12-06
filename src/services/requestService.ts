@@ -3,6 +3,7 @@ import ResourceCategory from '../models/resourceModel'; // Assuming this is your
 
 export const requestService = {
   async createRequest(requestData: any): Promise<IRequest> {
+    console.log("Received requestData:", requestData);
     // Iterate through each requested material to validate against available resources
     for (const material of requestData.materials) {
       const resourceCategory = await ResourceCategory.findById(material.materialId).populate('userResources.userId');
