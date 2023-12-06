@@ -1,21 +1,26 @@
 import { Request, Response } from 'express';
 import requestService from '../services/requestService';
-import { IRequest } from '../models/requestModel';
 import * as AllocationService from '../services/allocationService'; 
 
 export const requestController = {
   async createRequest(req: Request, res: Response) {
     try {
-      const requestData: IRequest = req.body;
+      // Extracting request data from the request body
+      const requestData = req.body;
+
+      // Creating a new request in the database
       const newRequest = await requestService.createRequest(requestData);
 
+      // Triggering the allocation process after successfully creating the request
       const allocationResults = await AllocationService.triggerAllocationProcess();
 
-      res.status(201).json({request: newRequest, allocationResults});
-      
-    } catch (error: unknown) {
+      // Sending the newly created request and allocation results in the response
+      res.status(201).json({ request: newRequest, allocationResults });
+    } catch (error) {
+      // Improved error handling to provide specific error messages
       if (error instanceof Error) {
-        res.status(500).json({ message: 'Internal server error', error: error.message });
+        console.error('Error in createRequest:', error); // Log the error for debugging
+        res.status(500).json({ message: error.message });
       } else {
         res.status(500).json({ message: 'Internal server error' });
       }
