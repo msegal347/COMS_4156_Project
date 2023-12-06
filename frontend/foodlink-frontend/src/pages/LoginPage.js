@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useUser } from '../contexts/UserContext'; // Import useUser
 import styles from './LoginPage.module.css';
-import { loginUser } from '../services/api';
+import { loginUser as loginUserApi } from '../services/api'; // Renamed to avoid naming conflict
 
 const LoginPage = () => {
   const [loginData, setLoginData] = useState({
@@ -10,6 +11,7 @@ const LoginPage = () => {
   });
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const { loginUser } = useUser(); // Get loginUser function from context
 
   const handleChange = e => {
     setLoginData({ ...loginData, [e.target.name]: e.target.value });
@@ -18,13 +20,13 @@ const LoginPage = () => {
   const handleSubmit = async e => {
     e.preventDefault();
     setError('');
+
     try {
-      const response = await loginUser(loginData);
-      const { role, token } = response.data;
+      const response = await loginUserApi(loginData); // Call the API
+      await loginUser(response.data); // Update user context with received data
 
-      localStorage.setItem('token', token);
-
-      switch (role) {
+      // Navigate based on the user's role
+      switch (response.data.user.role) {
         case 'source':
           navigate('/source');
           break;

@@ -5,6 +5,8 @@ import styles from './SinkPage.module.css';
 const SinkPage = () => {
   const [materials, setMaterials] = useState([]);
   const [requests, setRequests] = useState({});
+  const [feedbackMessage, setFeedbackMessage] = useState('');
+  const [isError, setIsError] = useState(false);
 
   useEffect(() => {
     const fetchMaterials = async () => {
@@ -25,12 +27,17 @@ const SinkPage = () => {
 
   const handleSubmit = async e => {
     e.preventDefault();
+    setFeedbackMessage('');
+    setIsError(false);
+
     try {
       await submitRequest(requests);
-      console.log('Submitted requests:', requests);
+      setFeedbackMessage('Request submitted successfully');
       setRequests({});
     } catch (error) {
       console.error('Error submitting requests', error);
+      setFeedbackMessage('Error submitting requests');
+      setIsError(true);
     }
   };
 
@@ -76,6 +83,11 @@ const SinkPage = () => {
         <button type="submit" className={styles.submitButton}>
           Submit Request
         </button>
+        {feedbackMessage && (
+          <div className={isError ? styles.errorMessage : styles.successMessage}>
+            {feedbackMessage}
+          </div>
+        )}
       </form>
     </div>
   );

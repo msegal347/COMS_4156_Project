@@ -1,5 +1,6 @@
-import { Schema, model, Document } from 'mongoose';
+import mongoose, { Schema, model, Document } from 'mongoose';
 
+// Interface for User Document
 export interface IUser extends Document {
   email: string;
   password: string;
@@ -9,6 +10,7 @@ export interface IUser extends Document {
     lat: number;
     lng: number;
   };
+  materials: mongoose.Types.ObjectId[];
 }
 
 const userSchema = new Schema<IUser>({
@@ -20,6 +22,7 @@ const userSchema = new Schema<IUser>({
     lat: { type: Number },
     lng: { type: Number },
   },
+  materials: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Material' }],
 });
 
 const User = model<IUser>('User', userSchema);

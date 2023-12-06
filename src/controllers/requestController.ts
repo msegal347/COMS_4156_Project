@@ -9,9 +9,10 @@ export const requestController = {
       const requestData: IRequest = req.body;
       const newRequest = await requestService.createRequest(requestData);
 
-      await AllocationService.triggerAllocationProcess();
+      const allocationResults = await AllocationService.triggerAllocationProcess();
 
-      res.status(201).json(newRequest);
+      res.status(201).json({request: newRequest, allocationResults});
+      
     } catch (error: unknown) {
       if (error instanceof Error) {
         res.status(500).json({ message: 'Internal server error', error: error.message });

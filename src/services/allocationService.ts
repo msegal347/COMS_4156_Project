@@ -3,19 +3,27 @@ import { Allocation } from '../models/allocationModel';
 import ResourceCategoryModel from '../models/resourceModel';
 import RequestModel, { IRequest } from '../models/requestModel';
 
-async function fetchSourcesAndSinks() {
-  const resourceCategories = await ResourceCategoryModel.find({});
+// Fetch Sources Function
+async function fetchSources(): Promise<Source[]> {
+  const resourceCategories = await ResourceCategoryModel.find({}).populate('userResources.userId');
+
+  return resourceCategories.map(category => {
+    const totalQuantity = category.userResources.reduce((sum, userResource) => sum + userResource.quantity, 0);
+    return {
+      id: category._id.toString(),
+      resourceType: category.category,
+      quantity: totalQuantity,
+    };
+  });
+}
+
+// Fetch Sinks Function
+async function fetchSinks(): Promise<Sink[]> {
   const requests = await RequestModel.find({}).populate('materials.materialId');
-
-  const sources: Source[] = resourceCategories.map(category => ({
-    id: category._id.toString(),
-    resourceType: category.category,
-    quantity: category.quantity,
-  }));
-
   const sinks: Sink[] = [];
-  requests.forEach(request => {
-    request.materials.forEach(async material => {
+
+  for (const request of requests) {
+    for (const material of request.materials) {
       const resourceCategory = await ResourceCategoryModel.findById(material.materialId);
       if (resourceCategory) {
         sinks.push({
@@ -24,40 +32,47 @@ async function fetchSourcesAndSinks() {
           requiredQuantity: material.quantity,
         });
       }
-    });
-  });
+    }
+  }
 
-  return { sources, sinks };
+  return sinks;
 }
 
+// Trigger Allocation Process Function
 export const triggerAllocationProcess = async () => {
-  const { sources, sinks } = await fetchSourcesAndSinks();
+  const sources = await fetchSources();
+  const sinks = await fetchSinks();
   const matches = allocateResources(sources, sinks);
 
   for (const match of matches) {
     const { sourceId, sinkId, allocatedQuantity } = match;
 
-    // Update the quantity of the resource category
-    await ResourceCategoryModel.findByIdAndUpdate(sourceId, { $inc: { quantity: -allocatedQuantity } });
-
-    const request = (await RequestModel.findById(sinkId)) as IRequest;
-    if (request && request.materials) {
-      const materialToUpdate = request.materials.find(
-        material => material.materialId.toString() === sourceId
-      );
-      if (materialToUpdate) {
-        materialToUpdate.fulfilled = true;
-
-        // Initialize remainingQuantity if undefined
-        if (materialToUpdate.remainingQuantity === undefined) {
-          materialToUpdate.remainingQuantity = materialToUpdate.quantity;
+    // Update the source resource's quantity
+    const sourceCategory = await ResourceCategoryModel.findById(sourceId);
+    if (sourceCategory) {
+      for (const userResource of sourceCategory.userResources) {
+        if (userResource.quantity >= allocatedQuantity) {
+          userResource.quantity -= allocatedQuantity;
+          break; // Assuming one userResource can fulfill the allocation
         }
-
-        materialToUpdate.remainingQuantity -= allocatedQuantity;
-        await request.save();
       }
+      await sourceCategory.save();
     }
 
+    // Update the sink request
+    const request = await RequestModel.findById(sinkId) as IRequest;
+    if (request) {
+      for (const material of request.materials) {
+        if (material.materialId.toString() === sourceId) {
+          material.fulfilled = true;
+          material.remainingQuantity = (material.remainingQuantity || material.quantity) - allocatedQuantity;
+          break;
+        }
+      }
+      await request.save();
+    }
+
+    // Create an allocation record
     await Allocation.create({ sourceId, sinkId, allocatedQuantity });
   }
 

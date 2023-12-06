@@ -73,25 +73,6 @@ const AuditorPage = () => {
       end: { lat: 40.5749, lng: -73.9857 },
     },
   ];
-  // Placeholder for available materials
-  const availableMaterials = [
-    { name: 'Apples', quantity: 200 },
-    { name: 'Oranges', quantity: 150 },
-    { name: 'Bananas', quantity: 180 },
-    { name: 'Grapes', quantity: 210 },
-    { name: 'Peaches', quantity: 170 },
-  ];
-
-  const materialsChartData = {
-    labels: availableMaterials.map(material => material.name),
-    datasets: [
-      {
-        label: 'Available Quantity',
-        data: availableMaterials.map(material => material.quantity),
-        backgroundColor: 'rgba(53, 162, 235, 0.5)',
-      },
-    ],
-  };
 
   const transfersChartData = {
     labels: placeholderTransactions.map(transfer => transfer.materials[0].foodType),
@@ -107,30 +88,49 @@ const AuditorPage = () => {
   const chartOptions = {
     responsive: true,
     plugins: {
-      legend: {
-        position: 'top',
-      },
-      title: {
-        display: true,
-        text: 'Chart',
-      },
+      legend: { position: 'top' },
+      title: { display: true, text: 'Material Availability' },
     },
   };
 
+  const materialsChartData = {
+    labels: analyticsData.materials.map(material => material.category),
+    datasets: [{
+      label: 'Available Quantity',
+      data: analyticsData.materials.map(material => material.quantity),
+      backgroundColor: 'rgba(53, 162, 235, 0.5)',
+    }],
+  };
+
   useEffect(() => {
-    const fetchAnalyticsData = async () => {
+    const fetchMaterials = async () => {
       try {
-        // Assuming getMaterials and getTransactions are correctly defined in your API service
-        const materialsResponse = await getResources(); // Updated to getResources if it fetches material data
-        const allocationsResponse = await getAllocations();
-        setAnalyticsData({
-          materials: materialsResponse.data,
-          transfers: allocationsResponse.data, // Updated to use allocations data
-        });
+        const response = await getResources();
+        setAnalyticsData({ materials: response.data });
       } catch (error) {
-        console.error('Error fetching analytics data', error);
+        console.error('Error fetching materials', error);
       }
     };
+
+    fetchMaterials();
+  }, []);
+
+
+    useEffect(() => {
+      const fetchAnalyticsData = async () => {
+        try {
+          const materialsResponse = await getResources();
+          const transfersResponse = await getTransfers(); 
+          const allocationsResponse = await getAllocations(); 
+          setAnalyticsData({
+            materials: materialsResponse.data,
+            transfers: transfersResponse.data,
+            allocations: allocationsResponse.data,
+          });
+        } catch (error) {
+          console.error('Error fetching analytics data', error);
+        }
+      };
     const renderMarkers = (map, maps) => {
       placeholderTransactions.forEach(transaction => {
         new maps.Marker({

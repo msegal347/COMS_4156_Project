@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
 import styles from './SourcePage.module.css';
 import { createResource } from '../services/api';
+import { useUser } from '../contexts/UserContext';
 
 const SourcePage = () => {
   const [materialData, setMaterialData] = useState({
     category: '',
     quantity: '',
   });
+  const [feedbackMessage, setFeedbackMessage] = useState('');
+  const [isError, setIsError] = useState(false);
+  const { currentUser } = useUser();
 
   const foodCategories = [
     'Fruits',
@@ -37,15 +41,28 @@ const SourcePage = () => {
 
   const handleSubmit = async e => {
     e.preventDefault();
+    setFeedbackMessage('');
+    setIsError(false);
+
+    if (!currentUser) {
+      setFeedbackMessage('No user is logged in');
+      setIsError(true);
+      return;
+    }
+
+    const submissionData = {
+      ...materialData,
+      userId: currentUser.id, 
+    };
+
     try {
-      await createResource(materialData);
-      console.log('Material data submitted:', materialData);
-      setMaterialData({
-        category: '',
-        quantity: '',
-      });
+      await createResource(submissionData);
+      setFeedbackMessage('Material data submitted successfully');
+      setMaterialData({ category: '', quantity: '' });
     } catch (error) {
       console.error('Error submitting material data', error);
+      setFeedbackMessage('Error submitting material data');
+      setIsError(true);
     }
   };
 
@@ -86,6 +103,11 @@ const SourcePage = () => {
             Submit
           </button>
         </div>
+        {feedbackMessage && (
+          <div className={isError ? styles.errorMessage : styles.successMessage}>
+            {feedbackMessage}
+          </div>
+        )}
       </form>
     </div>
   );

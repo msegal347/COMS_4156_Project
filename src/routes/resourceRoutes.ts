@@ -1,11 +1,12 @@
 import express from 'express';
 import { resourceController } from '../controllers/resourceController';
+import authenticate from '../middleware/authenticate'; 
 
 const router = express.Router();
 
-// Create a new resource
-router.post('/', async (req, res) => {
-  await resourceController.createResource(req, res);
+// Add or Update a user's resource
+router.post('/user-resource', authenticate, async (req, res) => {
+  await resourceController.addOrUpdateUserResource(req, res);
 });
 
 // Retrieve all resources
@@ -18,13 +19,8 @@ router.get('/:id', async (req, res) => {
   await resourceController.getResourceById(req, res);
 });
 
-// Update a resource by ID
-router.put('/:id', async (req, res) => {
-  await resourceController.updateResource(req, res);
-});
-
-// Delete a resource
-router.delete('/:id', async (req, res) => {
+// Delete a user's resource entry
+router.delete('/:id', authenticate, async (req, res) => {
   await resourceController.deleteResource(req, res);
 });
 
