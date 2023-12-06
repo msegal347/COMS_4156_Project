@@ -27,7 +27,7 @@ const SinkPage = () => {
   }, []);
 
   const handleQuantityChange = (materialId, quantity) => {
-    setRequests({ ...requests, [materialId]: quantity });
+    setRequests({ ...requests, [materialId]: parseInt(quantity, 10) || 0 });
   };
 
   const handleSubmit = async e => {
@@ -35,12 +35,15 @@ const SinkPage = () => {
     setFeedbackMessage('');
     setIsError(false);
   
-    const materialsArray = Object.entries(requests).map(([materialId, quantity]) => ({
-      materialId,
-      quantity: parseInt(quantity, 10),
-    }));
+    const materialsArray = Object.entries(requests)
+      .filter(([_, quantity]) => quantity > 0)
+      .map(([materialId, quantity]) => ({
+        materialId,
+        quantity,
+      }));
   
     try {
+      // Send the materials array directly without wrapping it in another object
       await submitRequest(materialsArray);
       setFeedbackMessage('Request submitted successfully');
       setRequests({});
@@ -50,8 +53,6 @@ const SinkPage = () => {
       setIsError(true);
     }
   };
-  
-  
 
   return (
     <div className={styles.container}>
@@ -66,30 +67,22 @@ const SinkPage = () => {
             </tr>
           </thead>
           <tbody>
-            {materials.length > 0 ? (
-              materials.map(material => (
-                <tr key={material._id}>
-                  <td>{material.category}</td>
-                  <td>{material.quantity}</td>
-                  <td>
-                    <input
-                      type="number"
-                      min="0"
-                      max={material.quantity}
-                      value={requests[material._id] || ''}
-                      onChange={e => handleQuantityChange(material._id, e.target.value)}
-                      className={styles.quantityInput}
-                    />
-                  </td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="3" className={styles.noAvailable}>
-                  No materials available
+            {materials.map(material => (
+              <tr key={material._id}>
+                <td>{material.category}</td>
+                <td>{material.quantity}</td>
+                <td>
+                  <input
+                    type="number"
+                    min="0"
+                    max={material.quantity}
+                    value={requests[material._id] || ''}
+                    onChange={e => handleQuantityChange(material._id, e.target.value)}
+                    className={styles.quantityInput}
+                  />
                 </td>
               </tr>
-            )}
+            ))}
           </tbody>
         </table>
         <button type="submit" className={styles.submitButton}>

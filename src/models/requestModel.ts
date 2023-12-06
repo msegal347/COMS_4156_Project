@@ -14,7 +14,7 @@ export interface IRequest extends Document {
 }
 
 const requestMaterialSchema = new mongoose.Schema({
-  materialId: { type: mongoose.Schema.Types.ObjectId, ref: 'Resource', required: true },
+  materialId: { type: mongoose.Schema.Types.ObjectId, ref: 'ResourceCategory', required: true },
   quantity: { type: Number, required: true },
   fulfilled: { type: Boolean, default: false },
   remainingQuantity: { type: Number },
