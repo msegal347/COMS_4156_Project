@@ -12,7 +12,12 @@ const SinkPage = () => {
     const fetchMaterials = async () => {
       try {
         const response = await getResources();
-        setMaterials(response.data);
+        // Aggregate quantities from different users for each material
+        const aggregatedMaterials = response.data.map(material => {
+          const totalQuantity = material.userResources.reduce((sum, userRes) => sum + userRes.quantity, 0);
+          return { ...material, quantity: totalQuantity };
+        });
+        setMaterials(aggregatedMaterials);
       } catch (error) {
         console.error('Error fetching materials', error);
       }
@@ -29,9 +34,14 @@ const SinkPage = () => {
     e.preventDefault();
     setFeedbackMessage('');
     setIsError(false);
-
+  
+    const materialsArray = Object.entries(requests).map(([materialId, quantity]) => ({
+      materialId,
+      quantity: parseInt(quantity, 10),
+    }));
+  
     try {
-      await submitRequest(requests);
+      await submitRequest(materialsArray);
       setFeedbackMessage('Request submitted successfully');
       setRequests({});
     } catch (error) {
@@ -40,6 +50,8 @@ const SinkPage = () => {
       setIsError(true);
     }
   };
+  
+  
 
   return (
     <div className={styles.container}>

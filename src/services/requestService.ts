@@ -18,8 +18,14 @@ export const requestService = {
       }
     }
 
-    // Create and save the new request
-    const newRequest = new Request(requestData);
+    const newRequest = new Request({
+      materials: requestData.materials.map(material => ({
+        materialId: material.materialId,
+        quantity: material.quantity,
+        fulfilled: false,
+        remainingQuantity: material.quantity
+      })),
+    });
     await newRequest.save();
     return newRequest;
   },

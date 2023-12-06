@@ -32,7 +32,10 @@ export const deleteAllocation = allocationId =>
 // Transaction management
 export const getTransactions = () => axios.get(createEndpoint('/transactions'));
 export const getRecentTransactions = () => axios.get(createEndpoint('/transactions/recent'));
-export const submitRequest = request => axios.post(createEndpoint('/requests'), request);
+export const submitRequest = materials => {
+  return axios.post(createEndpoint('/requests'), { materials });
+};
+
 
 // User management
 export const getUsers = () => axios.get(createEndpoint('/users'));
