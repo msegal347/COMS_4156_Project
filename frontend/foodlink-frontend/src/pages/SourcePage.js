@@ -5,27 +5,28 @@ import { useUser } from '../contexts/UserContext';
 import axios from 'axios';
 
 const resourceCategories = {
-  "6571e743f1b2729b8ad21a49": "Fruits",
-  "6571e743f1b2729b8ad21a4a": "Vegetables",
-  "6571e743f1b2729b8ad21a4b": "Dairy",
-  "6571e743f1b2729b8ad21a4c": "Meat & Poultry",
-  "6571e743f1b2729b8ad21a4d": "Seafood",
-  "6571e743f1b2729b8ad21a4e": "Baked Goods",
-  "6571e743f1b2729b8ad21a4f": "Frozen Foods",
-  "6571e743f1b2729b8ad21a50": "Deli Items",
-  "6571e743f1b2729b8ad21a51": "Canned Goods",
-  "6571e743f1b2729b8ad21a52": "Dry Goods & Pasta",
-  "6571e743f1b2729b8ad21a53": "Snacks",
-  "6571e743f1b2729b8ad21a54": "Beverages",
-  "6571e743f1b2729b8ad21a55": "Condiments & Sauces",
-  "6571e743f1b2729b8ad21a56": "Spices & Herbs",
-  "6571e743f1b2729b8ad21a57": "Breakfast Foods",
-  "6571e743f1b2729b8ad21a58": "Sweets & Chocolates",
-  "6571e743f1b2729b8ad21a59": "Health Foods",
-  "6571e743f1b2729b8ad21a5a": "International Cuisine",
-  "6571e743f1b2729b8ad21a5b": "Baby Food",
-  "6571e743f1b2729b8ad21a5c": "Pet Food"
+  "657229cd1dd539c82dbd5755": "Fruits",
+  "657229cd1dd539c82dbd5756": "Vegetables",
+  "657229cd1dd539c82dbd5757": "Dairy",
+  "657229cd1dd539c82dbd5758": "Meat & Poultry",
+  "657229cd1dd539c82dbd5759": "Seafood",
+  "657229cd1dd539c82dbd575a": "Baked Goods",
+  "657229cd1dd539c82dbd575b": "Frozen Foods",
+  "657229cd1dd539c82dbd575c": "Deli Items",
+  "657229cd1dd539c82dbd575d": "Canned Goods",
+  "657229cd1dd539c82dbd575e": "Dry Goods & Pasta",
+  "657229cd1dd539c82dbd575f": "Snacks",
+  "657229cd1dd539c82dbd5760": "Beverages",
+  "657229cd1dd539c82dbd5761": "Condiments & Sauces",
+  "657229cd1dd539c82dbd5762": "Spices & Herbs",
+  "657229cd1dd539c82dbd5763": "Breakfast Foods",
+  "657229cd1dd539c82dbd5764": "Sweets & Chocolates",
+  "657229cd1dd539c82dbd5765": "Health Foods",
+  "657229cd1dd539c82dbd5766": "International Cuisine",
+  "657229cd1dd539c82dbd5767": "Baby Food",
+  "657229cd1dd539c82dbd5768": "Pet Food"
 };
+
 
 
 const SourcePage = () => {

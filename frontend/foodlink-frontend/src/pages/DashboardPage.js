@@ -7,26 +7,26 @@ import { useUser } from '../contexts/UserContext';
 const AnyReactComponent = ({ text }) => <div>{text}</div>;
 
 const resourceCategories = {
-  "6570a7b08a63f3553041e2f3": "Fruits",
-  "6570a7b08a63f3553041e2f4": "Vegetables",
-  "6570a7b08a63f3553041e2f5": "Dairy",
-  "6570a7b08a63f3553041e2f6": "Meat & Poultry",
-  "6570a7b08a63f3553041e2f7": "Seafood",
-  "6570a7b08a63f3553041e2f8": "Baked Goods",
-  "6570a7b08a63f3553041e2f9": "Frozen Foods",
-  "6570a7b08a63f3553041e2fa": "Deli Items",
-  "6570a7b08a63f3553041e2fb": "Canned Goods",
-  "6570a7b08a63f3553041e2fc": "Dry Goods & Pasta",
-  "6570a7b08a63f3553041e2fd": "Snacks",
-  "6570a7b08a63f3553041e2fe": "Beverages",
-  "6570a7b08a63f3553041e2ff": "Condiments & Sauces",
-  "6570a7b08a63f3553041e300": "Spices & Herbs",
-  "6570a7b08a63f3553041e301": "Breakfast Foods",
-  "6570a7b08a63f3553041e302": "Sweets & Chocolates",
-  "6570a7b08a63f3553041e303": "Health Foods",
-  "6570a7b08a63f3553041e304": "International Cuisine",
-  "6570a7b08a63f3553041e305": "Baby Food",
-  "6570a7b08a63f3553041e306": "Pet Food"
+  "657229cd1dd539c82dbd5755": "Fruits",
+  "657229cd1dd539c82dbd5756": "Vegetables",
+  "657229cd1dd539c82dbd5757": "Dairy",
+  "657229cd1dd539c82dbd5758": "Meat & Poultry",
+  "657229cd1dd539c82dbd5759": "Seafood",
+  "657229cd1dd539c82dbd575a": "Baked Goods",
+  "657229cd1dd539c82dbd575b": "Frozen Foods",
+  "657229cd1dd539c82dbd575c": "Deli Items",
+  "657229cd1dd539c82dbd575d": "Canned Goods",
+  "657229cd1dd539c82dbd575e": "Dry Goods & Pasta",
+  "657229cd1dd539c82dbd575f": "Snacks",
+  "657229cd1dd539c82dbd5760": "Beverages",
+  "657229cd1dd539c82dbd5761": "Condiments & Sauces",
+  "657229cd1dd539c82dbd5762": "Spices & Herbs",
+  "657229cd1dd539c82dbd5763": "Breakfast Foods",
+  "657229cd1dd539c82dbd5764": "Sweets & Chocolates",
+  "657229cd1dd539c82dbd5765": "Health Foods",
+  "657229cd1dd539c82dbd5766": "International Cuisine",
+  "657229cd1dd539c82dbd5767": "Baby Food",
+  "657229cd1dd539c82dbd5768": "Pet Food"
 };
 
 const placeholderTransactions = [
