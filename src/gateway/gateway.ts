@@ -53,7 +53,7 @@ export const initializeGateway = (app: Express) => {
   app.use('/api/transactions', transactionRoutes);
   app.use('/api/allocations', allocationRoutes);
   app.use('/api/requests', requestRoutes);
-  app.use('/api', userRoutes);
+  app.use('/api/users', userRoutes); 
 
   // Additional middleware to log unhandled requests
   app.use((req, res, next) => {

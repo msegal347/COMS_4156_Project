@@ -15,31 +15,41 @@ const DashboardPage = () => {
 
   useEffect(() => {
     if (currentUser?.id) {
-      const fetchAllocations = async () => {
-        try {
-          const response = await getAllocations();
-          const allocationsWithDetails = await Promise.all(response.data.map(async allocation => {
-            const sourceUserResponse = await getUserById(allocation.sourceId);
-            const sinkUserResponse = await getUserById(allocation.sinkId);
-            const resourceCategoryResponse = await getResourceCategoryById(allocation.resourceCategoryId);
-  
-            return {
-              ...allocation,
-              sourceName: sourceUserResponse.data.name, // Adjust according to your response structure
-              sinkName: sinkUserResponse.data.name, // Adjust according to your response structure
-              resourceCategoryName: resourceCategoryResponse.data.category // Adjust according to your response structure
-            };
-          }));
-  
-          setAllocations(allocationsWithDetails);
-        } catch (error) {
-          console.error('Error fetching allocations:', error);
-        }
-      };
-  
       fetchAllocations();
     }
   }, [currentUser?.id]);
+
+  const fetchAllocations = async () => {
+    try {
+      const response = await getAllocations();
+      const userIds = new Set(response.data.flatMap(a => [a.sourceId._id, a.sinkId._id]));
+      const userResponses = await Promise.all([...userIds].map(id => getUserById(id)));
+      const userMap = new Map(userResponses
+        .filter(u => u && u.data)  // Filter out null and undefined responses
+        .map(u => [u.data._id, u.data]));
+
+      const allocationsWithDetails = (await Promise.all(response.data.map(async allocation => {
+        const sourceUser = userMap.get(allocation.sourceId._id);
+        const sinkUser = userMap.get(allocation.sinkId._id);
+        if (!sourceUser || !sinkUser) {
+          console.warn(`User data missing in allocation ${allocation._id}`);
+          return null;  // Skip this allocation if user data is missing
+        }
+        const resourceCategoryResponse = await getResourceCategoryById(allocation.resourceCategoryId);
+
+        return {
+          ...allocation,
+          sourceName: sourceUser.name || 'Unknown',
+          sinkName: sinkUser.name || 'Unknown',
+          resourceCategoryName: resourceCategoryResponse.data.category || 'Unknown'
+        };
+      }))).filter(a => a);  // Filter out null allocations
+
+      setAllocations(allocationsWithDetails);
+    } catch (error) {
+      console.error('Error fetching allocations:', error);
+    }
+  };
   
 
   const handleAllocationSelect = allocation => {
