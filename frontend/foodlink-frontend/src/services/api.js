@@ -21,7 +21,8 @@ export const registerUser = userData => {
 export const getResources = () => axios.get(createEndpoint('/resources'));
 
 export const createResource = async (resourceData) => {
-  const token = localStorage.getItem('token'); // Retrieve token
+  const { categoryId, quantity, userId } = resourceData; // Destructure the data
+  const token = localStorage.getItem('token');
   const config = {
     headers: {
       'Content-Type': 'application/json',
@@ -29,10 +30,13 @@ export const createResource = async (resourceData) => {
     }
   };
 
-  console.log('Sending request with data:', resourceData); // Log the data being sent
+  const data = { categoryId, quantity, userId }; // Construct the data in the expected format
+  console.log('Sending request with data:', data);
 
-  return axios.post(`${API_BASE_URL}/resources`, resourceData, config);
+  return axios.post(`${API_BASE_URL}/resources`, data, config);
 };
+
+
 
 
 export const updateResource = (resourceId, resourceData) =>

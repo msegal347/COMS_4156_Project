@@ -4,6 +4,29 @@ import { createResource } from '../services/api';
 import { useUser } from '../contexts/UserContext';
 import axios from 'axios';
 
+const resourceCategories = {
+  "6570a7b08a63f3553041e2f3": "Fruits",
+  "6570a7b08a63f3553041e2f4": "Vegetables",
+  "6570a7b08a63f3553041e2f5": "Dairy",
+  "6570a7b08a63f3553041e2f6": "Meat & Poultry",
+  "6570a7b08a63f3553041e2f7": "Seafood",
+  "6570a7b08a63f3553041e2f8": "Baked Goods",
+  "6570a7b08a63f3553041e2f9": "Frozen Foods",
+  "6570a7b08a63f3553041e2fa": "Deli Items",
+  "6570a7b08a63f3553041e2fb": "Canned Goods",
+  "6570a7b08a63f3553041e2fc": "Dry Goods & Pasta",
+  "6570a7b08a63f3553041e2fd": "Snacks",
+  "6570a7b08a63f3553041e2fe": "Beverages",
+  "6570a7b08a63f3553041e2ff": "Condiments & Sauces",
+  "6570a7b08a63f3553041e300": "Spices & Herbs",
+  "6570a7b08a63f3553041e301": "Breakfast Foods",
+  "6570a7b08a63f3553041e302": "Sweets & Chocolates",
+  "6570a7b08a63f3553041e303": "Health Foods",
+  "6570a7b08a63f3553041e304": "International Cuisine",
+  "6570a7b08a63f3553041e305": "Baby Food",
+  "6570a7b08a63f3553041e306": "Pet Food"
+};
+
 const SourcePage = () => {
   const [materialData, setMaterialData] = useState({
     category: '',
@@ -13,62 +36,44 @@ const SourcePage = () => {
   const [isError, setIsError] = useState(false);
   const { currentUser } = useUser();
 
-  const foodCategories = [
-    'Fruits',
-    'Vegetables',
-    'Dairy',
-    'Meat & Poultry',
-    'Seafood',
-    'Baked Goods',
-    'Frozen Foods',
-    'Deli Items',
-    'Canned Goods',
-    'Dry Goods & Pasta',
-    'Snacks',
-    'Beverages',
-    'Condiments & Sauces',
-    'Spices & Herbs',
-    'Breakfast Foods',
-    'Sweets & Chocolates',
-    'Health Foods',
-    'International Cuisine',
-    'Baby Food',
-    'Pet Food',
-  ];
+  const foodCategories = Object.values(resourceCategories);
 
   const handleChange = e => {
     setMaterialData({ ...materialData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
+  const mapCategoryNameToId = (categoryName) => {
+    return Object.keys(resourceCategories).find(key => resourceCategories[key] === categoryName);
+  };
+
+  const handleSubmit = async e => {
     e.preventDefault();
-    console.log('Form submission initiated:', materialData);
     setFeedbackMessage('');
     setIsError(false);
   
     if (!currentUser || !currentUser.id) {
-      console.log('No user is logged in or user ID is undefined');
       setFeedbackMessage('No user is logged in or user ID is undefined');
       setIsError(true);
       return;
     }
   
-    const submissionData = {
-      category: materialData.category,
-      userResources: [
-        {
-          userId: currentUser.id,
-          quantity: parseInt(materialData.quantity, 10),
-        },
-      ],
-    };
-    
+    const categoryId = mapCategoryNameToId(materialData.category);
   
-    console.log('Submitting material data to API:', submissionData);
+    if (!categoryId) {
+      setFeedbackMessage('Invalid category selected');
+      setIsError(true);
+      return;
+    }
+  
+    // Adjust the structure of submission data to match backend expectations
+    const submissionData = {
+      categoryId, // The ID of the category
+      quantity: parseInt(materialData.quantity, 10),
+      userId: currentUser.id,
+    };
   
     try {
       const response = await createResource(submissionData);
-      console.log('Submission response:', response);
       setFeedbackMessage('Material data submitted successfully');
       setMaterialData({ category: '', quantity: '' });
     } catch (error) {
@@ -77,7 +82,6 @@ const SourcePage = () => {
       setIsError(true);
     }
   };
-  
   
 
   return (
