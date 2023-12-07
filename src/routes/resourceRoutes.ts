@@ -5,7 +5,7 @@ import authenticate from '../middleware/authenticate';
 const router = express.Router();
 
 // Add or Update a user's resource
-router.post('/user-resource', authenticate, async (req, res) => {
+router.post('/', authenticate, async (req, res) => {
   await resourceController.addOrUpdateUserResource(req, res);
 });
 
