@@ -29,11 +29,6 @@ const Navigation = () => {
           </NavLink>
         </li>
         <li className={styles.navItem}>
-          <NavLink to="/profile" className={getActiveLinkStyle}>
-            Profile
-          </NavLink>
-        </li>
-        <li className={styles.navItem}>
           <NavLink to="/source" className={getActiveLinkStyle}>
             Source
           </NavLink>

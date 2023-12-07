@@ -30,6 +30,21 @@ const CollapsibleComponent = ({ title, children }) => {
   );
 };
 
+const placeholderUsers = [
+  { id: "656fe3661a0dcc3c4bcecf02", name: "source1@example.com", role: "source", address: "123 Source St" },
+  { id: "656fe3661a0dcc3c4bcecf03", name: "sink1@example.com", role: "sink", address: "456 Sink Rd" },
+  { id: "656fe3661a0dcc3c4bcecf04", name: "auditor1@example.com", role: "auditor", address: "789 Auditor Ave" },
+  { id: "656fe3661a0dcc3c4bcecf06", name: "source2@example.com", role: "source", address: "102 Source St" },
+  { id: "656fe3661a0dcc3c4bcecf07", name: "sink2@example.com", role: "sink", address: "103 Sink Street" },
+  { id: "656fe3661a0dcc3c4bcecf08", name: "auditor2@example.com", role: "auditor", address: "104 Auditor Rd" },
+  { id: "656fe3661a0dcc3c4bcecf0a", name: "source3@example.com", role: "source", address: "106 Source St" },
+  { id: "656fe3661a0dcc3c4bcecf0b", name: "sink3@example.com", role: "sink", address: "107 Sink Blvd" },
+  { id: "656fe3661a0dcc3c4bcecf0c", name: "auditor3@example.com", role: "auditor", address: "108 Auditor St" },
+  { id: "6570a44b66b2b54d698fb4a2", name: "sink_test@test.com", role: "sink", address: "535 West 116th St" },
+  { id: "6570a44b66b2b54d698fb4a2", name: "source_test@test.com", role: "source", address: "537 West 116th St" },
+];
+
+
 const auditLogsData = [
   {
     id: 1,
@@ -151,7 +166,7 @@ const analyticsData = {
 };
 
 const AdminPage = () => {
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState(placeholderUsers);
   const [transactions, setTransactions] = useState([]);
   const [auditLogs, setAuditLogs] = useState([]);
   const [analytics, setAnalytics] = useState({});
@@ -194,6 +209,7 @@ const AdminPage = () => {
               <th>ID</th>
               <th>Name</th>
               <th>Role</th>
+              <th>Address</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -203,6 +219,7 @@ const AdminPage = () => {
                 <td>{user.id}</td>
                 <td>{user.name}</td>
                 <td>{user.role}</td>
+                <td>{user.address}</td>
                 <td>
                   <button onClick={() => alert('Edit user')}>Edit</button>
                   <button onClick={() => alert('Remove user')}>Remove</button>

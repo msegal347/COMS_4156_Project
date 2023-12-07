@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styles from './SourcePage.module.css';
 import { createResource } from '../services/api';
 import { useUser } from '../contexts/UserContext';
+import axios from 'axios';
 
 const SourcePage = () => {
   const [materialData, setMaterialData] = useState({
@@ -39,24 +40,35 @@ const SourcePage = () => {
     setMaterialData({ ...materialData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log('Form submission initiated:', materialData);
     setFeedbackMessage('');
     setIsError(false);
-
-    if (!currentUser) {
-      setFeedbackMessage('No user is logged in');
+  
+    if (!currentUser || !currentUser.id) {
+      console.log('No user is logged in or user ID is undefined');
+      setFeedbackMessage('No user is logged in or user ID is undefined');
       setIsError(true);
       return;
     }
-
+  
     const submissionData = {
-      ...materialData,
-      userId: currentUser.id, 
+      category: materialData.category,
+      userResources: [
+        {
+          userId: currentUser.id,
+          quantity: parseInt(materialData.quantity, 10),
+        },
+      ],
     };
-
+    
+  
+    console.log('Submitting material data to API:', submissionData);
+  
     try {
-      await createResource(submissionData);
+      const response = await createResource(submissionData);
+      console.log('Submission response:', response);
       setFeedbackMessage('Material data submitted successfully');
       setMaterialData({ category: '', quantity: '' });
     } catch (error) {
@@ -65,6 +77,8 @@ const SourcePage = () => {
       setIsError(true);
     }
   };
+  
+  
 
   return (
     <div className={styles.container}>
@@ -81,12 +95,11 @@ const SourcePage = () => {
           >
             <option value="">Select a Category</option>
             {foodCategories.map((category, index) => (
-              <option key={index} value={category}>
-                {category}
-              </option>
+              <option key={index} value={category}>{category}</option>
             ))}
           </select>
         </div>
+
         <div className={styles.inputField}>
           <label htmlFor="quantity">Quantity</label>
           <input
@@ -98,11 +111,13 @@ const SourcePage = () => {
             required
           />
         </div>
+
         <div className={styles.buttonContainer}>
-          <button className={styles.submitButton} type="submit">
+          <button type="submit" className={styles.submitButton}>
             Submit
           </button>
         </div>
+
         {feedbackMessage && (
           <div className={isError ? styles.errorMessage : styles.successMessage}>
             {feedbackMessage}

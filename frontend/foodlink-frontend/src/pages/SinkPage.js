@@ -12,11 +12,13 @@ const SinkPage = () => {
     const fetchMaterials = async () => {
       try {
         const response = await getResources();
-        // Aggregate quantities from different users for each material
+        console.log('Raw materials data:', response.data); // Log raw data
+
         const aggregatedMaterials = response.data.map(material => {
           const totalQuantity = material.userResources.reduce((sum, userRes) => sum + userRes.quantity, 0);
           return { ...material, quantity: totalQuantity };
         });
+        console.log('Aggregated materials:', aggregatedMaterials); // Log aggregated data
         setMaterials(aggregatedMaterials);
       } catch (error) {
         console.error('Error fetching materials', error);
@@ -26,6 +28,10 @@ const SinkPage = () => {
     fetchMaterials();
   }, []);
 
+  useEffect(() => {
+    console.log('Current requests state:', requests); // Log requests state
+  }, [requests]);
+
   const handleQuantityChange = (materialId, quantity) => {
     setRequests({ ...requests, [materialId]: parseInt(quantity, 10) || 0 });
   };
@@ -34,16 +40,16 @@ const SinkPage = () => {
     e.preventDefault();
     setFeedbackMessage('');
     setIsError(false);
-  
+
     const materialsArray = Object.entries(requests)
       .filter(([_, quantity]) => quantity > 0)
       .map(([materialId, quantity]) => ({
         materialId,
         quantity,
       }));
-  
+
+    console.log('Submitting materials:', materialsArray); // Log before submit
     try {
-      // Send the materials array directly without wrapping it in another object
       await submitRequest(materialsArray);
       setFeedbackMessage('Request submitted successfully');
       setRequests({});

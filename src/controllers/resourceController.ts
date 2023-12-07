@@ -9,6 +9,7 @@ interface CustomRequest extends Request {
 
 export const resourceController = {
   async addOrUpdateUserResource(req: CustomRequest, res: Response) {
+    console.log("Received request body:", req.body);
     try {
       const userId = req.user?.id;
       if (!userId) {

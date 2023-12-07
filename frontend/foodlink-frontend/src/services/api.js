@@ -20,8 +20,20 @@ export const registerUser = userData => {
 // Resource management
 export const getResources = () => axios.get(createEndpoint('/resources'));
 
-export const createResource = resourceData =>
-  axios.post(createEndpoint('/resources'), resourceData);
+export const createResource = async (resourceData) => {
+  const token = localStorage.getItem('token'); // Retrieve token
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    }
+  };
+
+  console.log('Sending request with data:', resourceData); // Log the data being sent
+
+  return axios.post(`${API_BASE_URL}/resources`, resourceData, config);
+};
+
 
 export const updateResource = (resourceId, resourceData) =>
   axios.put(createEndpoint(`/resources/${resourceId}`), resourceData);
