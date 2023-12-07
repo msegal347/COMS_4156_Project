@@ -15,6 +15,7 @@ const DashboardPage = () => {
 
   useEffect(() => {
     console.log('DashboardPage useEffect triggered');
+    console.log('Current user:', currentUser);
     if (currentUser?.id) {
       console.log('Current user ID:', currentUser.id);
       const fetchAllocations = async () => {
@@ -35,7 +36,7 @@ const DashboardPage = () => {
     } else {
       console.log('Current user ID is undefined');
     }
-  }, [currentUser?.id]); // Dependency array to trigger effect when currentUser.id changes
+  }, [currentUser?.id]);
 
   const handleAllocationSelect = allocation => {
     console.log('Selected allocation:', allocation);
@@ -120,6 +121,7 @@ const DashboardPage = () => {
 
   const Map = ({ allocation }) => {
     useEffect(() => {
+      console.log('Map useEffect triggered for allocation:', allocation);
       if (allocation) {
         renderMarkersAndRoute(allocation);
       }
@@ -134,6 +136,7 @@ const DashboardPage = () => {
         onGoogleApiLoaded={({ map, maps }) => {
           mapRef.current = map;
           mapsRef.current = maps;
+          console.log('Google Maps API loaded');
           if (allocation) {
             renderMarkersAndRoute(allocation);
           }
@@ -143,6 +146,7 @@ const DashboardPage = () => {
   };
 
   if (!currentUser) {
+    console.log('Current user is null, showing loading...');
     return <div>Loading...</div>;
   }
 
