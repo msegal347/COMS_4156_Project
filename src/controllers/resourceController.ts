@@ -63,8 +63,6 @@ export const resourceController = {
     }
   },
 
-  // Removed createResource and updateResource methods as they seem no longer relevant
-  // based on the new functionality.
 };
 
 export default resourceController;

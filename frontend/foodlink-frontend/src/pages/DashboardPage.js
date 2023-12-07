@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import GoogleMapReact from 'google-map-react';
 import styles from './DashboardPage.module.css';
-import { getAllocations, getUsers } from '../services/api';
+import { getAllocations, getUserById, getResourceCategoryById } from '../services/api';
 import { useUser } from '../contexts/UserContext';
 
 const AnyReactComponent = ({ text }) => <div>{text}</div>;
@@ -19,26 +19,24 @@ const DashboardPage = () => {
         try {
           const response = await getAllocations();
           const allocationsWithDetails = await Promise.all(response.data.map(async allocation => {
-            const sourceUser = await getUserById(allocation.sourceId);
-            const sinkUser = await getUserById(allocation.sinkId);
-            const resourceCategory = await getResourceCategoryById(allocation.resourceCategoryId);
-
+            const sourceUserResponse = await getUserById(allocation.sourceId);
+            const sinkUserResponse = await getUserById(allocation.sinkId);
+            const resourceCategoryResponse = await getResourceCategoryById(allocation.resourceCategoryId);
+  
             return {
               ...allocation,
-              sourceName: sourceUser.data.name,
-              sinkName: sinkUser.data.name,
-              resourceCategoryName: resourceCategory.data.category
+              sourceName: sourceUserResponse.data.name, // Adjust according to your response structure
+              sinkName: sinkUserResponse.data.name, // Adjust according to your response structure
+              resourceCategoryName: resourceCategoryResponse.data.category // Adjust according to your response structure
             };
           }));
-
-          setAllocations(allocationsWithDetails.filter(allocation => 
-            allocation.sourceId === currentUser.id || allocation.sinkId === currentUser.id
-          ));
+  
+          setAllocations(allocationsWithDetails);
         } catch (error) {
           console.error('Error fetching allocations:', error);
         }
       };
-
+  
       fetchAllocations();
     }
   }, [currentUser?.id]);
@@ -63,8 +61,8 @@ const DashboardPage = () => {
     window.markers = [];
 
     try {
-      const sourceResponse = await getUsers(allocation.sourceId);
-      const sinkResponse = await getUsers(allocation.sinkId);
+      const sourceResponse = await getUserById(allocation.sourceId);
+      const sinkResponse = await getUserById(allocation.sinkId);
 
       console.log('Source user data:', sourceResponse.data);
       console.log('Sink user data:', sinkResponse.data);

@@ -20,6 +20,10 @@ export const updateResource = (resourceId, resourceData) =>
   axios.put(createEndpoint(`/resources/${resourceId}`), resourceData);
 export const deleteResource = resourceId =>
   axios.delete(createEndpoint(`/resources/${resourceId}`));
+export const getResourceCategoryById = categoryId => {
+  console.log("API getResourceCategoryById called for categoryId:", categoryId);
+  return axios.get(`${API_BASE_URL}/resourceCategories/${categoryId}`);
+};
 
 // Allocation management
 export const getAllocations = () => axios.get(createEndpoint('/allocations'));
@@ -40,7 +44,7 @@ export const submitRequest = materials => {
 };
 
 // User management
-export const getUsers = (userId) => {
+export const getUserById = userId => {
   console.log("API getUsers called for userId:", userId);
   return axios.get(`${API_BASE_URL}/users/${userId}`);
 };
@@ -73,7 +77,7 @@ const api = {
   getTransactions,
   getRecentTransactions,
   submitRequest,
-  getUsers,
+  getUserById,
   getCurrentUser,
   getAuditLogs,
   getAnalytics,
