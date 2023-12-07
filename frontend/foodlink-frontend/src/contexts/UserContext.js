@@ -33,23 +33,21 @@ export const UserProvider = ({ children }) => {
     }
   }, []);
 
-  const loginUser = async (credentials) => {
-    console.log('Attempting to login with credentials:', credentials);
+  const loginUser = async (loginResponse) => {
+    console.log('Setting current user with login response:', loginResponse);
     try {
       setIsLoading(true);
-      const response = await api.loginUser(credentials);
-      console.log('Login successful, response:', response);
-
-      if (response.data.token) {
-        localStorage.setItem('token', response.data.token);
-        console.log('Token set in localStorage:', response.data.token);
+  
+      if (loginResponse.token) {
+        localStorage.setItem('token', loginResponse.token);
+        console.log('Token set in localStorage:', loginResponse.token);
       } else {
         console.warn('No token received from backend');
       }
-
-      setCurrentUser({ ...response.data.user, token: response.data.token });
+  
+      setCurrentUser({ ...loginResponse.user, token: loginResponse.token });
     } catch (error) {
-      console.error('Login error:', error);
+      console.error('Error setting current user:', error);
       setError(error); // Set error state
     } finally {
       setIsLoading(false);

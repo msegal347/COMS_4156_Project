@@ -8,8 +8,9 @@ interface IAllocation extends mongoose.Document {
 
 const allocationSchema = new mongoose.Schema(
   {
-    sourceId: { type: mongoose.Schema.Types.ObjectId, ref: 'ResourceCategory', required: true },
-    sinkId: { type: mongoose.Schema.Types.ObjectId, ref: 'Request', required: true },
+    // Update the ref to 'User' for both sourceId and sinkId
+    sourceId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    sinkId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     allocatedQuantity: { type: Number, required: true },
   },
   {
@@ -18,3 +19,4 @@ const allocationSchema = new mongoose.Schema(
 );
 
 export const Allocation = mongoose.model<IAllocation>('Allocation', allocationSchema);
+

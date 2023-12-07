@@ -2,6 +2,8 @@ import { allocateResources, Source, Sink } from '../algorithms/resourceAllocatio
 import { Allocation } from '../models/allocationModel';
 import ResourceCategoryModel from '../models/resourceModel';
 import RequestModel, { IRequest } from '../models/requestModel';
+import UserModel from '../models/userModel'; 
+import mongoose from 'mongoose';
 
 // Fetch Sources Function
 async function fetchSources(): Promise<Source[]> {
@@ -73,7 +75,11 @@ export const triggerAllocationProcess = async () => {
     }
 
     // Create an allocation record
-    await Allocation.create({ sourceId, sinkId, allocatedQuantity });
+    await Allocation.create({ 
+      sourceId: new mongoose.Types.ObjectId(sourceId), 
+      sinkId: new mongoose.Types.ObjectId(sinkId), 
+      allocatedQuantity 
+    });
   }
 
   return matches;

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useUser } from '../contexts/UserContext'; // Import useUser
+import { useUser } from '../contexts/UserContext';
 import styles from './LoginPage.module.css';
-import { loginUser as loginUserApi } from '../services/api'; // Renamed to avoid naming conflict
+import { loginUser as loginUserApi } from '../services/api';
 
 const LoginPage = () => {
   const [loginData, setLoginData] = useState({
@@ -11,7 +11,7 @@ const LoginPage = () => {
   });
   const [error, setError] = useState('');
   const navigate = useNavigate();
-  const { loginUser } = useUser(); // Get loginUser function from context
+  const { loginUser } = useUser(); 
 
   const handleChange = e => {
     setLoginData({ ...loginData, [e.target.name]: e.target.value });
@@ -20,9 +20,11 @@ const LoginPage = () => {
   const handleSubmit = async e => {
     e.preventDefault();
     setError('');
+    console.log("LoginPage handleSubmit called with loginData:", loginData);
 
     try {
       const response = await loginUserApi(loginData); // Call the API
+      console.log("Login response received:", response.data);
       await loginUser(response.data); // Update user context with received data
 
       // Navigate based on the user's role

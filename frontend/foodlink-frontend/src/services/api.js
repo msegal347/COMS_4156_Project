@@ -6,7 +6,10 @@ const API_BASE_URL = 'http://34.145.209.212:5000/api';
 const createEndpoint = path => `${API_BASE_URL}${path}`;
 
 // Auth functions
-export const loginUser = credentials => axios.post(createEndpoint('/login'), credentials);
+export const loginUser = credentials => {
+  console.log("API loginUser called with credentials:", credentials);
+  return axios.post(createEndpoint('/login'), credentials);
+};
 export const registerUser = userData => axios.post(createEndpoint('/registration'), userData);
 
 // Resource management
@@ -37,7 +40,10 @@ export const submitRequest = materials => {
 };
 
 // User management
-export const getUsers = () => axios.get(createEndpoint('/users'));
+export const getUsers = () => {
+  console.log("API getUsers called");
+  return axios.get(createEndpoint('/users'));
+};
 export const getCurrentUser = () => {
   const token = localStorage.getItem('token');
   return axios.get(createEndpoint('/users/current'), {
@@ -67,6 +73,7 @@ const api = {
   getRecentTransactions,
   submitRequest,
   getUsers,
+  getCurrentUser,
   getAuditLogs,
   getAnalytics,
 };
