@@ -11,7 +11,7 @@ import {
 import { Bar } from 'react-chartjs-2';
 import GoogleMapReact from 'google-map-react';
 import styles from './AuditorPage.module.css';
-import { getResources, getTransfers, getAllocations } from '../services/api';
+import { getResources, getTransactions, getAllocations } from '../services/api';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -120,17 +120,18 @@ const AuditorPage = () => {
       const fetchAnalyticsData = async () => {
         try {
           const materialsResponse = await getResources();
-          const transfersResponse = await getTransfers(); 
+          const transactionsResponse = await getTransactions(); 
           const allocationsResponse = await getAllocations(); 
           setAnalyticsData({
             materials: materialsResponse.data,
-            transfers: transfersResponse.data,
+            transfers: transactionsResponse.data, 
             allocations: allocationsResponse.data,
           });
         } catch (error) {
           console.error('Error fetching analytics data', error);
         }
       };
+      
     const renderMarkers = (map, maps) => {
       placeholderTransactions.forEach(transaction => {
         new maps.Marker({

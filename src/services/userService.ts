@@ -50,6 +50,15 @@ class UserService {
       throw new Error('User not found');
     }
   }
+
+  async getAllUsers() {
+    try {
+      // Select all fields except for password
+      return await User.find({}).select('-password');
+    } catch (error) {
+      throw new Error('Error fetching users');
+    }
+  }
 }
 
 export default new UserService();
