@@ -41,6 +41,15 @@ class UserService {
       return null;
     }
   }
+
+
+  async getUserById(userId: string) {
+    try {
+      return await User.findById(userId).select('-password');
+    } catch (error) {
+      throw new Error('User not found');
+    }
+  }
 }
 
 export default new UserService();

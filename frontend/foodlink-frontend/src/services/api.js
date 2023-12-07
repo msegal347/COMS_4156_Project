@@ -40,10 +40,11 @@ export const submitRequest = materials => {
 };
 
 // User management
-export const getUsers = () => {
-  console.log("API getUsers called");
-  return axios.get(createEndpoint('/users'));
+export const getUsers = (userId) => {
+  console.log("API getUsers called for userId:", userId);
+  return axios.get(`${API_BASE_URL}/users/${userId}`);
 };
+
 export const getCurrentUser = () => {
   const token = localStorage.getItem('token');
   return axios.get(createEndpoint('/users/current'), {

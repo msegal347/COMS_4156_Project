@@ -14,29 +14,35 @@ const DashboardPage = () => {
   const { currentUser } = useUser();
 
   useEffect(() => {
-    console.log('DashboardPage useEffect triggered');
-    console.log('Current user:', currentUser);
     if (currentUser?.id) {
-      console.log('Current user ID:', currentUser.id);
       const fetchAllocations = async () => {
         try {
-          console.log('Fetching allocations...');
           const response = await getAllocations();
-          console.log('Allocations fetched:', response.data);
-          const userAllocations = response.data.filter(allocation => 
-            allocation.sinkId === currentUser.id || allocation.sourceId === currentUser.id
-          );
-          console.log('User allocations:', userAllocations);
-          setAllocations(userAllocations);
+          const allocationsWithDetails = await Promise.all(response.data.map(async allocation => {
+            const sourceUser = await getUserById(allocation.sourceId);
+            const sinkUser = await getUserById(allocation.sinkId);
+            const resourceCategory = await getResourceCategoryById(allocation.resourceCategoryId);
+
+            return {
+              ...allocation,
+              sourceName: sourceUser.data.name,
+              sinkName: sinkUser.data.name,
+              resourceCategoryName: resourceCategory.data.category
+            };
+          }));
+
+          setAllocations(allocationsWithDetails.filter(allocation => 
+            allocation.sourceId === currentUser.id || allocation.sinkId === currentUser.id
+          ));
         } catch (error) {
           console.error('Error fetching allocations:', error);
         }
       };
+
       fetchAllocations();
-    } else {
-      console.log('Current user ID is undefined');
     }
   }, [currentUser?.id]);
+  
 
   const handleAllocationSelect = allocation => {
     console.log('Selected allocation:', allocation);
@@ -103,18 +109,24 @@ const DashboardPage = () => {
           <th>ID</th>
           <th>Source</th>
           <th>Sink</th>
+          <th>Resource Category</th>
           <th>Allocated Quantity</th>
         </tr>
       </thead>
       <tbody>
-        {allocations.map(allocation => (
+        {allocations.length > 0 ? allocations.map(allocation => (
           <tr key={allocation._id} onClick={() => handleAllocationSelect(allocation)}>
             <td>{allocation._id}</td>
-            <td>{allocation.sourceId}</td>
-            <td>{allocation.sinkId}</td>
+            <td>{allocation.sourceName}</td>
+            <td>{allocation.sinkName}</td>
+            <td>{allocation.resourceCategoryName}</td>
             <td>{allocation.allocatedQuantity}</td>
           </tr>
-        ))}
+        )) : (
+          <tr>
+            <td colSpan="5">No allocations found</td>
+          </tr>
+        )}
       </tbody>
     </table>
   );

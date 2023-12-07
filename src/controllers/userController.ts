@@ -91,6 +91,20 @@ class UserController {
       res.status(500).json({ message: 'Internal server error' });
     }
   }
+
+  async getUserById(req: Request, res: Response) {
+    try {
+      const userId = req.params.id;
+      const user = await UserService.getUserById(userId); // If using UserService
+      // const user = await User.findById(userId).select('-password'); // If directly using Mongoose
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+      res.json(user);
+    } catch (error) {
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  }
 }
 
 export default new UserController();
