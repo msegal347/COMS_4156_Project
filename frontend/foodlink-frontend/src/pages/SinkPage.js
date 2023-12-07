@@ -33,32 +33,47 @@ const SinkPage = () => {
   }, [requests]);
 
   const handleQuantityChange = (materialId, quantity) => {
-    setRequests({ ...requests, [materialId]: parseInt(quantity, 10) || 0 });
+    const material = materials.find(m => m._id === materialId);
+    if (material) {
+      // Ensure the quantity is within bounds
+      const validQuantity = Math.max(0, Math.min(material.quantity, quantity));
+      setRequests({ ...requests, [materialId]: validQuantity });
+    }
   };
 
   const handleSubmit = async e => {
     e.preventDefault();
     setFeedbackMessage('');
     setIsError(false);
-
+  
     const materialsArray = Object.entries(requests)
       .filter(([_, quantity]) => quantity > 0)
       .map(([materialId, quantity]) => ({
         materialId,
         quantity,
       }));
-
-    console.log('Submitting materials:', materialsArray); // Log before submit
+  
     try {
       await submitRequest(materialsArray);
-      setFeedbackMessage('Request submitted successfully');
+  
+      // Update the materials state to reflect the new quantities
+      const updatedMaterials = materials.map(material => {
+        const requestForThisMaterial = materialsArray.find(req => req.materialId === material._id);
+        return requestForThisMaterial
+          ? { ...material, quantity: material.quantity - requestForThisMaterial.quantity }
+          : material;
+      });
+  
+      setMaterials(updatedMaterials);
       setRequests({});
+      setFeedbackMessage('Request submitted successfully');
     } catch (error) {
       console.error('Error submitting requests', error);
       setFeedbackMessage('Error submitting requests');
       setIsError(true);
     }
   };
+  
 
   return (
     <div className={styles.container}>

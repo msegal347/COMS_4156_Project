@@ -245,30 +245,30 @@ const DashboardPage = () => {
     }
   };
 
-  const renderAllocationsTable = () => (
-    <table className={styles.allocationTable}>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Resource Category</th>
-          <th>Allocated Quantity</th>
-        </tr>
-      </thead>
-      <tbody>
-        {allocations.length > 0 ? allocations.map(allocation => (
-          <tr key={allocation._id} onClick={() => handleAllocationSelect(allocation)}>
-            <td>{allocation._id}</td>
-            <td>{allocation.resourceCategoryName}</td>
-            <td>{allocation.allocatedQuantity}</td>
-          </tr>
-        )) : (
-          <tr>
-            <td colSpan="5">No allocations found</td>
-          </tr>
-        )}
-      </tbody>
-    </table>
-  );
+  // const renderAllocationsTable = () => (
+    //<table className={styles.allocationTable}>
+     // <thead>
+     //   <tr>
+      //    <th>ID</th>
+       //   <th>Resource Category</th>
+       //   <th>Allocated Quantity</th>
+      //  </tr>
+    //  </thead>
+    //   <tbody>
+     //    {allocations.length > 0 ? allocations.map(allocation => (
+     //      <tr key={allocation._id} onClick={() => handleAllocationSelect(allocation)}>
+      //       <td>{allocation._id}</td>
+      //       <td>{allocation.resourceCategoryName}</td>
+      //       <td>{allocation.allocatedQuantity}</td>
+      //     </tr>
+     //   )) : (
+     //      <tr>
+    //         <td colSpan="5">No allocations found</td>
+    //       </tr>
+    //     )}
+    //   </tbody>
+   //  </table>
+  // );
 
   const renderTransactionsTable = () => (
     <table className={styles.transactionTable}>
@@ -340,7 +340,6 @@ const DashboardPage = () => {
     <div className={styles.dashboardContainer}>
       <h1 className={styles.title}>Dashboard</h1>
       <div className={styles.allocationTableContainer}>
-        {renderAllocationsTable()}
         {renderTransactionsTable()}
       </div>
       <section className={styles.mapSection}>

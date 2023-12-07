@@ -5,27 +5,28 @@ import { useUser } from '../contexts/UserContext';
 import axios from 'axios';
 
 const resourceCategories = {
-  "6570a7b08a63f3553041e2f3": "Fruits",
-  "6570a7b08a63f3553041e2f4": "Vegetables",
-  "6570a7b08a63f3553041e2f5": "Dairy",
-  "6570a7b08a63f3553041e2f6": "Meat & Poultry",
-  "6570a7b08a63f3553041e2f7": "Seafood",
-  "6570a7b08a63f3553041e2f8": "Baked Goods",
-  "6570a7b08a63f3553041e2f9": "Frozen Foods",
-  "6570a7b08a63f3553041e2fa": "Deli Items",
-  "6570a7b08a63f3553041e2fb": "Canned Goods",
-  "6570a7b08a63f3553041e2fc": "Dry Goods & Pasta",
-  "6570a7b08a63f3553041e2fd": "Snacks",
-  "6570a7b08a63f3553041e2fe": "Beverages",
-  "6570a7b08a63f3553041e2ff": "Condiments & Sauces",
-  "6570a7b08a63f3553041e300": "Spices & Herbs",
-  "6570a7b08a63f3553041e301": "Breakfast Foods",
-  "6570a7b08a63f3553041e302": "Sweets & Chocolates",
-  "6570a7b08a63f3553041e303": "Health Foods",
-  "6570a7b08a63f3553041e304": "International Cuisine",
-  "6570a7b08a63f3553041e305": "Baby Food",
-  "6570a7b08a63f3553041e306": "Pet Food"
+  "6571e743f1b2729b8ad21a49": "Fruits",
+  "6571e743f1b2729b8ad21a4a": "Vegetables",
+  "6571e743f1b2729b8ad21a4b": "Dairy",
+  "6571e743f1b2729b8ad21a4c": "Meat & Poultry",
+  "6571e743f1b2729b8ad21a4d": "Seafood",
+  "6571e743f1b2729b8ad21a4e": "Baked Goods",
+  "6571e743f1b2729b8ad21a4f": "Frozen Foods",
+  "6571e743f1b2729b8ad21a50": "Deli Items",
+  "6571e743f1b2729b8ad21a51": "Canned Goods",
+  "6571e743f1b2729b8ad21a52": "Dry Goods & Pasta",
+  "6571e743f1b2729b8ad21a53": "Snacks",
+  "6571e743f1b2729b8ad21a54": "Beverages",
+  "6571e743f1b2729b8ad21a55": "Condiments & Sauces",
+  "6571e743f1b2729b8ad21a56": "Spices & Herbs",
+  "6571e743f1b2729b8ad21a57": "Breakfast Foods",
+  "6571e743f1b2729b8ad21a58": "Sweets & Chocolates",
+  "6571e743f1b2729b8ad21a59": "Health Foods",
+  "6571e743f1b2729b8ad21a5a": "International Cuisine",
+  "6571e743f1b2729b8ad21a5b": "Baby Food",
+  "6571e743f1b2729b8ad21a5c": "Pet Food"
 };
+
 
 const SourcePage = () => {
   const [materialData, setMaterialData] = useState({
@@ -50,6 +51,13 @@ const SourcePage = () => {
     e.preventDefault();
     setFeedbackMessage('');
     setIsError(false);
+
+    const quantity = parseInt(materialData.quantity, 10);
+    if (quantity < 0) {
+      setFeedbackMessage('Quantity cannot be less than zero');
+      setIsError(true);
+      return;
+    }
   
     if (!currentUser || !currentUser.id) {
       setFeedbackMessage('No user is logged in or user ID is undefined');
@@ -110,6 +118,7 @@ const SourcePage = () => {
             id="quantity"
             type="number"
             name="quantity"
+            min="0"
             value={materialData.quantity}
             onChange={handleChange}
             required
