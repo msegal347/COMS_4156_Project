@@ -17,6 +17,11 @@ export const transactionService = {
     return await Transaction.find({ userId });
   },
 
+  // Retrieve all transactions
+  async getAllTransactions(): Promise<ITransaction[]> {
+    return await Transaction.find({});
+  },
+
   // Update a specific transaction
   async updateTransaction(
     id: string,

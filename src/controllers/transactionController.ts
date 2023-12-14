@@ -37,6 +37,16 @@ export const transactionController = {
     }
   },
 
+  // Retrieve all transactions
+  async getAllTransactions(req: Request, res: Response) {
+    try {
+      const transactions = await transactionService.getAllTransactions();
+      res.status(200).json(transactions);
+    } catch (err) {
+      res.status(400).json({ error: (err as Error).message });
+    }
+  },
+
   // Update a specific transaction by its ID
   async updateTransaction(req: Request, res: Response) {
     try {
