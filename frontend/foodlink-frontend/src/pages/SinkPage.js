@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getResources, submitRequest } from '../services/api';
+import { getResources, submitRequest, triggerAllocationProcess } from '../services/api';
 import styles from './SinkPage.module.css';
 
 const SinkPage = () => {
@@ -15,7 +15,10 @@ const SinkPage = () => {
         console.log('Raw materials data:', response.data); // Log raw data
 
         const aggregatedMaterials = response.data.map(material => {
-          const totalQuantity = material.userResources.reduce((sum, userRes) => sum + userRes.quantity, 0);
+          const totalQuantity = material.userResources.reduce(
+            (sum, userRes) => sum + userRes.quantity,
+            0
+          );
           return { ...material, quantity: totalQuantity };
         });
         console.log('Aggregated materials:', aggregatedMaterials); // Log aggregated data
@@ -45,17 +48,17 @@ const SinkPage = () => {
     e.preventDefault();
     setFeedbackMessage('');
     setIsError(false);
-  
+
     const materialsArray = Object.entries(requests)
       .filter(([_, quantity]) => quantity > 0)
       .map(([materialId, quantity]) => ({
         materialId,
         quantity,
       }));
-  
+
     try {
       await submitRequest(materialsArray);
-  
+
       // Update the materials state to reflect the new quantities
       const updatedMaterials = materials.map(material => {
         const requestForThisMaterial = materialsArray.find(req => req.materialId === material._id);
@@ -63,7 +66,7 @@ const SinkPage = () => {
           ? { ...material, quantity: material.quantity - requestForThisMaterial.quantity }
           : material;
       });
-  
+
       setMaterials(updatedMaterials);
       setRequests({});
       setFeedbackMessage('Request submitted successfully');
@@ -72,8 +75,16 @@ const SinkPage = () => {
       setFeedbackMessage('Error submitting requests');
       setIsError(true);
     }
+
+    try {
+      const res = await triggerAllocationProcess();
+      setFeedbackMessage('The resources have been reallocated');
+    } catch (error) {
+      console.error('Error reallocating data', error);
+      setFeedbackMessage('Error reallocating data');
+      setIsError(true);
+    }
   };
-  
 
   return (
     <div className={styles.container}>
