@@ -322,8 +322,8 @@ const AuditorPage = () => {
         <tr>
           <th>Quantity</th>
           <th>Created Date</th>
-          <th>Source ID</th>
-          <th>Sink ID</th>
+          <th>Source Email</th>
+          <th>Sink Email</th>
         </tr>
       </thead>
       <tbody>
@@ -331,8 +331,8 @@ const AuditorPage = () => {
           <tr key={allocation.id}>
             <td>{allocation.allocatedQuantity}</td>
             <td>{new Date(allocation.createdAt).toLocaleString()}</td>
-            <td>{allocation.sourceId}</td>
-            <td>{allocation.sinkId}</td>
+            <td>{allocation.sourceId.email}</td>
+            <td>{allocation.sinkId.email}</td>
           </tr>
         ))}
       </tbody>

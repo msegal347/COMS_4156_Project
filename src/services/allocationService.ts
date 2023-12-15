@@ -40,8 +40,34 @@ async function fetchSinks(): Promise<Sink[]> {
   return sinks;
 }
 
-// Trigger Allocation Process Function
 export const triggerAllocationProcess = async () => {
+  const requests = await RequestModel.find({});
+  console.log(requests);
+  for (const request of requests) {
+    for (const material of request.materials) {
+      const resource = await ResourceCategoryModel.findById(material.materialId);
+      console.log(resource);
+      if (!resource) continue;
+      for (const userResource of resource.userResources) {
+        if (!material.remainingQuantity || material.remainingQuantity == 0) break;
+        if (userResource.quantity == 0) continue;
+        const allocatedQuantity = Math.min(material.remainingQuantity, userResource.quantity);
+        material.remainingQuantity -= allocatedQuantity;
+        userResource.quantity -= allocatedQuantity;
+        await request.save();
+        await resource.save();
+        await Allocation.create({
+          sourceId: userResource.userId,
+          sinkId: request.userId,
+          allocatedQuantity,
+        });
+      }
+    }
+  }
+};
+
+// Trigger Allocation Process Function
+export const triggerAllocationProcessDeprecated = async () => {
   const sources = await fetchSources();
   const sinks = await fetchSinks();
   const matches = allocateResources(sources, sinks);
