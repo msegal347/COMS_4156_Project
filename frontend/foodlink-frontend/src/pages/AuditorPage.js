@@ -328,7 +328,7 @@ const AuditorPage = () => {
       </thead>
       <tbody>
         {analyticsData.allocations.map(allocation => (
-          <tr key={allocation.id}>
+          <tr key={allocation._id}>
             <td>{allocation.allocatedQuantity}</td>
             <td>{new Date(allocation.createdAt).toLocaleString()}</td>
             <td>{allocation.sourceId.email}</td>
