@@ -261,9 +261,7 @@ const analyticsData = {
 };
 
 const AdminPage = () => {
-  // const [users, setUsers] = useState(placeholderUsers);
   const [resources, setResources] = useState([]);
-  // const [transactions, setTransactions] = useState(placeholderTransactions);
   const [transactions, setTransactions] = useState();
   const [auditLogs, setAuditLogs] = useState();
   const [analytics, setAnalytics] = useState({});
@@ -438,37 +436,56 @@ const AdminPage = () => {
 
       {/* Analytics and Reporting Section */}
       <CollapsibleComponent title="Analytics and Reporting">
-        <div className={styles.analyticsSection}>
-          <h3>User Activity</h3>
-          <p>Logins Today: {analyticsData.userActivity.loginsToday}</p>
-          <p>Signups Today: {analyticsData.userActivity.signupsToday}</p>
-          <p>Active Users: {analyticsData.userActivity.activeUsers}</p>
-
-          <h3>Transaction Volumes</h3>
-          <p>Today: {analyticsData.transactionVolumes.today}</p>
-          <p>This Week: {analyticsData.transactionVolumes.thisWeek}</p>
-          <p>This Month: {analyticsData.transactionVolumes.thisMonth}</p>
-
-          <h3>Resource Utilization</h3>
-          <p>Total Listed: {analyticsData.resourceUtilization.totalListed}</p>
-          <p>Total Requested: {analyticsData.resourceUtilization.totalRequested}</p>
-          <p>Total Fulfilled: {analyticsData.resourceUtilization.totalFulfilled}</p>
-
-          <h3>System Performance</h3>
-          <p>Uptime: {analyticsData.systemPerformance.uptime}</p>
-          <p>Average Response Time: {analyticsData.systemPerformance.averageResponseTime}</p>
-
-          <h3>Issue Tracking</h3>
-          <p>Open Issues: {analyticsData.issueTracking.openIssues}</p>
-          <p>Resolved Issues: {analyticsData.issueTracking.resolvedIssues}</p>
-          <p>Average Resolution Time: {analyticsData.issueTracking.averageResolutionTime}</p>
-
-          <h3>User Engagement</h3>
-          <p>
-            Average Transactions Per User: {analyticsData.userEngagement.averageTransactionsPerUser}
-          </p>
-          <p>Average Session Time: {analyticsData.userEngagement.averageSessionTime}</p>
-        </div>
+        {
+          <table className={styles.analyticsTable}>
+            <thead>
+              <tr>
+                <th>Category</th>
+                <th>Today</th>
+                <th>This Week</th>
+                <th>This Month</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>User Activity</td>
+                <td>{analytics?.userActivity?.loginsToday}</td>
+                <td>{analytics?.userActivity?.signupsToday}</td>
+                <td>{analytics?.userActivity?.activeUsers}</td>
+              </tr>
+              <tr>
+                <td>Transaction Volumes</td>
+                <td>{analytics?.transactionVolumes?.today}</td>
+                <td>{analytics?.transactionVolumes?.thisWeek}</td>
+                <td>{analytics?.transactionVolumes?.thisMonth}</td>
+              </tr>
+              <tr>
+                <td>Resource Utilization</td>
+                <td>{analytics?.resourceUtilization?.totalListed}</td>
+                <td>{analytics?.resourceUtilization?.totalRequested}</td>
+                <td>{analytics?.resourceUtilization?.totalFulfilled}</td>
+              </tr>
+              <tr>
+                <td>System Performance</td>
+                <td>{analytics?.systemPerformance?.uptime}</td>
+                <td>{analytics?.systemPerformance?.averageResponseTime}</td>
+                <td />
+              </tr>
+              <tr>
+                <td>Issue Tracking</td>
+                <td>{analytics?.issueTracking?.openIssues}</td>
+                <td>{analytics?.issueTracking?.resolvedIssues}</td>
+                <td>{analytics?.issueTracking?.averageResolutionTime}</td>
+              </tr>
+              <tr>
+                <td>User Engagement</td>
+                <td>{analytics?.userEngagement?.averageTransactionsPerUser}</td>
+                <td>{analytics?.userEngagement?.averageSessionTime}</td>
+                <td />
+              </tr>
+            </tbody>
+          </table>
+        }
       </CollapsibleComponent>
 
       {/* Audit Logs Section */}
