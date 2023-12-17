@@ -8,6 +8,7 @@ export interface IRequestMaterial extends mongoose.Document {
 }
 
 export interface IRequest extends Document {
+  userId?: mongoose.Schema.Types.ObjectId;
   materials: IRequestMaterial[];
   createdAt: Date;
   updatedAt: Date;
@@ -22,6 +23,7 @@ const requestMaterialSchema = new mongoose.Schema({
 
 const requestSchema: Schema = new Schema(
   {
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     materials: [requestMaterialSchema],
   },
   {

@@ -71,7 +71,15 @@ export const getTransactions = () => axios.get(createEndpoint('/transactions'));
 export const getRecentTransactions = () => axios.get(createEndpoint('/transactions/recent'));
 
 export const submitRequest = materials => {
-  return axios.post(createEndpoint('/requests'), { materials });
+  const token = localStorage.getItem('token');
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    }
+  };
+
+  return axios.post(createEndpoint('/requests'), { materials }, config);
 };
 
 // User management

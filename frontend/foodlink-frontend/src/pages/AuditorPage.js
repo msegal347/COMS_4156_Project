@@ -316,6 +316,29 @@ const AuditorPage = () => {
     </table>
   );
 
+  const renderAllocationsTable = () => !analyticsData.allocations ? (<></>) : (
+    <table className={styles.transactionTable}>
+      <thead>
+        <tr>
+          <th>Quantity</th>
+          <th>Created Date</th>
+          <th>Source Email</th>
+          <th>Sink Email</th>
+        </tr>
+      </thead>
+      <tbody>
+        {analyticsData.allocations.map(allocation => (
+          <tr key={allocation.id}>
+            <td>{allocation.allocatedQuantity}</td>
+            <td>{new Date(allocation.createdAt).toLocaleString()}</td>
+            <td>{allocation.sourceId.email}</td>
+            <td>{allocation.sinkId.email}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Auditor Analytics</h1>
@@ -324,6 +347,7 @@ const AuditorPage = () => {
         <Bar data={transfersChartData} options={chartOptions} />
       </div>
       <div className={styles.transactionTableContainer}>{renderTransactionsTable()}</div>
+      <div className={styles.transactionTableContainer}>{renderAllocationsTable()}</div>
       <div style={{ height: '400px', width: '100%' }}>
         <MapWithMarkers />
       </div>

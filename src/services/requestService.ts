@@ -1,5 +1,6 @@
 import Request, { IRequest } from '../models/requestModel';
 import ResourceCategory from '../models/resourceModel'; 
+import mongoose from 'mongoose';
 
 export const requestService = {
   async createRequest(requestData: any): Promise<IRequest> {
@@ -18,6 +19,7 @@ export const requestService = {
     }
 
     const newRequest = new Request({
+      userId: new mongoose.Types.ObjectId(requestData.userId),
       materials: requestData.materials.map(material => ({
         materialId: material.materialId,
         quantity: material.quantity,
